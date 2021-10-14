@@ -29,13 +29,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         appearance.backgroundColor = .clear
         
         // Button Items Color
-        UINavigationBar.appearance().tintColor = .label
+        UINavigationBar.appearance().tintColor = ThemeColors.navbar
         
         // Text & Color for titles
-        appearance.titleTextAttributes = [ .foregroundColor: UIColor.label ]
+        appearance.titleTextAttributes = [ .foregroundColor: ThemeColors.navbar ]
         
         // Text & Color for LargeTitles
-        appearance.largeTitleTextAttributes = [ .foregroundColor: UIColor.label ]
+        appearance.largeTitleTextAttributes = [ .foregroundColor: ThemeColors.navbar ]
         
         // Apply the appearance
         UINavigationBar.appearance().standardAppearance = appearance
