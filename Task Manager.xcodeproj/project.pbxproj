@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A032FF02717E0FA00EA11B9 /* WelcomeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A032FEF2717E0FA00EA11B9 /* WelcomeHeaderView.swift */; };
 		3A3720F0271643CE00FE1A75 /* ThemeColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3720EF271643CE00FE1A75 /* ThemeColors.swift */; };
 		3A69C77D271892E50078668B /* TMTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A69C77C271892E40078668B /* TMTitleLabel.swift */; };
 		3A69C780271899E10078668B /* TMSubtitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A69C77F271899E10078668B /* TMSubtitleLabel.swift */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3A032FEF2717E0FA00EA11B9 /* WelcomeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeHeaderView.swift; sourceTree = "<group>"; };
 		3A3720EF271643CE00FE1A75 /* ThemeColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColors.swift; sourceTree = "<group>"; };
 		3A69C77C271892E40078668B /* TMTitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMTitleLabel.swift; sourceTree = "<group>"; };
 		3A69C77F271899E10078668B /* TMSubtitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMSubtitleLabel.swift; sourceTree = "<group>"; };
@@ -76,6 +78,7 @@
 				3A7080562711240E00D2F06E /* HomeVC.swift */,
 				3A69C77C271892E40078668B /* TMTitleLabel.swift */,
 				3A69C77F271899E10078668B /* TMSubtitleLabel.swift */,
+				3A032FEF2717E0FA00EA11B9 /* WelcomeHeaderView.swift */,
 				3A941222271679CC00B2DF64 /* Util */,
 				3AEF9E0A270E6F880065B184 /* Assets.xcassets */,
 				3AEF9E0C270E6F880065B184 /* LaunchScreen.storyboard */,
@@ -155,6 +158,7 @@
 			files = (
 				3A3720F0271643CE00FE1A75 /* ThemeColors.swift in Sources */,
 				3AEF9E06270E6F860065B184 /* ViewController.swift in Sources */,
+				3A032FF02717E0FA00EA11B9 /* WelcomeHeaderView.swift in Sources */,
 				3A7080572711240E00D2F06E /* HomeVC.swift in Sources */,
 				3A69C77D271892E50078668B /* TMTitleLabel.swift in Sources */,
 				3A69C780271899E10078668B /* TMSubtitleLabel.swift in Sources */,
