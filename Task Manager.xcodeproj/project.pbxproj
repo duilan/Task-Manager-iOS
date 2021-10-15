@@ -3,11 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		3A032FF02717E0FA00EA11B9 /* WelcomeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A032FEF2717E0FA00EA11B9 /* WelcomeHeaderView.swift */; };
+		3A1940AC271900C000469C06 /* BetterSegmentedControl in Frameworks */ = {isa = PBXBuildFile; productRef = 3A1940AB271900C000469C06 /* BetterSegmentedControl */; };
 		3A3720F0271643CE00FE1A75 /* ThemeColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3720EF271643CE00FE1A75 /* ThemeColors.swift */; };
 		3A69C77D271892E50078668B /* TMTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A69C77C271892E40078668B /* TMTitleLabel.swift */; };
 		3A69C780271899E10078668B /* TMSubtitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A69C77F271899E10078668B /* TMSubtitleLabel.swift */; };
@@ -39,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A1940AC271900C000469C06 /* BetterSegmentedControl in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -103,6 +105,9 @@
 			dependencies = (
 			);
 			name = "Task Manager";
+			packageProductDependencies = (
+				3A1940AB271900C000469C06 /* BetterSegmentedControl */,
+			);
 			productName = "Task Manager";
 			productReference = 3AEF9DFE270E6F860065B184 /* Task Manager.app */;
 			productType = "com.apple.product-type.application";
@@ -130,6 +135,9 @@
 				Base,
 			);
 			mainGroup = 3AEF9DF5270E6F860065B184;
+			packageReferences = (
+				3A1940AA271900C000469C06 /* XCRemoteSwiftPackageReference "BetterSegmentedControl" */,
+			);
 			productRefGroup = 3AEF9DFF270E6F860065B184 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -359,6 +367,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3A1940AA271900C000469C06 /* XCRemoteSwiftPackageReference "BetterSegmentedControl" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gmarm/BetterSegmentedControl.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 2.0.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3A1940AB271900C000469C06 /* BetterSegmentedControl */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3A1940AA271900C000469C06 /* XCRemoteSwiftPackageReference "BetterSegmentedControl" */;
+			productName = BetterSegmentedControl;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 3AEF9DF6270E6F860065B184 /* Project object */;
 }
