@@ -58,13 +58,14 @@ class HomeVC: UIViewController {
     private func setupContentView() {
         scrollView.addSubview(contentView)
         contentView.translatesAutoresizingMaskIntoConstraints = false
-        let paddingForContentView: CGFloat = 16
+        let padding: CGFloat = 16
+        contentView.layoutMargins = UIEdgeInsets(top: 0, left: padding, bottom: padding, right: padding)
         // Constraints
         NSLayoutConstraint.activate([
             contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
             contentView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -paddingForContentView * 2),
+            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             contentView.heightAnchor.constraint(greaterThanOrEqualTo: scrollView.heightAnchor, constant: 1)
         ])
     }
@@ -74,9 +75,9 @@ class HomeVC: UIViewController {
         welcomeHeader.title = "Hola Adrián"
         // Constraints
         NSLayoutConstraint.activate([
-            welcomeHeader.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-            welcomeHeader.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            welcomeHeader.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            welcomeHeader.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor),
+            welcomeHeader.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
+            welcomeHeader.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
             welcomeHeader.heightAnchor.constraint(equalToConstant: 60)
         ])
     }
@@ -99,8 +100,8 @@ class HomeVC: UIViewController {
         // Constraints
         NSLayoutConstraint.activate([
             segmentedControl.topAnchor.constraint(equalTo: welcomeHeader.bottomAnchor, constant: 20),
-            segmentedControl.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            segmentedControl.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            segmentedControl.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
+            segmentedControl.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
             segmentedControl.heightAnchor.constraint(equalToConstant: 45)
         ])
     }
