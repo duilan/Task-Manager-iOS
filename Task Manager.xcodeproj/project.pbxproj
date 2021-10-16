@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3A032FF02717E0FA00EA11B9 /* WelcomeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A032FEF2717E0FA00EA11B9 /* WelcomeHeaderView.swift */; };
+		3A032FF02717E0FA00EA11B9 /* TMWelcomeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A032FEF2717E0FA00EA11B9 /* TMWelcomeHeaderView.swift */; };
 		3A1940AC271900C000469C06 /* BetterSegmentedControl in Frameworks */ = {isa = PBXBuildFile; productRef = 3A1940AB271900C000469C06 /* BetterSegmentedControl */; };
 		3A3720F0271643CE00FE1A75 /* ThemeColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3720EF271643CE00FE1A75 /* ThemeColors.swift */; };
 		3A69C77D271892E50078668B /* TMTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A69C77C271892E40078668B /* TMTitleLabel.swift */; };
@@ -15,13 +15,12 @@
 		3A7080572711240E00D2F06E /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7080562711240E00D2F06E /* HomeVC.swift */; };
 		3AEF9E02270E6F860065B184 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEF9E01270E6F860065B184 /* AppDelegate.swift */; };
 		3AEF9E04270E6F860065B184 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEF9E03270E6F860065B184 /* SceneDelegate.swift */; };
-		3AEF9E06270E6F860065B184 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEF9E05270E6F860065B184 /* ViewController.swift */; };
 		3AEF9E0B270E6F880065B184 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3AEF9E0A270E6F880065B184 /* Assets.xcassets */; };
 		3AEF9E0E270E6F880065B184 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3AEF9E0C270E6F880065B184 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3A032FEF2717E0FA00EA11B9 /* WelcomeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeHeaderView.swift; sourceTree = "<group>"; };
+		3A032FEF2717E0FA00EA11B9 /* TMWelcomeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMWelcomeHeaderView.swift; sourceTree = "<group>"; };
 		3A3720EF271643CE00FE1A75 /* ThemeColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColors.swift; sourceTree = "<group>"; };
 		3A69C77C271892E40078668B /* TMTitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMTitleLabel.swift; sourceTree = "<group>"; };
 		3A69C77F271899E10078668B /* TMSubtitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMSubtitleLabel.swift; sourceTree = "<group>"; };
@@ -29,7 +28,6 @@
 		3AEF9DFE270E6F860065B184 /* Task Manager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Task Manager.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3AEF9E01270E6F860065B184 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3AEF9E03270E6F860065B184 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		3AEF9E05270E6F860065B184 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		3AEF9E0A270E6F880065B184 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3AEF9E0D270E6F880065B184 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3AEF9E0F270E6F880065B184 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -47,6 +45,70 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3A00A0BA271A931A0001168F /* ChildViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ChildViewControllers;
+			sourceTree = "<group>";
+		};
+		3A3F2C6C271A9060008BEEC5 /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				3A3F2C71271A9085008BEEC5 /* Views */,
+				3A3F2C6E271A9072008BEEC5 /* Labels */,
+				3A3F2C76271A91F5008BEEC5 /* ReusableCells */,
+				3A00A0BA271A931A0001168F /* ChildViewControllers */,
+			);
+			path = CustomViews;
+			sourceTree = "<group>";
+		};
+		3A3F2C6E271A9072008BEEC5 /* Labels */ = {
+			isa = PBXGroup;
+			children = (
+				3A69C77C271892E40078668B /* TMTitleLabel.swift */,
+				3A69C77F271899E10078668B /* TMSubtitleLabel.swift */,
+			);
+			path = Labels;
+			sourceTree = "<group>";
+		};
+		3A3F2C71271A9085008BEEC5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3A032FEF2717E0FA00EA11B9 /* TMWelcomeHeaderView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		3A3F2C73271A90F0008BEEC5 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				3A7080562711240E00D2F06E /* HomeVC.swift */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		3A3F2C74271A9117008BEEC5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		3A3F2C75271A9156008BEEC5 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		3A3F2C76271A91F5008BEEC5 /* ReusableCells */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ReusableCells;
+			sourceTree = "<group>";
+		};
 		3A941222271679CC00B2DF64 /* Util */ = {
 			isa = PBXGroup;
 			children = (
@@ -76,11 +138,10 @@
 			children = (
 				3AEF9E01270E6F860065B184 /* AppDelegate.swift */,
 				3AEF9E03270E6F860065B184 /* SceneDelegate.swift */,
-				3AEF9E05270E6F860065B184 /* ViewController.swift */,
-				3A7080562711240E00D2F06E /* HomeVC.swift */,
-				3A69C77C271892E40078668B /* TMTitleLabel.swift */,
-				3A69C77F271899E10078668B /* TMSubtitleLabel.swift */,
-				3A032FEF2717E0FA00EA11B9 /* WelcomeHeaderView.swift */,
+				3A3F2C6C271A9060008BEEC5 /* CustomViews */,
+				3A3F2C73271A90F0008BEEC5 /* Screens */,
+				3A3F2C74271A9117008BEEC5 /* Model */,
+				3A3F2C75271A9156008BEEC5 /* Services */,
 				3A941222271679CC00B2DF64 /* Util */,
 				3AEF9E0A270E6F880065B184 /* Assets.xcassets */,
 				3AEF9E0C270E6F880065B184 /* LaunchScreen.storyboard */,
@@ -165,8 +226,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A3720F0271643CE00FE1A75 /* ThemeColors.swift in Sources */,
-				3AEF9E06270E6F860065B184 /* ViewController.swift in Sources */,
-				3A032FF02717E0FA00EA11B9 /* WelcomeHeaderView.swift in Sources */,
+				3A032FF02717E0FA00EA11B9 /* TMWelcomeHeaderView.swift in Sources */,
 				3A7080572711240E00D2F06E /* HomeVC.swift in Sources */,
 				3A69C77D271892E50078668B /* TMTitleLabel.swift in Sources */,
 				3A69C780271899E10078668B /* TMSubtitleLabel.swift in Sources */,

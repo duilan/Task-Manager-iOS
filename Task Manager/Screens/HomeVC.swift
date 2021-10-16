@@ -10,7 +10,7 @@ import BetterSegmentedControl
 
 class HomeVC: UIViewController {
     
-    private let welcomeHeader = WelcomeHeaderView()
+    private let welcomeHeader = TMWelcomeHeaderView()
     private let segmentedControl = BetterSegmentedControl()
     private let scrollView = UIScrollView()
     private let contentView = UIView(frame: .zero)

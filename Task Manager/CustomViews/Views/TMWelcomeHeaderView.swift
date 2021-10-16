@@ -1,5 +1,5 @@
 //
-//  WelcomeHeaderView.swift
+//  TMWelcomeHeaderView.swift
 //  Task Manager
 //
 //  Created by Duilan on 13/10/21.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WelcomeHeaderView: UIView {
+class TMWelcomeHeaderView: UIView {
     
     private let titleLabel = TMTitleLabel(fontSize: 34)
     private let subtitleLabel = TMSubtitleLabel()
