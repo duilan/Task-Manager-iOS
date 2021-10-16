@@ -6,10 +6,12 @@
 //
 
 import UIKit
+import BetterSegmentedControl
 
 class HomeVC: UIViewController {
     
     private let welcomeHeader = WelcomeHeaderView()
+    private let segmentedControl = BetterSegmentedControl()
     private let scrollView = UIScrollView()
     private let contentView = UIView(frame: .zero)
     
@@ -20,6 +22,11 @@ class HomeVC: UIViewController {
         setupScrollView()
         setupContentView()
         setupWelcomeHeader()
+        setupSegmentedControl()
+    }
+    
+    @objc private func segmentIndexChanged(_ sender: BetterSegmentedControl) {
+        print(sender.index)
     }
     
     private func setup() {
@@ -71,6 +78,30 @@ class HomeVC: UIViewController {
             welcomeHeader.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             welcomeHeader.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             welcomeHeader.heightAnchor.constraint(equalToConstant: 60)
+        ])
+    }
+    
+    private func setupSegmentedControl() {
+        contentView.addSubview(segmentedControl)
+        segmentedControl.cornerRadius = 22.5
+        segmentedControl.backgroundColor = #colorLiteral(red: 0.6156862745, green: 0.6156862745, blue: 0.6156862745, alpha: 0.08)
+        segmentedControl.addTarget(self, action: #selector(segmentIndexChanged(_:)), for: .valueChanged)
+        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Configure BettersegmentedControl segmets
+        segmentedControl.segments = LabelSegment.segments(
+            withTitles: ["Mis Proyectos", "En Progreso", "Completados"],
+            normalFont: .systemFont(ofSize: 12.0, weight: .regular),
+            normalTextColor: .lightGray,
+            selectedFont: .systemFont(ofSize: 12.0, weight: .bold),
+            selectedTextColor: ThemeColors.title)
+        
+        // Constraints
+        NSLayoutConstraint.activate([
+            segmentedControl.topAnchor.constraint(equalTo: welcomeHeader.bottomAnchor, constant: 20),
+            segmentedControl.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            segmentedControl.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            segmentedControl.heightAnchor.constraint(equalToConstant: 45)
         ])
     }
     
