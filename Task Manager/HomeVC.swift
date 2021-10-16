@@ -9,6 +9,7 @@ import UIKit
 
 class HomeVC: UIViewController {
     
+    private let welcomeHeader = WelcomeHeaderView()
     private let scrollView = UIScrollView()
     private let contentView = UIView(frame: .zero)
     
@@ -18,6 +19,7 @@ class HomeVC: UIViewController {
         setupNavigationButtonItems()
         setupScrollView()
         setupContentView()
+        setupWelcomeHeader()
     }
     
     private func setup() {
@@ -57,6 +59,18 @@ class HomeVC: UIViewController {
             contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
             contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -paddingForContentView * 2),
             contentView.heightAnchor.constraint(greaterThanOrEqualTo: scrollView.heightAnchor, constant: 1)
+        ])
+    }
+    
+    private func setupWelcomeHeader() {
+        contentView.addSubview(welcomeHeader)
+        welcomeHeader.title = "Hola Adrián"
+        // Constraints
+        NSLayoutConstraint.activate([
+            welcomeHeader.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            welcomeHeader.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            welcomeHeader.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            welcomeHeader.heightAnchor.constraint(equalToConstant: 60)
         ])
     }
     
