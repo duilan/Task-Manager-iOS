@@ -27,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Transparent Background Color
         appearance.backgroundColor = .clear
+        appearance.backgroundEffect = UIBlurEffect(style: .light)
         
         // Button Items Color
         UINavigationBar.appearance().tintColor = ThemeColors.navbar
