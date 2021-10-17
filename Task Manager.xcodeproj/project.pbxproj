@@ -10,6 +10,7 @@
 		3A032FF02717E0FA00EA11B9 /* TMWelcomeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A032FEF2717E0FA00EA11B9 /* TMWelcomeHeaderView.swift */; };
 		3A1940AC271900C000469C06 /* BetterSegmentedControl in Frameworks */ = {isa = PBXBuildFile; productRef = 3A1940AB271900C000469C06 /* BetterSegmentedControl */; };
 		3A33009A271BCBC3001DD4F3 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A330099271BCBC3001DD4F3 /* Project.swift */; };
+		3A33009F271BCE43001DD4F3 /* DummyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A33009E271BCE43001DD4F3 /* DummyData.swift */; };
 		3A3720F0271643CE00FE1A75 /* ThemeColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3720EF271643CE00FE1A75 /* ThemeColors.swift */; };
 		3A69C77D271892E50078668B /* TMTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A69C77C271892E40078668B /* TMTitleLabel.swift */; };
 		3A69C780271899E10078668B /* TMSubtitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A69C77F271899E10078668B /* TMSubtitleLabel.swift */; };
@@ -23,6 +24,7 @@
 /* Begin PBXFileReference section */
 		3A032FEF2717E0FA00EA11B9 /* TMWelcomeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMWelcomeHeaderView.swift; sourceTree = "<group>"; };
 		3A330099271BCBC3001DD4F3 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
+		3A33009E271BCE43001DD4F3 /* DummyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyData.swift; sourceTree = "<group>"; };
 		3A3720EF271643CE00FE1A75 /* ThemeColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColors.swift; sourceTree = "<group>"; };
 		3A69C77C271892E40078668B /* TMTitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMTitleLabel.swift; sourceTree = "<group>"; };
 		3A69C77F271899E10078668B /* TMSubtitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMSubtitleLabel.swift; sourceTree = "<group>"; };
@@ -52,6 +54,14 @@
 			children = (
 			);
 			path = ChildViewControllers;
+			sourceTree = "<group>";
+		};
+		3A33009D271BCE37001DD4F3 /* Local */ = {
+			isa = PBXGroup;
+			children = (
+				3A33009E271BCE43001DD4F3 /* DummyData.swift */,
+			);
+			path = Local;
 			sourceTree = "<group>";
 		};
 		3A3F2C6C271A9060008BEEC5 /* CustomViews */ = {
@@ -101,6 +111,7 @@
 		3A3F2C75271A9156008BEEC5 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				3A33009D271BCE37001DD4F3 /* Local */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -233,6 +244,7 @@
 				3A7080572711240E00D2F06E /* HomeVC.swift in Sources */,
 				3A69C77D271892E50078668B /* TMTitleLabel.swift in Sources */,
 				3A69C780271899E10078668B /* TMSubtitleLabel.swift in Sources */,
+				3A33009F271BCE43001DD4F3 /* DummyData.swift in Sources */,
 				3AEF9E02270E6F860065B184 /* AppDelegate.swift in Sources */,
 				3AEF9E04270E6F860065B184 /* SceneDelegate.swift in Sources */,
 				3A33009A271BCBC3001DD4F3 /* Project.swift in Sources */,
