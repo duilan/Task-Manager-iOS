@@ -14,7 +14,7 @@ final class TMTitleLabel: UILabel {
         setup()
     }
     
-    init(fontSize: CGFloat, weight: UIFont.Weight = .bold, textAligment: NSTextAlignment = .left, colorInverted: Bool = false) {
+    init(fontSize: CGFloat, weight: UIFont.Weight = .bold, textAlignment: NSTextAlignment = .left, colorInverted: Bool = false) {
         super.init(frame: .zero)
         setup()
         self.font = .systemFont(ofSize: fontSize, weight: weight)
