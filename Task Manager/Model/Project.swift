@@ -12,9 +12,15 @@ struct Project: Hashable {
     let alias: String
     let title: String
     let tasks: [Task]
+    let status: StatusProject
 }
 
 struct Task: Hashable {
     let id = UUID().uuidString.lowercased()
     let title: String
+}
+
+enum StatusProject: String, CaseIterable {
+    case inProgress = "En Progreso"
+    case completed = "Completado"
 }
