@@ -20,6 +20,7 @@
 		3AEF9E04270E6F860065B184 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEF9E03270E6F860065B184 /* SceneDelegate.swift */; };
 		3AEF9E0B270E6F880065B184 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3AEF9E0A270E6F880065B184 /* Assets.xcassets */; };
 		3AEF9E0E270E6F880065B184 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3AEF9E0C270E6F880065B184 /* LaunchScreen.storyboard */; };
+		3AFECF7E271FB31300404F1F /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFECF7D271FB31300404F1F /* UIView+Ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		3AEF9E0A270E6F880065B184 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3AEF9E0D270E6F880065B184 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3AEF9E0F270E6F880065B184 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3AFECF7D271FB31300404F1F /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,7 @@
 			isa = PBXGroup;
 			children = (
 				3A3300AC271D2F62001DD4F3 /* ViewController+Ext.swift */,
+				3AFECF7D271FB31300404F1F /* UIView+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -251,6 +254,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A3720F0271643CE00FE1A75 /* ThemeColors.swift in Sources */,
+				3AFECF7E271FB31300404F1F /* UIView+Ext.swift in Sources */,
 				3A3300AD271D2F62001DD4F3 /* ViewController+Ext.swift in Sources */,
 				3A032FF02717E0FA00EA11B9 /* TMWelcomeHeaderView.swift in Sources */,
 				3A7080572711240E00D2F06E /* HomeVC.swift in Sources */,
