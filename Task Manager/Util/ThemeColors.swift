@@ -23,8 +23,9 @@ struct ThemeColors {
     static let navbar = UIColor(named: "Navbar") ?? .gray
     
     static let green = UIColor(named: "Green") ?? .gray
-    static let blueA = UIColor(named: "GradientBlueColorA") ?? .gray
-    static let blueB = UIColor(named: "GradientBlueColorB") ?? .gray
+    
+    static let blueLight = UIColor(named: "GradientBlueLight") ?? .gray
+    static let blueDark = UIColor(named: "GradientBlueDark") ?? .gray
     
     static let accentColor = UIColor(named: "AccentColor") ?? .gray
     
