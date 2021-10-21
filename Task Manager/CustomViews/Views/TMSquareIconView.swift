@@ -36,6 +36,7 @@ final class TMSquareIconView: UIView {
         self.backgroundColor = UIColor.white.withAlphaComponent(0.2)
         self.translatesAutoresizingMaskIntoConstraints = false
         
+        imageView.contentMode = .scaleAspectFit
         imageView.backgroundColor = .clear
         imageView.tintColor = .white
         imageView.translatesAutoresizingMaskIntoConstraints = false
