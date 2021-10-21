@@ -11,6 +11,7 @@
 		3A1940AC271900C000469C06 /* BetterSegmentedControl in Frameworks */ = {isa = PBXBuildFile; productRef = 3A1940AB271900C000469C06 /* BetterSegmentedControl */; };
 		3A33009A271BCBC3001DD4F3 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A330099271BCBC3001DD4F3 /* Project.swift */; };
 		3A33009F271BCE43001DD4F3 /* DummyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A33009E271BCE43001DD4F3 /* DummyData.swift */; };
+		3A3300A9271CCF56001DD4F3 /* ProjectViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3300A8271CCF56001DD4F3 /* ProjectViewCell.swift */; };
 		3A3300AD271D2F62001DD4F3 /* ViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3300AC271D2F62001DD4F3 /* ViewController+Ext.swift */; };
 		3A3720F0271643CE00FE1A75 /* ThemeColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3720EF271643CE00FE1A75 /* ThemeColors.swift */; };
 		3A69C77D271892E50078668B /* TMTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A69C77C271892E40078668B /* TMTitleLabel.swift */; };
@@ -28,6 +29,7 @@
 		3A032FEF2717E0FA00EA11B9 /* TMWelcomeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMWelcomeHeaderView.swift; sourceTree = "<group>"; };
 		3A330099271BCBC3001DD4F3 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		3A33009E271BCE43001DD4F3 /* DummyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyData.swift; sourceTree = "<group>"; };
+		3A3300A8271CCF56001DD4F3 /* ProjectViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewCell.swift; sourceTree = "<group>"; };
 		3A3300AC271D2F62001DD4F3 /* ViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Ext.swift"; sourceTree = "<group>"; };
 		3A3720EF271643CE00FE1A75 /* ThemeColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColors.swift; sourceTree = "<group>"; };
 		3A69C77C271892E40078668B /* TMTitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMTitleLabel.swift; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 		3A3F2C76271A91F5008BEEC5 /* ReusableCells */ = {
 			isa = PBXGroup;
 			children = (
+				3A3300A8271CCF56001DD4F3 /* ProjectViewCell.swift */,
 			);
 			path = ReusableCells;
 			sourceTree = "<group>";
@@ -261,6 +264,7 @@
 				3A3300AD271D2F62001DD4F3 /* ViewController+Ext.swift in Sources */,
 				3A032FF02717E0FA00EA11B9 /* TMWelcomeHeaderView.swift in Sources */,
 				3A7080572711240E00D2F06E /* HomeVC.swift in Sources */,
+				3A3300A9271CCF56001DD4F3 /* ProjectViewCell.swift in Sources */,
 				3AFECF87271FCC8000404F1F /* TMSquareIconView.swift in Sources */,
 				3A69C77D271892E50078668B /* TMTitleLabel.swift in Sources */,
 				3A69C780271899E10078668B /* TMSubtitleLabel.swift in Sources */,
