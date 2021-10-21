@@ -14,16 +14,14 @@ struct DummyData {
     private init() { }
     
     let projects = [
-        Project(alias: "alias0", title: "titulo0", tasks: [Task(title: "Titulo de la tarea")], status: .completed),
-        Project(alias: "alias1", title: "titulo1", tasks: [Task(title: "Titulo de la tarea")], status: .inProgress),
-        Project(alias: "alias2", title: "titulo2", tasks: [Task(title: "Titulo de la tarea")], status: .inProgress),
-        Project(alias: "alias3", title: "titulo3", tasks: [Task(title: "Titulo de la tarea")], status: .completed),
-        Project(alias: "alias4", title: "titulo4", tasks: [Task(title: "Titulo de la tarea")], status: .inProgress),
-        Project(alias: "alias5", title: "titulo5", tasks: [Task(title: "Titulo de la tarea")], status: .inProgress),
-        Project(alias: "alias6", title: "titulo6", tasks: [Task(title: "Titulo de la tarea")], status: .completed),
-        Project(alias: "alias7", title: "titulo7", tasks: [Task(title: "Titulo de la tarea")], status: .inProgress),
-        Project(alias: "alias8", title: "titulo8", tasks: [Task(title: "Titulo de la tarea")], status: .completed),
-        Project(alias: "alias9", title: "titulo9", tasks: [Task(title: "Titulo de la tarea")], status: .completed),
+        Project(alias: "Coffe Shop", title: "App coffe shop para iOS, Android y Web", tasks: [Task(title: "Titulo de la tarea")], status: .completed),
+        Project(alias: "Portafolio", title: "Mi Portafolio Personal", tasks: [Task(title: "Titulo de la tarea")], status: .inProgress),
+        Project(alias: "Random Workout App", title: "App Random Workout para iOS", tasks: [Task(title: "Titulo de la tarea")], status: .inProgress),
+        Project(alias: "Esto es un alias", title: "Configuracion del servidor DELL en el piso 7", tasks: [Task(title: "Titulo de la tarea")], status: .completed),
+        Project(alias: "Logo de MasterGym", title: "Diseño del Logo para MasterGym", tasks: [Task(title: "Titulo de la tarea")], status: .inProgress),
+        Project(alias: "Analisis de Sistemas", title: "Tarea Analisis", tasks: [Task(title: "Titulo de la tarea")], status: .inProgress),
+        Project(alias: "Tesis", title: "Mi Tesis", tasks: [Task(title: "Titulo de la tarea")], status: .completed),
+        Project(alias: "Esto es un alias muchooo mas largo de lo normal", title: "titulo7", tasks: [Task(title: "Titulo de la tarea")], status: .inProgress)
     ]
     
 }

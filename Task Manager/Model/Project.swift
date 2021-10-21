@@ -13,6 +13,7 @@ struct Project: Hashable {
     let title: String
     let tasks: [Task]
     let status: StatusProject
+    let createAt = Date()
 }
 
 struct Task: Hashable {
