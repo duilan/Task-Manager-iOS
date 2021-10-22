@@ -12,21 +12,19 @@ class HomeVC: UIViewController {
     
     private let welcomeHeader = TMWelcomeHeaderView()
     private let segmentedControl = BetterSegmentedControl()
-    private let scrollView = UIScrollView()
-    private let contentView = UIView(frame: .zero)
+    let scrollView = UIScrollView()
+    let stackContentView = UIStackView()
+    
+    let headerContainer = UIView()
+    let segmentedControlContainer = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
         setupNavigationButtonItems()
-        setupScrollView()
-        setupContentView()
+        setupScrollViewWithStackContainer()
         setupWelcomeHeader()
         setupSegmentedControl()
-    }
-    
-    @objc private func segmentIndexChanged(_ sender: BetterSegmentedControl) {
-        print(sender.index)
     }
     
     private func setup() {
@@ -41,49 +39,52 @@ class HomeVC: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: addImageSymbol, style: .plain, target: self, action: nil)
     }
     
-    private func setupScrollView() {
+    private func setupScrollViewWithStackContainer() {
+        
         view.addSubview(scrollView)
-        scrollView.showsVerticalScrollIndicator = false
-        //scrollView.contentInsetAdjustmentBehavior = .never
+        scrollView.addSubview(stackContentView)
+        
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        // Constraints
+        stackContentView.translatesAutoresizingMaskIntoConstraints = false
+        
+        stackContentView.axis = .vertical
+        
         NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
-            scrollView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            scrollView.widthAnchor.constraint(equalTo: view.widthAnchor),
-        ])
-    }
-    
-    private func setupContentView() {
-        scrollView.addSubview(contentView)
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        let padding: CGFloat = 16
-        contentView.layoutMargins = UIEdgeInsets(top: 0, left: padding, bottom: padding, right: padding)
-        // Constraints
-        NSLayoutConstraint.activate([
-            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            contentView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-            contentView.heightAnchor.constraint(greaterThanOrEqualTo: scrollView.heightAnchor, constant: 1)
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
+            
+            stackContentView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 0),
+            stackContentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 0),
+            stackContentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: 0),
+            stackContentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 0),
+//            stackContentView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor, constant: 0),
+//            stackContentView.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor, constant: 0),
+//
+            stackContentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: 0),
+            
         ])
     }
     
     private func setupWelcomeHeader() {
-        contentView.addSubview(welcomeHeader)
+        stackContentView.addArrangedSubview(headerContainer)
+        stackContentView.setCustomSpacing(20, after: headerContainer)
+        headerContainer.addSubview(welcomeHeader)
         welcomeHeader.title = "Hola Adrián"
-        // Constraints
         NSLayoutConstraint.activate([
-            welcomeHeader.topAnchor.constraint(equalTo: contentView.layoutMarginsGuide.topAnchor),
-            welcomeHeader.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
-            welcomeHeader.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
-            welcomeHeader.heightAnchor.constraint(equalToConstant: 60)
+            headerContainer.heightAnchor.constraint(equalToConstant: 60),
+            welcomeHeader.topAnchor.constraint(equalTo: headerContainer.topAnchor),
+            welcomeHeader.leadingAnchor.constraint(equalTo: headerContainer.leadingAnchor, constant: 16),
+            welcomeHeader.trailingAnchor.constraint(equalTo: headerContainer.trailingAnchor, constant: -16),
+            welcomeHeader.bottomAnchor.constraint(equalTo: headerContainer.bottomAnchor)
         ])
     }
     
     private func setupSegmentedControl() {
-        contentView.addSubview(segmentedControl)
+        stackContentView.addArrangedSubview(segmentedControlContainer)
+        stackContentView.setCustomSpacing(20, after: segmentedControlContainer)
+        segmentedControlContainer.addSubview(segmentedControl)
         segmentedControl.cornerRadius = 22.5
         segmentedControl.backgroundColor = #colorLiteral(red: 0.6156862745, green: 0.6156862745, blue: 0.6156862745, alpha: 0.08)
         segmentedControl.addTarget(self, action: #selector(segmentIndexChanged(_:)), for: .valueChanged)
@@ -99,11 +100,16 @@ class HomeVC: UIViewController {
         
         // Constraints
         NSLayoutConstraint.activate([
-            segmentedControl.topAnchor.constraint(equalTo: welcomeHeader.bottomAnchor, constant: 20),
-            segmentedControl.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
-            segmentedControl.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
-            segmentedControl.heightAnchor.constraint(equalToConstant: 45)
+            segmentedControlContainer.heightAnchor.constraint(equalToConstant: 45),
+            segmentedControl.topAnchor.constraint(equalTo: segmentedControlContainer.topAnchor),
+            segmentedControl.leadingAnchor.constraint(equalTo: segmentedControlContainer.leadingAnchor, constant: 16),
+            segmentedControl.trailingAnchor.constraint(equalTo: segmentedControlContainer.trailingAnchor, constant: -16),
+            segmentedControl.bottomAnchor.constraint(equalTo: segmentedControlContainer.bottomAnchor)
         ])
     }
     
+    
+    @objc private func segmentIndexChanged(_ sender: BetterSegmentedControl) {
+        print(sender.index)
+    }
 }
