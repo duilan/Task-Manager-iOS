@@ -12,11 +12,13 @@ class HomeVC: UIViewController {
     
     private let welcomeHeader = TMWelcomeHeaderView()
     private let segmentedControl = BetterSegmentedControl()
+    private let projectsVC = TMProjectsVC()
     let scrollView = UIScrollView()
     let stackContentView = UIStackView()
     
     let headerContainer = UIView()
     let segmentedControlContainer = UIView()
+    let projectsVCContainer = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +27,7 @@ class HomeVC: UIViewController {
         setupScrollViewWithStackContainer()
         setupWelcomeHeader()
         setupSegmentedControl()
+        setupChildProjectsVC()
     }
     
     private func setup() {
@@ -108,8 +111,34 @@ class HomeVC: UIViewController {
         ])
     }
     
+    private func setupChildProjectsVC() {
+        projectsVC.delegate = self
+        stackContentView.addArrangedSubview(projectsVCContainer)
+        stackContentView.setCustomSpacing(20, after: projectsVCContainer)
+        add(childVC: projectsVC, to: projectsVCContainer)
+        
+        projectsVCContainer.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            projectsVCContainer.heightAnchor.constraint(equalToConstant: 230)
+        ])
+    }
+    
     
     @objc private func segmentIndexChanged(_ sender: BetterSegmentedControl) {
         print(sender.index)
+        switch sender.index {
+        case 1 :
+            projectsVC.projectFilter = .inProgress
+        case 2:
+            projectsVC.projectFilter = .completed
+        default:
+            projectsVC.projectFilter = nil
+        }
+    }
+}
+
+extension HomeVC: TMProjectsProtocol {
+    func ItemCenterDidChange(itemIndex: Int) {
+        print(itemIndex)
     }
 }
