@@ -9,10 +9,24 @@ import UIKit
 
 final class TMSquareIconView: UIView {
     private let imageView = UIImageView()
+    private let backgroundView = UIView()
+    private var hasGradient: Bool = false {
+        didSet {
+            if hasGradient { setGradient() }
+        }
+    }
+    
     public var systemNameIcon: String = "questionmark.square" {
         didSet {
             DispatchQueue.main.async { self.setIcon() }
         }
+    }
+    
+    init(withGradient: Bool = false) {
+        super.init(frame: .zero)
+        self.hasGradient = withGradient
+        setup()
+        setIcon()
     }
     
     override init(frame: CGRect) {
@@ -48,6 +62,17 @@ final class TMSquareIconView: UIView {
             imageView.centerXAnchor.constraint(equalTo: centerXAnchor),
             imageView.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
+    }
+    
+    private func setGradient() {
+        self.addGradientBackground(colorSet: [ThemeColors.blueDark, ThemeColors.blueLight])
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        if hasGradient {
+            self.addGradientBackground(colorSet: [ThemeColors.blueDark, ThemeColors.blueLight])
+        }
     }
     
 }
