@@ -27,15 +27,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Transparent Background Color
         appearance.backgroundColor = .clear
+        appearance.backgroundEffect = UIBlurEffect(style: .light)
         
         // Button Items Color
-        UINavigationBar.appearance().tintColor = .label
+        UINavigationBar.appearance().tintColor = ThemeColors.navbar
         
         // Text & Color for titles
-        appearance.titleTextAttributes = [ .foregroundColor: UIColor.label ]
+        appearance.titleTextAttributes = [ .foregroundColor: ThemeColors.navbar ]
         
         // Text & Color for LargeTitles
-        appearance.largeTitleTextAttributes = [ .foregroundColor: UIColor.label ]
+        appearance.largeTitleTextAttributes = [ .foregroundColor: ThemeColors.navbar ]
         
         // Apply the appearance
         UINavigationBar.appearance().standardAppearance = appearance
