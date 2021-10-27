@@ -13,9 +13,13 @@ class HomeVC: UIViewController {
     private let welcomeHeader = TMWelcomeHeaderView()
     private let segmentedControl = BetterSegmentedControl()
     private let projectsVC = TMProjectsVC()
+    private var projectsData: [Project] = []
+    
+    //ScrollView Container
     let scrollView = UIScrollView()
     let stackContentView = UIStackView()
     
+    // View Containers
     let headerContainer = UIView()
     let segmentedControlContainer = UIView()
     let projectsVCContainer = UIView()
@@ -28,7 +32,14 @@ class HomeVC: UIViewController {
         setupWelcomeHeader()
         setupSegmentedControl()
         setupChildProjectsVC()
+        loadProjects()
     }
+    
+    private func loadProjects() {
+        projectsData = DummyData.shared.projects
+        projectsVC.projectsData = projectsData
+    }
+    
     
     private func setup() {
         view.backgroundColor = ThemeColors.backgroundPrimary
@@ -46,12 +57,11 @@ class HomeVC: UIViewController {
         
         view.addSubview(scrollView)
         scrollView.addSubview(stackContentView)
+        stackContentView.axis = .vertical
         
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         stackContentView.translatesAutoresizingMaskIntoConstraints = false
-        
-        stackContentView.axis = .vertical
-        
+        // Constraints
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
@@ -62,9 +72,6 @@ class HomeVC: UIViewController {
             stackContentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 0),
             stackContentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: 0),
             stackContentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 0),
-//            stackContentView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor, constant: 0),
-//            stackContentView.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor, constant: 0),
-//
             stackContentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: 0),
             
         ])
@@ -125,20 +132,27 @@ class HomeVC: UIViewController {
     
     
     @objc private func segmentIndexChanged(_ sender: BetterSegmentedControl) {
-        print(sender.index)
+        
         switch sender.index {
         case 1 :
-            projectsVC.projectFilter = .inProgress
+            self.projectsVC.projectsData = projectsData.filter({ (project) -> Bool in
+                return project.status == .inProgress
+            })
+            print("segment: En Progreso")
         case 2:
-            projectsVC.projectFilter = .completed
+            projectsVC.projectsData = projectsData.filter({ (project) -> Bool in
+                return project.status == .completed
+            })
+            print("segment: En completadas")
         default:
-            projectsVC.projectFilter = nil
+            print("segment: Todas")
+            projectsVC.projectsData = projectsData
         }
     }
 }
 
 extension HomeVC: TMProjectsProtocol {
-    func ItemCenterDidChange(itemIndex: Int) {
-        print(itemIndex)
+    func projectDidChange(project: Project) {
+        print("cambiar datos de tabla inferior")
     }
 }

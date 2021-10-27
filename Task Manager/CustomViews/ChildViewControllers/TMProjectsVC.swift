@@ -8,33 +8,37 @@
 import UIKit
 
 protocol TMProjectsProtocol: class {
-    func ItemCenterDidChange(itemIndex: Int)
+    func projectDidChange(project: Project)
 }
 
 class TMProjectsVC: UIViewController {
     
-    private var collectionView: UICollectionView!
-    private var dataSource: UICollectionViewDiffableDataSource<Section,Project>!
-    private let projectsData = DummyData.shared.projects
+    private typealias ProjectDataSource = UICollectionViewDiffableDataSource<Section,Project>
+    private typealias ProjectSnapshot = NSDiffableDataSourceSnapshot<Section,Project>
+    
+    private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: generateLayout())
+    private var dataSource: ProjectDataSource!
     private let impactFeedback = UIImpactFeedbackGenerator(style: .light)
     
-    // Protocolo Delegado
+    // MARK: -  Delegate TMProjectsProtocol
     weak var delegate: TMProjectsProtocol?
     
     private enum Section: String, Hashable {
         case projects = "Proyectos"
-        case tasks = "Tareas"
     }
     
-    var projectFilter: StatusProject? {
+    private var currentProjectSelected: Project?   {
         didSet {
-            updateDataSourceSnapshot( with: projectsData , filter: projectFilter)
-            self.resetScroll()
+            if let projectSelected = currentProjectSelected {
+                delegate?.projectDidChange(project: projectSelected)
+            }
         }
     }
     
-    private var currentItemIndex: Int = -1 {
-        didSet { delegate?.ItemCenterDidChange(itemIndex: currentItemIndex) }
+    var projectsData: [Project] = [] {
+        didSet {
+            updateDataSourceSnapshot()
+        }
     }
     
     override func viewDidLoad() {
@@ -42,7 +46,6 @@ class TMProjectsVC: UIViewController {
         setup()
         setupCollectionView()
         setupDataSource()
-        updateDataSourceSnapshot( with: projectsData , filter: projectFilter)
     }
     
     private func setup() {
@@ -50,7 +53,6 @@ class TMProjectsVC: UIViewController {
     }
     
     private func setupCollectionView() {
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: generateLayout())
         view.addSubview(collectionView)
         collectionView.backgroundColor = .clear
         collectionView.isPagingEnabled = true
@@ -67,7 +69,7 @@ class TMProjectsVC: UIViewController {
         ])
     }
     
-    private func resetScroll() {
+    private func animateToStartItem() {
         collectionView.transform = CGAffineTransform(translationX: (self.view.bounds.width), y: 0).concatenating(CGAffineTransform(scaleX: 0.6, y: 0.6))
         collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .centeredHorizontally, animated: false)
         UIView.animate(withDuration: 0.35, delay: 0, options: [.curveEaseInOut]) {
@@ -75,39 +77,36 @@ class TMProjectsVC: UIViewController {
         }
     }
     
-    private func findCenterIndex() {
-        let center = self.view.convert(collectionView.center, to: collectionView)
-        let indexPath = collectionView.indexPathForItem(at: center)
-        guard let indexPathSafe = indexPath else { return }
+    private func getProjectAtCenterPoint() {
+        let centerPoint = self.view.convert(collectionView.center, to: collectionView)
+        guard let indexPathSafe = collectionView.indexPathForItem(at: centerPoint) else { return }
+        guard let item = dataSource.itemIdentifier(for: indexPathSafe) else { return }
         // como el metodo es ejectado varias veces,
         // esto verifica si ya tenemos un valor igual no se asigne el mismo valor varias veces
-        guard currentItemIndex != indexPathSafe.row else { return }
-        currentItemIndex = indexPathSafe.row
-        impactFeedback.impactOccurred()
+        if currentProjectSelected != item {
+            currentProjectSelected = item
+            impactFeedback.impactOccurred()
+        }
     }
     
     private func setupDataSource() {
-        dataSource = UICollectionViewDiffableDataSource<Section, Project>(collectionView: collectionView) { (collectionView, indexPath, projectItem) -> UICollectionViewCell? in
+        dataSource = ProjectDataSource(collectionView: collectionView) { (collectionView, indexPath, project) -> UICollectionViewCell? in
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProjectViewCell.cellID, for: indexPath) as? ProjectViewCell else {
                 return UICollectionViewCell()
             }
-            cell.configure(with: projectItem)
+            cell.configure(with: project)
             return cell
         }
     }
     
-    private func updateDataSourceSnapshot(with projects: [Project], filter: StatusProject? = nil) {
-        var projectsDataSource = projects
-        if filter !=  nil {
-            projectsDataSource = projects.filter({ (project) -> Bool in
-                return project.status == filter
-            })
-        }
-        
-        var snapshot = NSDiffableDataSourceSnapshot<Section,Project>()
+    private func updateDataSourceSnapshot() {
+        var snapshot = ProjectSnapshot()
         snapshot.appendSections([.projects])
-        snapshot.appendItems( projectsDataSource, toSection: .projects)
-        dataSource.apply(snapshot, animatingDifferences: false)
+        snapshot.appendItems( projectsData, toSection: .projects)
+        DispatchQueue.main.async {
+            self.dataSource.apply(snapshot,animatingDifferences: false)
+            self.animateToStartItem()
+        }
     }
     
     private func generateLayout()->UICollectionViewLayout {
@@ -138,7 +137,7 @@ class TMProjectsVC: UIViewController {
             section.visibleItemsInvalidationHandler = { [weak self] (visibleItems, point, env) -> Void in
                 guard let self = self else { return }
                 // Obtener el item que se muestra al centro cada vez que las celdas visibles cambien
-                self.findCenterIndex()
+                self.getProjectAtCenterPoint()
             }
             return section
         }
