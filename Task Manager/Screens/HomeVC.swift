@@ -126,7 +126,7 @@ class HomeVC: UIViewController {
         
         projectsVCContainer.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            projectsVCContainer.heightAnchor.constraint(equalToConstant: 230)
+            projectsVCContainer.heightAnchor.constraint(equalToConstant: 260)
         ])
     }
     

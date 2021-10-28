@@ -18,6 +18,7 @@ class TMProjectsVC: UIViewController {
     
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: generateLayout())
     private var dataSource: ProjectDataSource!
+    private let pageIndicator = UIPageControl(frame: .zero)
     private let impactFeedback = UIImpactFeedbackGenerator(style: .light)
     
     // MARK: -  Delegate TMProjectsProtocol
@@ -41,11 +42,32 @@ class TMProjectsVC: UIViewController {
         }
     }
     
+    private var pageIndicatorIndex = 0 {
+        didSet {
+            pageIndicator.currentPage = pageIndicatorIndex
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
+        setupPageIndicator()
         setupCollectionView()
         setupDataSource()
+    }
+    
+    private func setupPageIndicator() {
+        view.addSubview(pageIndicator)
+        pageIndicator.currentPageIndicatorTintColor = ThemeColors.accentColor
+        pageIndicator.pageIndicatorTintColor = ThemeColors.accentColor.withAlphaComponent(0.2)
+        pageIndicator.isUserInteractionEnabled = false
+        pageIndicator.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            pageIndicator.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
+            pageIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            pageIndicator.widthAnchor.constraint(equalToConstant: view.frame.width / 2)
+        ])
     }
     
     private func setup() {
@@ -65,15 +87,17 @@ class TMProjectsVC: UIViewController {
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            collectionView.bottomAnchor.constraint(equalTo: pageIndicator.topAnchor)
         ])
     }
     
     private func animateToStartItem() {
         collectionView.transform = CGAffineTransform(translationX: (self.view.bounds.width), y: 0).concatenating(CGAffineTransform(scaleX: 0.6, y: 0.6))
         collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .centeredHorizontally, animated: false)
+        pageIndicatorIndex = 0
         UIView.animate(withDuration: 0.35, delay: 0, options: [.curveEaseInOut]) {
             self.collectionView.transform = .identity
+            self.pageIndicator.numberOfPages = self.projectsData.count
         }
     }
     
@@ -85,6 +109,7 @@ class TMProjectsVC: UIViewController {
         // esto verifica si ya tenemos un valor igual no se asigne el mismo valor varias veces
         if currentProjectSelected != item {
             currentProjectSelected = item
+            pageIndicatorIndex = indexPathSafe.row
             impactFeedback.impactOccurred()
         }
     }
