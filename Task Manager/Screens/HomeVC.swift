@@ -37,7 +37,7 @@ class HomeVC: UIViewController {
     }
     
     private func loadProjects() {
-        coredata.fetchProjects { (projects) in
+        coredata.fetchAllProjects { (projects) in
             self.projectsData = projects
             self.projectsVC.projectsData = projects
         }
