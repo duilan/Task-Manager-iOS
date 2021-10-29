@@ -39,7 +39,7 @@ class ProjectViewCell: UICollectionViewCell {
         titleLabel.text = project.title
         #warning("Formatear la fecha de project")
         createAtLabel.text = "12/10/2021"
-        statusLabel.text = project.status.rawValue
+        statusLabel.text = project.status
     }
     
     private func setup() {

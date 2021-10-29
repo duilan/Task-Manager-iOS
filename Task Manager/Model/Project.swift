@@ -7,19 +7,19 @@
 
 import Foundation
 
-struct Project: Hashable {
-    let id = UUID().uuidString.lowercased()
-    let alias: String
-    let title: String
-    let tasks: [Task]
-    let status: StatusProject
-    let createAt = Date()
-}
-
-struct Task: Hashable {
-    let id = UUID().uuidString.lowercased()
-    let title: String
-}
+//struct Project: Hashable {
+//    let id = UUID().uuidString.lowercased()
+//    let alias: String
+//    let title: String
+//    let tasks: [Task]
+//    let status: StatusProject
+//    let createAt = Date()
+//}
+//
+//struct Task: Hashable {
+//    let id = UUID().uuidString.lowercased()
+//    let title: String
+//}
 
 enum StatusProject: String, CaseIterable {
     case inProgress = "En Progreso"
