@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A022ADF272CBFE7009BD2B3 /* TMEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A022ADE272CBFE7009BD2B3 /* TMEmptyView.swift */; };
 		3A032FF02717E0FA00EA11B9 /* TMWelcomeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A032FEF2717E0FA00EA11B9 /* TMWelcomeHeaderView.swift */; };
 		3A07CB36272B798A00E20F3A /* TaskManager.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3A07CB34272B798A00E20F3A /* TaskManager.xcdatamodeld */; };
 		3A1940AC271900C000469C06 /* BetterSegmentedControl in Frameworks */ = {isa = PBXBuildFile; productRef = 3A1940AB271900C000469C06 /* BetterSegmentedControl */; };
@@ -30,6 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3A022ADE272CBFE7009BD2B3 /* TMEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMEmptyView.swift; sourceTree = "<group>"; };
 		3A032FEF2717E0FA00EA11B9 /* TMWelcomeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMWelcomeHeaderView.swift; sourceTree = "<group>"; };
 		3A07CB35272B798A00E20F3A /* TaskManager.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TaskManager.xcdatamodel; sourceTree = "<group>"; };
 		3A330094271B72FB001DD4F3 /* TMProjectsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMProjectsVC.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 			children = (
 				3A032FEF2717E0FA00EA11B9 /* TMWelcomeHeaderView.swift */,
 				3AFECF86271FCC8000404F1F /* TMSquareIconView.swift */,
+				3A022ADE272CBFE7009BD2B3 /* TMEmptyView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -283,6 +286,7 @@
 				3AFECF87271FCC8000404F1F /* TMSquareIconView.swift in Sources */,
 				3A69C77D271892E50078668B /* TMTitleLabel.swift in Sources */,
 				3A69C780271899E10078668B /* TMSubtitleLabel.swift in Sources */,
+				3A022ADF272CBFE7009BD2B3 /* TMEmptyView.swift in Sources */,
 				3A33009F271BCE43001DD4F3 /* DummyData.swift in Sources */,
 				3A6462F92727925800FA7F95 /* TaskTableViewCell.swift in Sources */,
 				3AEF9E02270E6F860065B184 /* AppDelegate.swift in Sources */,
