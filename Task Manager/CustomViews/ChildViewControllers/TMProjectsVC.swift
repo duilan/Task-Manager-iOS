@@ -125,6 +125,13 @@ class TMProjectsVC: UIViewController {
     }
     
     private func updateDataSourceSnapshot() {
+        collectionView.backgroundView = nil
+        if projectsData.isEmpty {
+            DispatchQueue.main.async {
+                self.collectionView.backgroundView = TMEmptyView(message: "Sin Proyectos ☝️")
+            }
+        }
+        
         var snapshot = ProjectSnapshot()
         snapshot.appendSections([.projects])
         snapshot.appendItems( projectsData, toSection: .projects)

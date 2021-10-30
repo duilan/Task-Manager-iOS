@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A022ADF272CBFE7009BD2B3 /* TMEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A022ADE272CBFE7009BD2B3 /* TMEmptyView.swift */; };
 		3A032FF02717E0FA00EA11B9 /* TMWelcomeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A032FEF2717E0FA00EA11B9 /* TMWelcomeHeaderView.swift */; };
+		3A07CB36272B798A00E20F3A /* TaskManager.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3A07CB34272B798A00E20F3A /* TaskManager.xcdatamodeld */; };
 		3A1940AC271900C000469C06 /* BetterSegmentedControl in Frameworks */ = {isa = PBXBuildFile; productRef = 3A1940AB271900C000469C06 /* BetterSegmentedControl */; };
 		3A330095271B72FB001DD4F3 /* TMProjectsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A330094271B72FB001DD4F3 /* TMProjectsVC.swift */; };
 		3A33009A271BCBC3001DD4F3 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A330099271BCBC3001DD4F3 /* Project.swift */; };
@@ -19,6 +21,7 @@
 		3A69C77D271892E50078668B /* TMTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A69C77C271892E40078668B /* TMTitleLabel.swift */; };
 		3A69C780271899E10078668B /* TMSubtitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A69C77F271899E10078668B /* TMSubtitleLabel.swift */; };
 		3A7080572711240E00D2F06E /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7080562711240E00D2F06E /* HomeVC.swift */; };
+		3AD69170272A4AC5000279B2 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD6916F272A4AC5000279B2 /* CoreDataManager.swift */; };
 		3AEF9E02270E6F860065B184 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEF9E01270E6F860065B184 /* AppDelegate.swift */; };
 		3AEF9E04270E6F860065B184 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEF9E03270E6F860065B184 /* SceneDelegate.swift */; };
 		3AEF9E0B270E6F880065B184 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3AEF9E0A270E6F880065B184 /* Assets.xcassets */; };
@@ -28,7 +31,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3A022ADE272CBFE7009BD2B3 /* TMEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMEmptyView.swift; sourceTree = "<group>"; };
 		3A032FEF2717E0FA00EA11B9 /* TMWelcomeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMWelcomeHeaderView.swift; sourceTree = "<group>"; };
+		3A07CB35272B798A00E20F3A /* TaskManager.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TaskManager.xcdatamodel; sourceTree = "<group>"; };
 		3A330094271B72FB001DD4F3 /* TMProjectsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMProjectsVC.swift; sourceTree = "<group>"; };
 		3A330099271BCBC3001DD4F3 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		3A33009E271BCE43001DD4F3 /* DummyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyData.swift; sourceTree = "<group>"; };
@@ -39,6 +44,7 @@
 		3A69C77C271892E40078668B /* TMTitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMTitleLabel.swift; sourceTree = "<group>"; };
 		3A69C77F271899E10078668B /* TMSubtitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMSubtitleLabel.swift; sourceTree = "<group>"; };
 		3A7080562711240E00D2F06E /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
+		3AD6916F272A4AC5000279B2 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		3AEF9DFE270E6F860065B184 /* Task Manager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Task Manager.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3AEF9E01270E6F860065B184 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3AEF9E03270E6F860065B184 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -73,6 +79,7 @@
 			isa = PBXGroup;
 			children = (
 				3A33009E271BCE43001DD4F3 /* DummyData.swift */,
+				3AD6916F272A4AC5000279B2 /* CoreDataManager.swift */,
 			);
 			path = Local;
 			sourceTree = "<group>";
@@ -111,6 +118,7 @@
 			children = (
 				3A032FEF2717E0FA00EA11B9 /* TMWelcomeHeaderView.swift */,
 				3AFECF86271FCC8000404F1F /* TMSquareIconView.swift */,
+				3A022ADE272CBFE7009BD2B3 /* TMEmptyView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -186,6 +194,7 @@
 				3AEF9E0A270E6F880065B184 /* Assets.xcassets */,
 				3AEF9E0C270E6F880065B184 /* LaunchScreen.storyboard */,
 				3AEF9E0F270E6F880065B184 /* Info.plist */,
+				3A07CB34272B798A00E20F3A /* TaskManager.xcdatamodeld */,
 			);
 			path = "Task Manager";
 			sourceTree = "<group>";
@@ -265,16 +274,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A07CB36272B798A00E20F3A /* TaskManager.xcdatamodeld in Sources */,
 				3A3720F0271643CE00FE1A75 /* ThemeColors.swift in Sources */,
 				3A330095271B72FB001DD4F3 /* TMProjectsVC.swift in Sources */,
 				3AFECF7E271FB31300404F1F /* UIView+Ext.swift in Sources */,
 				3A3300AD271D2F62001DD4F3 /* ViewController+Ext.swift in Sources */,
+				3AD69170272A4AC5000279B2 /* CoreDataManager.swift in Sources */,
 				3A032FF02717E0FA00EA11B9 /* TMWelcomeHeaderView.swift in Sources */,
 				3A7080572711240E00D2F06E /* HomeVC.swift in Sources */,
 				3A3300A9271CCF56001DD4F3 /* ProjectViewCell.swift in Sources */,
 				3AFECF87271FCC8000404F1F /* TMSquareIconView.swift in Sources */,
 				3A69C77D271892E50078668B /* TMTitleLabel.swift in Sources */,
 				3A69C780271899E10078668B /* TMSubtitleLabel.swift in Sources */,
+				3A022ADF272CBFE7009BD2B3 /* TMEmptyView.swift in Sources */,
 				3A33009F271BCE43001DD4F3 /* DummyData.swift in Sources */,
 				3A6462F92727925800FA7F95 /* TaskTableViewCell.swift in Sources */,
 				3AEF9E02270E6F860065B184 /* AppDelegate.swift in Sources */,
@@ -494,6 +506,19 @@
 			productName = BetterSegmentedControl;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		3A07CB34272B798A00E20F3A /* TaskManager.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				3A07CB35272B798A00E20F3A /* TaskManager.xcdatamodel */,
+			);
+			currentVersion = 3A07CB35272B798A00E20F3A /* TaskManager.xcdatamodel */;
+			path = TaskManager.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 3AEF9DF6270E6F860065B184 /* Project object */;
 }

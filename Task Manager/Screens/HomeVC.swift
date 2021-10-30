@@ -14,6 +14,7 @@ class HomeVC: UIViewController {
     private let segmentedControl = BetterSegmentedControl()
     private let projectsVC = TMProjectsVC()
     private var projectsData: [Project] = []
+    private let coredata = CoreDataManager()
     
     //ScrollView Container
     let scrollView = UIScrollView()
@@ -36,8 +37,10 @@ class HomeVC: UIViewController {
     }
     
     private func loadProjects() {
-        projectsData = DummyData.shared.projects
-        projectsVC.projectsData = projectsData
+        coredata.fetchAllProjects { (projects) in
+            self.projectsData = projects
+            self.projectsVC.projectsData = projects
+        }
     }
     
     
@@ -135,13 +138,13 @@ class HomeVC: UIViewController {
         
         switch sender.index {
         case 1 :
-            self.projectsVC.projectsData = projectsData.filter({ (project) -> Bool in
-                return project.status == .inProgress
+            self.projectsVC.projectsData = projectsData.filter({ (project) -> Bool in                
+                return project.status == StatusProject.inProgress.rawValue
             })
             print("segment: En Progreso")
         case 2:
             projectsVC.projectsData = projectsData.filter({ (project) -> Bool in
-                return project.status == .completed
+                return project.status == StatusProject.completed.rawValue
             })
             print("segment: En completadas")
         default:
