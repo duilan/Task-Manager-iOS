@@ -36,11 +36,21 @@ class HomeVC: UIViewController {
         loadProjects()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadProjects()
+    }
+    
     private func loadProjects() {
         coredata.fetchAllProjects { (projects) in
             self.projectsData = projects
             self.projectsVC.projectsData = projects
         }
+    }
+    
+    @objc private func GoToCreateProjectVC() {
+        let createProjectVC = CreateProjectVC()        
+        navigationController?.pushViewController(createProjectVC, animated: true)
     }
     
     
@@ -53,7 +63,7 @@ class HomeVC: UIViewController {
         let userImageSymbol = UIImage(systemName: "person.circle.fill")
         let addImageSymbol = UIImage(systemName: "plus")
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: userImageSymbol, style: .plain, target: self, action: nil)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: addImageSymbol, style: .plain, target: self, action: nil)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: addImageSymbol, style: .plain, target: self, action: #selector(GoToCreateProjectVC))
     }
     
     private func setupScrollViewWithStackContainer() {
