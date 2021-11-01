@@ -10,7 +10,7 @@ import UIKit
 class TMWelcomeHeaderView: UIView {
     
     private let titleLabel = TMTitleLabel(fontSize: 34)
-    private let subtitleLabel = TMSubtitleLabel()
+    private let subtitleLabel = TMSubtitleLabel(fontSize: 14)
     private let subtitlesData = ["Completemos algunas tareas!","Con diciplina lo lograrás!","Imposible es lo que no intentas!","No te rindas, ¡tú puedes!","¡Aprendamos de los errores!","El camino al éxito es la actitud.","Descansa, pero no te rindas!"]
     
     public var title: String? {
