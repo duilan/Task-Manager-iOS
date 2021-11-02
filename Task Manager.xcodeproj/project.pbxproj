@@ -19,6 +19,7 @@
 		3A3300AD271D2F62001DD4F3 /* ViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3300AC271D2F62001DD4F3 /* ViewController+Ext.swift */; };
 		3A3720F0271643CE00FE1A75 /* ThemeColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3720EF271643CE00FE1A75 /* ThemeColors.swift */; };
 		3A468130272F67C900142B4E /* TMTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A46812F272F67C900142B4E /* TMTextField.swift */; };
+		3A468133272FB78C00142B4E /* TMButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A468132272FB78C00142B4E /* TMButton.swift */; };
 		3A6462F92727925800FA7F95 /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6462F82727925800FA7F95 /* TaskTableViewCell.swift */; };
 		3A69C77D271892E50078668B /* TMTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A69C77C271892E40078668B /* TMTitleLabel.swift */; };
 		3A69C780271899E10078668B /* TMSubtitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A69C77F271899E10078668B /* TMSubtitleLabel.swift */; };
@@ -45,6 +46,7 @@
 		3A3300AC271D2F62001DD4F3 /* ViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Ext.swift"; sourceTree = "<group>"; };
 		3A3720EF271643CE00FE1A75 /* ThemeColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColors.swift; sourceTree = "<group>"; };
 		3A46812F272F67C900142B4E /* TMTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMTextField.swift; sourceTree = "<group>"; };
+		3A468132272FB78C00142B4E /* TMButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMButton.swift; sourceTree = "<group>"; };
 		3A6462F82727925800FA7F95 /* TaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
 		3A69C77C271892E40078668B /* TMTitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMTitleLabel.swift; sourceTree = "<group>"; };
 		3A69C77F271899E10078668B /* TMSubtitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMSubtitleLabel.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 				3A3F2C76271A91F5008BEEC5 /* ReusableCells */,
 				3A00A0BA271A931A0001168F /* ChildViewControllers */,
 				3A46812F272F67C900142B4E /* TMTextField.swift */,
+				3AA1930C2730F29B00D213CB /* Buttons */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -171,6 +174,14 @@
 				3A3720EF271643CE00FE1A75 /* ThemeColors.swift */,
 			);
 			path = Util;
+			sourceTree = "<group>";
+		};
+		3AA1930C2730F29B00D213CB /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				3A468132272FB78C00142B4E /* TMButton.swift */,
+			);
+			path = Buttons;
 			sourceTree = "<group>";
 		};
 		3AEF9DF5270E6F860065B184 = {
@@ -298,6 +309,7 @@
 				3A468130272F67C900142B4E /* TMTextField.swift in Sources */,
 				3A69C77D271892E50078668B /* TMTitleLabel.swift in Sources */,
 				3A69C780271899E10078668B /* TMSubtitleLabel.swift in Sources */,
+				3A468133272FB78C00142B4E /* TMButton.swift in Sources */,
 				3A022ADF272CBFE7009BD2B3 /* TMEmptyView.swift in Sources */,
 				3A33009F271BCE43001DD4F3 /* DummyData.swift in Sources */,
 				3A6462F92727925800FA7F95 /* TaskTableViewCell.swift in Sources */,
