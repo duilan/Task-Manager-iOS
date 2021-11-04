@@ -11,6 +11,7 @@
 		3A022AE2272CD815009BD2B3 /* CreateProjectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A022AE1272CD815009BD2B3 /* CreateProjectVC.swift */; };
 		3A032FF02717E0FA00EA11B9 /* TMWelcomeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A032FEF2717E0FA00EA11B9 /* TMWelcomeHeaderView.swift */; };
 		3A07CB36272B798A00E20F3A /* TaskManager.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3A07CB34272B798A00E20F3A /* TaskManager.xcdatamodeld */; };
+		3A108D7C2733A4620058D4E1 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3A108D7B2733A4620058D4E1 /* IQKeyboardManagerSwift */; };
 		3A1940AC271900C000469C06 /* BetterSegmentedControl in Frameworks */ = {isa = PBXBuildFile; productRef = 3A1940AB271900C000469C06 /* BetterSegmentedControl */; };
 		3A330095271B72FB001DD4F3 /* TMProjectsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A330094271B72FB001DD4F3 /* TMProjectsVC.swift */; };
 		3A33009A271BCBC3001DD4F3 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A330099271BCBC3001DD4F3 /* Project.swift */; };
@@ -71,6 +72,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A1940AC271900C000469C06 /* BetterSegmentedControl in Frameworks */,
+				3A108D7C2733A4620058D4E1 /* IQKeyboardManagerSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -240,6 +242,7 @@
 			name = "Task Manager";
 			packageProductDependencies = (
 				3A1940AB271900C000469C06 /* BetterSegmentedControl */,
+				3A108D7B2733A4620058D4E1 /* IQKeyboardManagerSwift */,
 			);
 			productName = "Task Manager";
 			productReference = 3AEF9DFE270E6F860065B184 /* Task Manager.app */;
@@ -270,6 +273,7 @@
 			mainGroup = 3AEF9DF5270E6F860065B184;
 			packageReferences = (
 				3A1940AA271900C000469C06 /* XCRemoteSwiftPackageReference "BetterSegmentedControl" */,
+				3A108D7A2733A4610058D4E1 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 			);
 			productRefGroup = 3AEF9DFF270E6F860065B184 /* Products */;
 			projectDirPath = "";
@@ -517,6 +521,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		3A108D7A2733A4610058D4E1 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager.git";
+			requirement = {
+				kind = exactVersion;
+				version = 6.5.6;
+			};
+		};
 		3A1940AA271900C000469C06 /* XCRemoteSwiftPackageReference "BetterSegmentedControl" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/gmarm/BetterSegmentedControl.git";
@@ -528,6 +540,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		3A108D7B2733A4620058D4E1 /* IQKeyboardManagerSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3A108D7A2733A4610058D4E1 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
+			productName = IQKeyboardManagerSwift;
+		};
 		3A1940AB271900C000469C06 /* BetterSegmentedControl */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 3A1940AA271900C000469C06 /* XCRemoteSwiftPackageReference "BetterSegmentedControl" */;
