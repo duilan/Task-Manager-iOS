@@ -11,7 +11,7 @@ class TMTextView: UITextView {
     
     private let titleLabel = UILabel()
     private let borderView = UIView()
-    private let toolbar = UIToolbar(frame:CGRect(x:0, y:0, width:100, height:100))
+    private let paddingtextContainer = UIEdgeInsets(top: 30, left: 3, bottom: 8, right: 3)
     
     var title: String? {
         didSet {
@@ -32,7 +32,6 @@ class TMTextView: UITextView {
         setup()
         setupTitleLabel()
         setupBorderView()
-        setupToolbar()
     }
     
     required init?(coder: NSCoder) {
@@ -43,13 +42,15 @@ class TMTextView: UITextView {
         self.textColor = ThemeColors.text
         self.tintColor = ThemeColors.accentColor
         self.textContainer.maximumNumberOfLines = maximumNumberOfLines
+        self.textContainerInset = paddingtextContainer
         self.textContainer.lineBreakMode = .byWordWrapping
-        self.textContainerInset = UIEdgeInsets(top: 30, left: 3, bottom: 8, right: 3)
-        self.isScrollEnabled = false
         self.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        self.backgroundColor = .white
+        self.layer.cornerCurve = .continuous
+        self.layer.cornerRadius = 10
+        self.clipsToBounds = true
         // UITextViewDelegate
         self.delegate = self
-        
     }
     
     private func setupTitleLabel() {
@@ -61,7 +62,6 @@ class TMTextView: UITextView {
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 6),
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
             titleLabel.heightAnchor.constraint(equalToConstant: 15)
         ])
     }
@@ -69,22 +69,7 @@ class TMTextView: UITextView {
     private func setupBorderView() {
         addSubview(borderView)
         borderView.alpha = 0
-        borderView.backgroundColor = ThemeColors.accentColor        
-    }
-    
-    private func setupToolbar() {
-        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace,
-                                        target: nil, action: nil)
-        let doneButton = UIBarButtonItem(title: "Done", style: .done,
-                                         target: self, action: #selector(doneButtonTapped))
-        toolbar.setItems([flexSpace, doneButton], animated: false)
-        toolbar.tintColor = ThemeColors.accentColor
-        toolbar.sizeToFit()
-        self.inputAccessoryView = toolbar
-    }
-    
-    @objc private func doneButtonTapped() {
-        DispatchQueue.main.async { self.endEditing(true) }
+        borderView.backgroundColor = ThemeColors.accentColor
     }
     
     private func showBorder(_ enable: Bool) {
