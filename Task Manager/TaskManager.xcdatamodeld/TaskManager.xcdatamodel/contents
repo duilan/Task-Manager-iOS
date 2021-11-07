@@ -4,7 +4,9 @@
         <attribute name="alias" attributeType="String"/>
         <attribute name="createAt" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="desc" optional="YES" attributeType="String"/>
+        <attribute name="endDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" attributeType="String"/>
+        <attribute name="startDate" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="status" attributeType="String" defaultValueString="0"/>
         <attribute name="title" attributeType="String"/>
         <relationship name="tasks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Task" inverseName="project" inverseEntity="Task"/>
@@ -17,7 +19,7 @@
         <relationship name="project" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Project" inverseName="tasks" inverseEntity="Project"/>
     </entity>
     <elements>
-        <element name="Project" positionX="-294.484375" positionY="-63.484375" width="128" height="148"/>
+        <element name="Project" positionX="-294.484375" positionY="-63.484375" width="128" height="178"/>
         <element name="Task" positionX="-54" positionY="27" width="128" height="118"/>
     </elements>
 </model>

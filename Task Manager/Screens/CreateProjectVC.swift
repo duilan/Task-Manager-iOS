@@ -161,9 +161,16 @@ class CreateProjectVC: UIViewController {
             aliasTextField.becomeFirstResponder()
             return
         }
-        guard let descValue = descTextView.text else { return }
+        guard let startDate = startDateTextField.date else {
+            startDateTextField.becomeFirstResponder()
+            return
+        }
         
-        coredata.createProject(alias: aliasValue, title: titleValue, desc: descValue) { [weak self] in
+        let endDate = endDateTextField.date
+        let descValue = descTextView.text
+        
+        coredata.createProject(
+            alias: aliasValue, title: titleValue, desc: descValue, startDate: startDate, endDate: endDate) { [weak self] in
             self?.navigationController?.popViewController(animated: true)
         }
     }
