@@ -12,6 +12,8 @@ class CreateProjectVC: UIViewController {
     private let formStackView = UIStackView()
     private let titleTextField = TMTextField()
     private let aliasTextField = TMTextField()
+    private let startDateTextField = TMDateField()
+    private let endDateTextField = TMDateField()
     private let descTextView = TMTextView()
     private let saveButton = TMButton("Guardar")
     
@@ -29,6 +31,7 @@ class CreateProjectVC: UIViewController {
         setupTitleTextField()
         setupAliasTextField()
         setupDescTextView()
+        setupDateTextFields()
         setupSaveButton()
     }
     
@@ -87,6 +90,7 @@ class CreateProjectVC: UIViewController {
         formStackView.addArrangedSubview(titleTextField)
         titleTextField.title = "Titulo"
         titleTextField.placeholder = "Titulo del proyecto"
+        titleTextField.clearButtonMode = .whileEditing
         titleTextField.layer.cornerCurve = .continuous
         titleTextField.layer.cornerRadius = 10
         titleTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -97,6 +101,7 @@ class CreateProjectVC: UIViewController {
         formStackView.addArrangedSubview(aliasTextField)
         aliasTextField.title = "Subtitulo"
         aliasTextField.placeholder = "Subtitulo o alias"
+        aliasTextField.clearButtonMode = .whileEditing
         aliasTextField.layer.cornerCurve = .continuous
         aliasTextField.layer.cornerRadius = 10
         aliasTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -104,8 +109,7 @@ class CreateProjectVC: UIViewController {
     }
     
     private func setupDescTextView() {
-        formStackView.addArrangedSubview(descTextView)
-        formStackView.setCustomSpacing(20, after: descTextView)
+        formStackView.addArrangedSubview(descTextView)        
         descTextView.title = "Descripción"
         descTextView.toolbarPlaceholder = "Descripción acerca del proyecto"
         descTextView.maximumNumberOfLines = 0
@@ -114,6 +118,30 @@ class CreateProjectVC: UIViewController {
         descTextView.layer.cornerRadius = 10
         descTextView.translatesAutoresizingMaskIntoConstraints = false
         descTextView.heightAnchor.constraint(greaterThanOrEqualToConstant: 120).isActive = true
+    }
+    
+    private func setupDateTextFields() {
+        let hStack = UIStackView()
+        hStack.axis = .horizontal
+        hStack.spacing = 4
+        hStack.distribution = .fillEqually
+        formStackView.addArrangedSubview(hStack)
+        
+        hStack.addArrangedSubview(startDateTextField)
+        startDateTextField.title = "Fecha Inicio"
+        startDateTextField.setDefaultDate()
+        startDateTextField.layer.cornerCurve = .continuous
+        startDateTextField.layer.cornerRadius = 10
+        startDateTextField.translatesAutoresizingMaskIntoConstraints = false
+        startDateTextField.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        
+        hStack.addArrangedSubview(endDateTextField)
+        formStackView.setCustomSpacing(24, after: hStack)
+        endDateTextField.title = "Fecha Termino"
+        endDateTextField.layer.cornerCurve = .continuous
+        endDateTextField.layer.cornerRadius = 10
+        endDateTextField.translatesAutoresizingMaskIntoConstraints = false
+        endDateTextField.heightAnchor.constraint(equalToConstant: 60).isActive = true
     }
     
     private func setupSaveButton() {
