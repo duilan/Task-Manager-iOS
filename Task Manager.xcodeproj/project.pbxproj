@@ -13,6 +13,7 @@
 		3A07CB36272B798A00E20F3A /* TaskManager.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3A07CB34272B798A00E20F3A /* TaskManager.xcdatamodeld */; };
 		3A108D7C2733A4620058D4E1 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3A108D7B2733A4620058D4E1 /* IQKeyboardManagerSwift */; };
 		3A1940AC271900C000469C06 /* BetterSegmentedControl in Frameworks */ = {isa = PBXBuildFile; productRef = 3A1940AB271900C000469C06 /* BetterSegmentedControl */; };
+		3A2983D927364D6A006B9448 /* TMDateField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2983D827364D6A006B9448 /* TMDateField.swift */; };
 		3A330095271B72FB001DD4F3 /* TMProjectsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A330094271B72FB001DD4F3 /* TMProjectsVC.swift */; };
 		3A33009A271BCBC3001DD4F3 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A330099271BCBC3001DD4F3 /* Project.swift */; };
 		3A33009F271BCE43001DD4F3 /* DummyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A33009E271BCE43001DD4F3 /* DummyData.swift */; };
@@ -41,6 +42,7 @@
 		3A022AE1272CD815009BD2B3 /* CreateProjectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProjectVC.swift; sourceTree = "<group>"; };
 		3A032FEF2717E0FA00EA11B9 /* TMWelcomeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMWelcomeHeaderView.swift; sourceTree = "<group>"; };
 		3A07CB35272B798A00E20F3A /* TaskManager.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TaskManager.xcdatamodel; sourceTree = "<group>"; };
+		3A2983D827364D6A006B9448 /* TMDateField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDateField.swift; sourceTree = "<group>"; };
 		3A330094271B72FB001DD4F3 /* TMProjectsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMProjectsVC.swift; sourceTree = "<group>"; };
 		3A330099271BCBC3001DD4F3 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		3A33009E271BCE43001DD4F3 /* DummyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyData.swift; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 				3A00A0BA271A931A0001168F /* ChildViewControllers */,
 				3A46812F272F67C900142B4E /* TMTextField.swift */,
 				3A43078C27323843005D98D9 /* TMTextView.swift */,
+				3A2983D827364D6A006B9448 /* TMDateField.swift */,
 				3AA1930C2730F29B00D213CB /* Buttons */,
 			);
 			path = CustomViews;
@@ -319,6 +322,7 @@
 				3A69C780271899E10078668B /* TMSubtitleLabel.swift in Sources */,
 				3A468133272FB78C00142B4E /* TMButton.swift in Sources */,
 				3A022ADF272CBFE7009BD2B3 /* TMEmptyView.swift in Sources */,
+				3A2983D927364D6A006B9448 /* TMDateField.swift in Sources */,
 				3A33009F271BCE43001DD4F3 /* DummyData.swift in Sources */,
 				3A6462F92727925800FA7F95 /* TaskTableViewCell.swift in Sources */,
 				3AEF9E02270E6F860065B184 /* AppDelegate.swift in Sources */,
