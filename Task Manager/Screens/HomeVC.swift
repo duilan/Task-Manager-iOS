@@ -56,7 +56,9 @@ class HomeVC: UIViewController {
     
     private func setup() {
         view.backgroundColor = ThemeColors.backgroundPrimary
-        title = "Proyectos"
+        navigationItem.title = "Proyectos"
+        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationItem.largeTitleDisplayMode  = .never
     }
     
     private func setupNavigationButtonItems() {
