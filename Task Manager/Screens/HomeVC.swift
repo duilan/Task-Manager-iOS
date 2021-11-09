@@ -98,7 +98,7 @@ class HomeVC: UIViewController {
         view.addSubview(scrollView)
         scrollView.addSubview(stackContentView)
         stackContentView.axis = .vertical
-        
+        scrollView.alwaysBounceVertical = true
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         stackContentView.translatesAutoresizingMaskIntoConstraints = false
         // Constraints
