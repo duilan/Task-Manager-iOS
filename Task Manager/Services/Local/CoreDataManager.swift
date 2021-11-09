@@ -44,7 +44,7 @@ final class CoreDataManager {
         }
     }
     
-    func createProject(alias: String, title: String , desc: String? = nil, completion: @escaping() -> Void ) {
+    func createProject(alias: String, title: String , desc: String? = nil, startDate: Date, endDate: Date?, completion: @escaping() -> Void ) {
         
         let context = container.viewContext
         let project = Project(context: context)
@@ -55,6 +55,8 @@ final class CoreDataManager {
         project.desc = desc
         project.status = StatusProject.inProgress.rawValue
         project.createAt = Date()
+        project.startDate = startDate
+        project.endDate = endDate
         // save
         do {
             try context.save()

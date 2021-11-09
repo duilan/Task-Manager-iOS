@@ -65,13 +65,13 @@ final class TMSquareIconView: UIView {
     }
     
     private func setGradient() {
-        self.addGradientBackground(colorSet: [ThemeColors.blueDark, ThemeColors.blueLight])
+        self.addGradientBackground(colorSet: [ThemeColors.accentColor, ThemeColors.accentColor.lighter()])
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         if hasGradient {
-            self.addGradientBackground(colorSet: [ThemeColors.blueDark, ThemeColors.blueLight])
+            setGradient()
         }
     }
     

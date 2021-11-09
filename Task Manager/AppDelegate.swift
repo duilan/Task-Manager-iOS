@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import IQKeyboardManagerSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -14,8 +15,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Configuracion de la apariencia del navbar
         configureNavigationBarAppearance()
+        // Configuracion de IQKeyboardManager
+        configureIQKeyboardManager()
         
         return true
+    }
+    
+    func configureIQKeyboardManager() {
+        IQKeyboardManager.shared.enable = true
+        IQKeyboardManager.shared.shouldResignOnTouchOutside = true
     }
     
     func configureNavigationBarAppearance() {

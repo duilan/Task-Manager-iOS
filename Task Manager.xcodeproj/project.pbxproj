@@ -8,19 +8,26 @@
 
 /* Begin PBXBuildFile section */
 		3A022ADF272CBFE7009BD2B3 /* TMEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A022ADE272CBFE7009BD2B3 /* TMEmptyView.swift */; };
+		3A022AE2272CD815009BD2B3 /* CreateProjectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A022AE1272CD815009BD2B3 /* CreateProjectVC.swift */; };
 		3A032FF02717E0FA00EA11B9 /* TMWelcomeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A032FEF2717E0FA00EA11B9 /* TMWelcomeHeaderView.swift */; };
 		3A07CB36272B798A00E20F3A /* TaskManager.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3A07CB34272B798A00E20F3A /* TaskManager.xcdatamodeld */; };
+		3A108D7C2733A4620058D4E1 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3A108D7B2733A4620058D4E1 /* IQKeyboardManagerSwift */; };
 		3A1940AC271900C000469C06 /* BetterSegmentedControl in Frameworks */ = {isa = PBXBuildFile; productRef = 3A1940AB271900C000469C06 /* BetterSegmentedControl */; };
+		3A2983D927364D6A006B9448 /* TMDateField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2983D827364D6A006B9448 /* TMDateField.swift */; };
 		3A330095271B72FB001DD4F3 /* TMProjectsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A330094271B72FB001DD4F3 /* TMProjectsVC.swift */; };
 		3A33009A271BCBC3001DD4F3 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A330099271BCBC3001DD4F3 /* Project.swift */; };
 		3A33009F271BCE43001DD4F3 /* DummyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A33009E271BCE43001DD4F3 /* DummyData.swift */; };
 		3A3300A9271CCF56001DD4F3 /* ProjectViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3300A8271CCF56001DD4F3 /* ProjectViewCell.swift */; };
 		3A3300AD271D2F62001DD4F3 /* ViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3300AC271D2F62001DD4F3 /* ViewController+Ext.swift */; };
 		3A3720F0271643CE00FE1A75 /* ThemeColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3720EF271643CE00FE1A75 /* ThemeColors.swift */; };
+		3A43078D27323843005D98D9 /* TMTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A43078C27323843005D98D9 /* TMTextView.swift */; };
+		3A468130272F67C900142B4E /* TMTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A46812F272F67C900142B4E /* TMTextField.swift */; };
+		3A468133272FB78C00142B4E /* TMButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A468132272FB78C00142B4E /* TMButton.swift */; };
 		3A6462F92727925800FA7F95 /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6462F82727925800FA7F95 /* TaskTableViewCell.swift */; };
 		3A69C77D271892E50078668B /* TMTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A69C77C271892E40078668B /* TMTitleLabel.swift */; };
 		3A69C780271899E10078668B /* TMSubtitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A69C77F271899E10078668B /* TMSubtitleLabel.swift */; };
 		3A7080572711240E00D2F06E /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7080562711240E00D2F06E /* HomeVC.swift */; };
+		3AA1930A2730D88300D213CB /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA193092730D88300D213CB /* UIColor+Ext.swift */; };
 		3AD69170272A4AC5000279B2 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD6916F272A4AC5000279B2 /* CoreDataManager.swift */; };
 		3AEF9E02270E6F860065B184 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEF9E01270E6F860065B184 /* AppDelegate.swift */; };
 		3AEF9E04270E6F860065B184 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEF9E03270E6F860065B184 /* SceneDelegate.swift */; };
@@ -32,18 +39,24 @@
 
 /* Begin PBXFileReference section */
 		3A022ADE272CBFE7009BD2B3 /* TMEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMEmptyView.swift; sourceTree = "<group>"; };
+		3A022AE1272CD815009BD2B3 /* CreateProjectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProjectVC.swift; sourceTree = "<group>"; };
 		3A032FEF2717E0FA00EA11B9 /* TMWelcomeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMWelcomeHeaderView.swift; sourceTree = "<group>"; };
 		3A07CB35272B798A00E20F3A /* TaskManager.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TaskManager.xcdatamodel; sourceTree = "<group>"; };
+		3A2983D827364D6A006B9448 /* TMDateField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDateField.swift; sourceTree = "<group>"; };
 		3A330094271B72FB001DD4F3 /* TMProjectsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMProjectsVC.swift; sourceTree = "<group>"; };
 		3A330099271BCBC3001DD4F3 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		3A33009E271BCE43001DD4F3 /* DummyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyData.swift; sourceTree = "<group>"; };
 		3A3300A8271CCF56001DD4F3 /* ProjectViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewCell.swift; sourceTree = "<group>"; };
 		3A3300AC271D2F62001DD4F3 /* ViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Ext.swift"; sourceTree = "<group>"; };
 		3A3720EF271643CE00FE1A75 /* ThemeColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColors.swift; sourceTree = "<group>"; };
+		3A43078C27323843005D98D9 /* TMTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMTextView.swift; sourceTree = "<group>"; };
+		3A46812F272F67C900142B4E /* TMTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMTextField.swift; sourceTree = "<group>"; };
+		3A468132272FB78C00142B4E /* TMButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMButton.swift; sourceTree = "<group>"; };
 		3A6462F82727925800FA7F95 /* TaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
 		3A69C77C271892E40078668B /* TMTitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMTitleLabel.swift; sourceTree = "<group>"; };
 		3A69C77F271899E10078668B /* TMSubtitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMSubtitleLabel.swift; sourceTree = "<group>"; };
 		3A7080562711240E00D2F06E /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
+		3AA193092730D88300D213CB /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
 		3AD6916F272A4AC5000279B2 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		3AEF9DFE270E6F860065B184 /* Task Manager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Task Manager.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3AEF9E01270E6F860065B184 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -61,6 +74,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A1940AC271900C000469C06 /* BetterSegmentedControl in Frameworks */,
+				3A108D7C2733A4620058D4E1 /* IQKeyboardManagerSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -89,6 +103,7 @@
 			children = (
 				3A3300AC271D2F62001DD4F3 /* ViewController+Ext.swift */,
 				3AFECF7D271FB31300404F1F /* UIView+Ext.swift */,
+				3AA193092730D88300D213CB /* UIColor+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -100,6 +115,10 @@
 				3A3F2C6E271A9072008BEEC5 /* Labels */,
 				3A3F2C76271A91F5008BEEC5 /* ReusableCells */,
 				3A00A0BA271A931A0001168F /* ChildViewControllers */,
+				3A46812F272F67C900142B4E /* TMTextField.swift */,
+				3A43078C27323843005D98D9 /* TMTextView.swift */,
+				3A2983D827364D6A006B9448 /* TMDateField.swift */,
+				3AA1930C2730F29B00D213CB /* Buttons */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -127,6 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				3A7080562711240E00D2F06E /* HomeVC.swift */,
+				3A022AE1272CD815009BD2B3 /* CreateProjectVC.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -162,6 +182,14 @@
 				3A3720EF271643CE00FE1A75 /* ThemeColors.swift */,
 			);
 			path = Util;
+			sourceTree = "<group>";
+		};
+		3AA1930C2730F29B00D213CB /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				3A468132272FB78C00142B4E /* TMButton.swift */,
+			);
+			path = Buttons;
 			sourceTree = "<group>";
 		};
 		3AEF9DF5270E6F860065B184 = {
@@ -217,6 +245,7 @@
 			name = "Task Manager";
 			packageProductDependencies = (
 				3A1940AB271900C000469C06 /* BetterSegmentedControl */,
+				3A108D7B2733A4620058D4E1 /* IQKeyboardManagerSwift */,
 			);
 			productName = "Task Manager";
 			productReference = 3AEF9DFE270E6F860065B184 /* Task Manager.app */;
@@ -247,6 +276,7 @@
 			mainGroup = 3AEF9DF5270E6F860065B184;
 			packageReferences = (
 				3A1940AA271900C000469C06 /* XCRemoteSwiftPackageReference "BetterSegmentedControl" */,
+				3A108D7A2733A4610058D4E1 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 			);
 			productRefGroup = 3AEF9DFF270E6F860065B184 /* Products */;
 			projectDirPath = "";
@@ -274,19 +304,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A022AE2272CD815009BD2B3 /* CreateProjectVC.swift in Sources */,
 				3A07CB36272B798A00E20F3A /* TaskManager.xcdatamodeld in Sources */,
 				3A3720F0271643CE00FE1A75 /* ThemeColors.swift in Sources */,
 				3A330095271B72FB001DD4F3 /* TMProjectsVC.swift in Sources */,
+				3A43078D27323843005D98D9 /* TMTextView.swift in Sources */,
 				3AFECF7E271FB31300404F1F /* UIView+Ext.swift in Sources */,
 				3A3300AD271D2F62001DD4F3 /* ViewController+Ext.swift in Sources */,
 				3AD69170272A4AC5000279B2 /* CoreDataManager.swift in Sources */,
 				3A032FF02717E0FA00EA11B9 /* TMWelcomeHeaderView.swift in Sources */,
 				3A7080572711240E00D2F06E /* HomeVC.swift in Sources */,
 				3A3300A9271CCF56001DD4F3 /* ProjectViewCell.swift in Sources */,
+				3AA1930A2730D88300D213CB /* UIColor+Ext.swift in Sources */,
 				3AFECF87271FCC8000404F1F /* TMSquareIconView.swift in Sources */,
+				3A468130272F67C900142B4E /* TMTextField.swift in Sources */,
 				3A69C77D271892E50078668B /* TMTitleLabel.swift in Sources */,
 				3A69C780271899E10078668B /* TMSubtitleLabel.swift in Sources */,
+				3A468133272FB78C00142B4E /* TMButton.swift in Sources */,
 				3A022ADF272CBFE7009BD2B3 /* TMEmptyView.swift in Sources */,
+				3A2983D927364D6A006B9448 /* TMDateField.swift in Sources */,
 				3A33009F271BCE43001DD4F3 /* DummyData.swift in Sources */,
 				3A6462F92727925800FA7F95 /* TaskTableViewCell.swift in Sources */,
 				3AEF9E02270E6F860065B184 /* AppDelegate.swift in Sources */,
@@ -489,6 +525,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		3A108D7A2733A4610058D4E1 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager.git";
+			requirement = {
+				kind = exactVersion;
+				version = 6.5.6;
+			};
+		};
 		3A1940AA271900C000469C06 /* XCRemoteSwiftPackageReference "BetterSegmentedControl" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/gmarm/BetterSegmentedControl.git";
@@ -500,6 +544,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		3A108D7B2733A4620058D4E1 /* IQKeyboardManagerSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3A108D7A2733A4610058D4E1 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
+			productName = IQKeyboardManagerSwift;
+		};
 		3A1940AB271900C000469C06 /* BetterSegmentedControl */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 3A1940AA271900C000469C06 /* XCRemoteSwiftPackageReference "BetterSegmentedControl" */;

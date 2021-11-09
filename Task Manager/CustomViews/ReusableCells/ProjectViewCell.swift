@@ -50,7 +50,7 @@ class ProjectViewCell: UICollectionViewCell {
     
     private func setupBackgroundGradient() {
         let startEndPointsGradient = (CGPoint(x: 0, y: 0), CGPoint(x: 0, y: 1))
-        self.addGradientBackground(colorSet: [ThemeColors.blueDark, ThemeColors.blueLight],
+        self.addGradientBackground(colorSet: [ThemeColors.accentColor.darker(), ThemeColors.accentColor.lighter()],
                                    startAndEndPoints: startEndPointsGradient)
     }
     
