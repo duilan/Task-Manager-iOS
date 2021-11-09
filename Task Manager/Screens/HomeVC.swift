@@ -14,6 +14,9 @@ class HomeVC: UIViewController {
     private let segmentedControl = BetterSegmentedControl()
     private let projectsVC = TMProjectsVC()
     private var projectsData: [Project] = []
+    // 0 : All, 1: InProgress, 2:Completed
+    private var segmentIndex: Int = 1
+    
     private let coredata = CoreDataManager()
     
     //ScrollView Container
