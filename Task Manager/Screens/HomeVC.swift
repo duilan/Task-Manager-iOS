@@ -38,13 +38,38 @@ class HomeVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setDefaultSegmentSelection()
         loadProjects()
     }
     
+    private func setDefaultSegmentSelection() {
+        segmentedControl.setIndex(1, animated: false, shouldSendValueChangedEvent: true)
+    }
+    
     private func loadProjects() {
-        coredata.fetchAllProjects { (projects) in
+        coredata.fetchAllProjects { [weak self] (projects) in
+            guard let self = self else { return }
             self.projectsData = projects
-            self.projectsVC.projectsData = projects
+            self.filterProjectData()
+        }
+    }
+    
+    private func filterProjectData() {
+        switch self.segmentIndex {
+        case 0 :
+            // show all project
+            projectsVC.projectsData = projectsData
+        case 1 :
+            self.projectsVC.projectsData = projectsData.filter({ (project) -> Bool in
+                return project.status == StatusProject.inProgress.rawValue
+            })
+        case 2:
+            projectsVC.projectsData = projectsData.filter({ (project) -> Bool in
+                return project.status == StatusProject.completed.rawValue
+            })
+        default:
+            //no filter data
+            projectsVC.projectsData = projectsData
         }
     }
     
@@ -147,22 +172,9 @@ class HomeVC: UIViewController {
     
     
     @objc private func segmentIndexChanged(_ sender: BetterSegmentedControl) {
+        segmentIndex = sender.index
+        filterProjectData()
         
-        switch sender.index {
-        case 1 :
-            self.projectsVC.projectsData = projectsData.filter({ (project) -> Bool in                
-                return project.status == StatusProject.inProgress.rawValue
-            })
-            print("segment: En Progreso")
-        case 2:
-            projectsVC.projectsData = projectsData.filter({ (project) -> Bool in
-                return project.status == StatusProject.completed.rawValue
-            })
-            print("segment: En completadas")
-        default:
-            print("segment: Todas")
-            projectsVC.projectsData = projectsData
-        }
     }
 }
 
