@@ -80,6 +80,7 @@ class TMProjectsVC: UIViewController {
         collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.delegate = self
         // Registro de cell reusable
         collectionView.register(ProjectViewCell.self, forCellWithReuseIdentifier: ProjectViewCell.cellID)
         // Contraints
@@ -176,4 +177,14 @@ class TMProjectsVC: UIViewController {
         return layout
     }
     
+}
+
+extension TMProjectsVC: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        guard let projectSelected = dataSource.itemIdentifier(for: indexPath) else { return }
+        
+        let projectDetailVC = ProjectDetailVC(project: projectSelected)
+        navigationController?.pushViewController(projectDetailVC, animated: true)
+    }
 }
