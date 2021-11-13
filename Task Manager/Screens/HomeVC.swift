@@ -14,6 +14,8 @@ class HomeVC: UIViewController {
     private let segmentedControl = BetterSegmentedControl()
     private let projectsVC = TMProjectsVC()
     private var projectsData: [Project] = []
+    private let taskVC = TMTasksListVC()
+    private var tableHeight: NSLayoutConstraint!
     // 0 : All, 1: InProgress, 2:Completed
     private var segmentIndex: Int = 1
     
@@ -27,6 +29,7 @@ class HomeVC: UIViewController {
     let headerContainer = UIView()
     let segmentedControlContainer = UIView()
     let projectsVCContainer = UIView()
+    let tasksVCContainer = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +40,7 @@ class HomeVC: UIViewController {
         setupSegmentedControl()
         setupChildProjectsVC()
         loadProjects()
+        setupChildTasksVC()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -173,6 +177,28 @@ class HomeVC: UIViewController {
         ])
     }
     
+    private func setupChildTasksVC() {
+        stackContentView.addArrangedSubview(tasksVCContainer)
+        add(childVC: taskVC, to: tasksVCContainer)
+        tableHeight =  tasksVCContainer.heightAnchor.constraint(equalToConstant: 100)
+        taskVC.view.translatesAutoresizingMaskIntoConstraints = false
+        tasksVCContainer.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            tableHeight,
+            taskVC.view.topAnchor.constraint(equalTo: tasksVCContainer.topAnchor),
+            taskVC.view.leadingAnchor.constraint(equalTo: tasksVCContainer.leadingAnchor, constant: 20),
+            taskVC.view.trailingAnchor.constraint(equalTo: tasksVCContainer.trailingAnchor, constant: -20),
+            taskVC.view.bottomAnchor.constraint(equalTo: tasksVCContainer.bottomAnchor)
+        ])
+    }
+    
+    override func preferredContentSizeDidChange(forChildContentContainer container: UIContentContainer) {
+        super.preferredContentSizeDidChange(forChildContentContainer: container)
+        if container as? TMTasksListVC != nil {
+            tableHeight.constant = container.preferredContentSize.height
+            print(tableHeight.constant)
+        }
+    }
     
     @objc private func segmentIndexChanged(_ sender: BetterSegmentedControl) {
         segmentIndex = sender.index
@@ -183,6 +209,7 @@ class HomeVC: UIViewController {
 
 extension HomeVC: TMProjectsProtocol {
     func projectDidChange(project: Project) {
+        taskVC.tasksData = project.tasks?.allObjects as [Task]
         print("cambiar datos de tabla inferior")
     }
 }
