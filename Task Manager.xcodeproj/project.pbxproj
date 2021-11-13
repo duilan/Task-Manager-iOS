@@ -19,6 +19,7 @@
 		3A33009F271BCE43001DD4F3 /* DummyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A33009E271BCE43001DD4F3 /* DummyData.swift */; };
 		3A3300A9271CCF56001DD4F3 /* ProjectViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3300A8271CCF56001DD4F3 /* ProjectViewCell.swift */; };
 		3A3300AD271D2F62001DD4F3 /* ViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3300AC271D2F62001DD4F3 /* ViewController+Ext.swift */; };
+		3A3300B1271E2210001DD4F3 /* TMTasksListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3300B0271E2210001DD4F3 /* TMTasksListVC.swift */; };
 		3A3720F0271643CE00FE1A75 /* ThemeColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3720EF271643CE00FE1A75 /* ThemeColors.swift */; };
 		3A43078D27323843005D98D9 /* TMTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A43078C27323843005D98D9 /* TMTextView.swift */; };
 		3A468130272F67C900142B4E /* TMTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A46812F272F67C900142B4E /* TMTextField.swift */; };
@@ -50,6 +51,7 @@
 		3A33009E271BCE43001DD4F3 /* DummyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyData.swift; sourceTree = "<group>"; };
 		3A3300A8271CCF56001DD4F3 /* ProjectViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewCell.swift; sourceTree = "<group>"; };
 		3A3300AC271D2F62001DD4F3 /* ViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Ext.swift"; sourceTree = "<group>"; };
+		3A3300B0271E2210001DD4F3 /* TMTasksListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMTasksListVC.swift; sourceTree = "<group>"; };
 		3A3720EF271643CE00FE1A75 /* ThemeColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColors.swift; sourceTree = "<group>"; };
 		3A43078C27323843005D98D9 /* TMTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMTextView.swift; sourceTree = "<group>"; };
 		3A46812F272F67C900142B4E /* TMTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMTextField.swift; sourceTree = "<group>"; };
@@ -89,6 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				3A330094271B72FB001DD4F3 /* TMProjectsVC.swift */,
+				3A3300B0271E2210001DD4F3 /* TMTasksListVC.swift */,
 			);
 			path = ChildViewControllers;
 			sourceTree = "<group>";
@@ -335,6 +338,7 @@
 				3A6462F92727925800FA7F95 /* TaskTableViewCell.swift in Sources */,
 				3AEF9E02270E6F860065B184 /* AppDelegate.swift in Sources */,
 				3AEF9E04270E6F860065B184 /* SceneDelegate.swift in Sources */,
+				3A3300B1271E2210001DD4F3 /* TMTasksListVC.swift in Sources */,
 				3A33009A271BCBC3001DD4F3 /* Project.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
