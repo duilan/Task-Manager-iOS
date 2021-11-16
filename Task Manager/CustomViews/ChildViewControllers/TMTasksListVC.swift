@@ -9,20 +9,25 @@ import UIKit
 
 class TMTasksListVC: UIViewController {
     
-    var tableView: UITableView!    
-    var dataSource: UITableViewDiffableDataSource<Section,Task>!
+    private typealias TaskDataSource = UITableViewDiffableDataSource<Section,Task>
+    private typealias TaskSnapshot = NSDiffableDataSourceSnapshot<Section, Task>
+    
+    private var tableView = UITableView(frame: .zero, style: .plain)
+    private var dataSource: TaskDataSource!
+    
+    private enum Section: String, CaseIterable {
+        case pending = "Pendientes"
+        case completed = "Completadas"
+    }
+    
     var tasksData: [Task] = [] {
         didSet {
             updateSnapshot(with: tasksData, animatingDifferences: false)
-            preferredContentSize.height = tableViewHeight + tableView.contentInset.top + tableView.contentInset .bottom
+            preferredContentSize.height = tableViewHeight + tableView.contentInset.top + tableView.contentInset.bottom
         }
     }
     
-    enum Section:String, Hashable {
-        case main = "Tareas"
-    }
-    
-    var tableViewHeight: CGFloat {
+    private var tableViewHeight: CGFloat {
         tableView.reloadData()
         tableView.layoutIfNeeded()
         return tableView.contentSize.height
@@ -36,19 +41,18 @@ class TMTasksListVC: UIViewController {
         updateSnapshot(with: tasksData, animatingDifferences: false)
     }
     
-    func setup() {
+    private func setup() {
         view.backgroundColor = ThemeColors.backgroundPrimary
     }
     
-    func setupTable() {
-        tableView = UITableView(frame: .zero, style: .plain)
+    private func setupTable() {
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         tableView.delegate = self
         tableView.rowHeight = 80
         tableView.separatorStyle = .none
-        tableView.contentInset = UIEdgeInsets(top: 24, left: 0, bottom: 32, right: 0)
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
         tableView.backgroundColor = ThemeColors.backgroundPrimary
         tableView.register(TaskTableViewCell.self, forCellReuseIdentifier: TaskTableViewCell.cellID)
         //registrar celdas        
@@ -65,8 +69,8 @@ class TMTasksListVC: UIViewController {
         preferredContentSize.height = tableViewHeight + tableView.contentInset.top + tableView.contentInset .bottom
     }
     
-    func setupDataSource() {
-        dataSource = UITableViewDiffableDataSource<Section,Task>(tableView: tableView, cellProvider: { (tableView, indexPath, item) -> UITableViewCell? in
+    private func setupDataSource() {
+        dataSource = TaskDataSource(tableView: tableView, cellProvider: { (tableView, indexPath, item) -> UITableViewCell? in
             guard  let cell = tableView.dequeueReusableCell(withIdentifier: TaskTableViewCell.cellID, for: indexPath) as? TaskTableViewCell else {
                 return TaskTableViewCell()
             }
@@ -75,10 +79,15 @@ class TMTasksListVC: UIViewController {
         })
     }
     
-    func updateSnapshot(with tasks: [Task], animatingDifferences: Bool = true) {
-        var snapshopt = NSDiffableDataSourceSnapshot<Section, Task>()
-        snapshopt.appendSections([.main])
-        snapshopt.appendItems(tasks, toSection: .main)
+    private func updateSnapshot(with tasks: [Task], animatingDifferences: Bool = true) {
+        var snapshopt = TaskSnapshot()
+        
+        let pendingTasks = tasks.filter { $0.status == "Pendiente" }
+        let completedTasks = tasks.filter { $0.status == "Completada" }
+        
+        snapshopt.appendSections([.pending,.completed])
+        snapshopt.appendItems(pendingTasks, toSection: .pending)
+        snapshopt.appendItems(completedTasks, toSection: .completed)
         dataSource.apply(snapshopt, animatingDifferences: animatingDifferences)
     }
 }
@@ -87,9 +96,25 @@ extension TMTasksListVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.cellForRow(at: indexPath)?.isSelected = false
-        let vc = TMTasksListVC()
-        vc.title = "Tareas"
-        present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
     }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 50
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        let InSection = Section.allCases[section]
+        let headerView = TMSectionHeaderView()
+        
+        switch InSection {
+        case .pending :
+            headerView.configure(title: InSection.rawValue.uppercased())
+        case .completed:
+            headerView.configure(title: InSection.rawValue.uppercased())
+        }
+        return headerView
+    }
+    
     
 }
