@@ -12,6 +12,7 @@
 		3A032FF02717E0FA00EA11B9 /* TMWelcomeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A032FEF2717E0FA00EA11B9 /* TMWelcomeHeaderView.swift */; };
 		3A07CB36272B798A00E20F3A /* TaskManager.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3A07CB34272B798A00E20F3A /* TaskManager.xcdatamodeld */; };
 		3A108D7C2733A4620058D4E1 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3A108D7B2733A4620058D4E1 /* IQKeyboardManagerSwift */; };
+		3A17BC2A274341F800CE504B /* TMSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A17BC29274341F800CE504B /* TMSectionHeaderView.swift */; };
 		3A1940AC271900C000469C06 /* BetterSegmentedControl in Frameworks */ = {isa = PBXBuildFile; productRef = 3A1940AB271900C000469C06 /* BetterSegmentedControl */; };
 		3A2983D927364D6A006B9448 /* TMDateField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2983D827364D6A006B9448 /* TMDateField.swift */; };
 		3A330095271B72FB001DD4F3 /* TMProjectsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A330094271B72FB001DD4F3 /* TMProjectsVC.swift */; };
@@ -45,6 +46,7 @@
 		3A022AE1272CD815009BD2B3 /* CreateProjectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProjectVC.swift; sourceTree = "<group>"; };
 		3A032FEF2717E0FA00EA11B9 /* TMWelcomeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMWelcomeHeaderView.swift; sourceTree = "<group>"; };
 		3A07CB35272B798A00E20F3A /* TaskManager.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TaskManager.xcdatamodel; sourceTree = "<group>"; };
+		3A17BC29274341F800CE504B /* TMSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMSectionHeaderView.swift; sourceTree = "<group>"; };
 		3A2983D827364D6A006B9448 /* TMDateField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDateField.swift; sourceTree = "<group>"; };
 		3A330094271B72FB001DD4F3 /* TMProjectsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMProjectsVC.swift; sourceTree = "<group>"; };
 		3A330099271BCBC3001DD4F3 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 				3A032FEF2717E0FA00EA11B9 /* TMWelcomeHeaderView.swift */,
 				3AFECF86271FCC8000404F1F /* TMSquareIconView.swift */,
 				3A022ADE272CBFE7009BD2B3 /* TMEmptyView.swift */,
+				3A17BC29274341F800CE504B /* TMSectionHeaderView.swift */,
 				3ADB3DB9273CC84E00944A08 /* TMProjectHeaderDetailView.swift */,
 			);
 			path = Views;
@@ -339,6 +342,7 @@
 				3AEF9E02270E6F860065B184 /* AppDelegate.swift in Sources */,
 				3AEF9E04270E6F860065B184 /* SceneDelegate.swift in Sources */,
 				3A3300B1271E2210001DD4F3 /* TMTasksListVC.swift in Sources */,
+				3A17BC2A274341F800CE504B /* TMSectionHeaderView.swift in Sources */,
 				3A33009A271BCBC3001DD4F3 /* Project.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
