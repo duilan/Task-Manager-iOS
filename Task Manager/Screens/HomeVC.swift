@@ -168,7 +168,6 @@ class HomeVC: UIViewController {
     private func setupChildProjectsVC() {
         projectsVC.delegate = self
         stackContentView.addArrangedSubview(projectsVCContainer)
-        stackContentView.setCustomSpacing(20, after: projectsVCContainer)
         add(childVC: projectsVC, to: projectsVCContainer)
         
         projectsVCContainer.translatesAutoresizingMaskIntoConstraints = false
@@ -186,8 +185,8 @@ class HomeVC: UIViewController {
         NSLayoutConstraint.activate([
             tableHeight,
             taskVC.view.topAnchor.constraint(equalTo: tasksVCContainer.topAnchor),
-            taskVC.view.leadingAnchor.constraint(equalTo: tasksVCContainer.leadingAnchor, constant: 20),
-            taskVC.view.trailingAnchor.constraint(equalTo: tasksVCContainer.trailingAnchor, constant: -20),
+            taskVC.view.leadingAnchor.constraint(equalTo: tasksVCContainer.leadingAnchor),
+            taskVC.view.trailingAnchor.constraint(equalTo: tasksVCContainer.trailingAnchor),
             taskVC.view.bottomAnchor.constraint(equalTo: tasksVCContainer.bottomAnchor)
         ])
     }
