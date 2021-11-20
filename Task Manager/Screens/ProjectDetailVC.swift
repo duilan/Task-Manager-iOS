@@ -11,6 +11,7 @@ class ProjectDetailVC: UIViewController {
     
     private var project: Project!
     private let detailHeaderView = TMProjectHeaderDetailView()
+    private let addFloatButton = TMCircleButton()
     
     private let taskVC = TMTasksListVC()
     private let taskVCContainer = UIView()
@@ -20,6 +21,7 @@ class ProjectDetailVC: UIViewController {
         setup()
         setupDetailHeaderView()
         setupTaskVContainer()
+        setupAddFloatButton()
     }
     
     init(project: Project) {
@@ -62,6 +64,17 @@ class ProjectDetailVC: UIViewController {
             taskVCContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             taskVCContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             taskVCContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+    }
+    
+    private func setupAddFloatButton() {
+        view.addSubview(addFloatButton)
+        addFloatButton.setSystemIcon(name: "plus", pointSize: 22)
+        NSLayoutConstraint.activate([
+            addFloatButton.heightAnchor.constraint(equalToConstant: 60),
+            addFloatButton.widthAnchor.constraint(equalToConstant: 60),
+            addFloatButton.bottomAnchor.constraint(equalTo: view.bottomAnchor,constant: -30),
+            addFloatButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30)
         ])
     }
     
