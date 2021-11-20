@@ -70,6 +70,7 @@ class ProjectDetailVC: UIViewController {
     private func setupAddFloatButton() {
         view.addSubview(addFloatButton)
         addFloatButton.setSystemIcon(name: "plus", pointSize: 22)
+        addFloatButton.setSystemIcon(name: "pencil", pointSize: 25)
         NSLayoutConstraint.activate([
             addFloatButton.heightAnchor.constraint(equalToConstant: 60),
             addFloatButton.widthAnchor.constraint(equalToConstant: 60),
