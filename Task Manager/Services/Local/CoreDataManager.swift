@@ -67,4 +67,24 @@ final class CoreDataManager {
         }
     }
     
+    func addTask(title: String, desc: String?, to project: Project, completion: @escaping() -> Void) {
+        // implementar mejor el uso de contextos para este caso!!
+        guard let existContext = project.managedObjectContext else { return }
+        
+        let task = Task(context: existContext)
+        task.id = UUID().uuidString.lowercased()
+        task.createAt = Date()
+        task.title = title
+        task.status = "Pendiente"
+        project.addToTasks(task)
+        
+        do {
+            try existContext.save()
+            completion()
+            print("Se agrego nueva tarea")
+        } catch {
+            print(error)
+        }
+    }
+    
 }
