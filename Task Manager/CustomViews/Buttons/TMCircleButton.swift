@@ -19,7 +19,7 @@ class TMCircleButton: UIButton {
     }
     
     func setSystemIcon(name: String, pointSize: CGFloat ) {
-        setImage(UIImage(systemName: name, withConfiguration: UIImage.SymbolConfiguration(pointSize: pointSize)), for: .normal)
+        setImage(UIImage(systemName: name, withConfiguration: UIImage.SymbolConfiguration(pointSize: pointSize, weight: .bold)), for: .normal)
     }
     
     private func setup() {
