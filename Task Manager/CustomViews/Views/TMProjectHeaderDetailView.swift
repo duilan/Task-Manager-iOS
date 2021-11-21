@@ -62,8 +62,6 @@ class TMProjectHeaderDetailView: UIView {
     
     private func setup() {
         self.translatesAutoresizingMaskIntoConstraints = false
-        self.layer.maskedCorners = [.layerMinXMaxYCorner,.layerMaxXMaxYCorner]
-        self.layer.cornerRadius = 24
         self.clipsToBounds = true
     }
     
