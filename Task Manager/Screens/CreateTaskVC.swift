@@ -49,10 +49,13 @@ class CreateTaskVC: UIViewController {
         }
         let descValue = descTextView.text
         
-        coredata.addTask(title: titleValue, desc: descValue, to: project, completion: {            
-            self.delegate?.taskAdded()
-            self.dismiss(animated: true)
-        })        
+        coredata.addTask(title: titleValue, desc: descValue, to: self.project) { [weak self] in
+            guard let self = self else { return }
+            
+            self.dismiss(animated: true) {
+                self.delegate?.taskAdded()
+            }
+        }
         
     }
     
