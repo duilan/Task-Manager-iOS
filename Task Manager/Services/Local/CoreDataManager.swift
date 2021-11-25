@@ -44,6 +44,23 @@ final class CoreDataManager {
         }
     }
     
+    func fetchProject(id: String, completion: @escaping(Project)-> Void) {
+        let context = container.viewContext
+        let request: NSFetchRequest<Project> = Project.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", id)
+        
+        do {
+            if let project = try context.fetch(request).first {
+                completion(project)
+            } else {
+                print("peoject with id:\(id) doesnt exist")
+            }
+        } catch {
+            print(error)
+        }
+        
+    }
+    
     func createProject(alias: String, title: String , desc: String? = nil, startDate: Date, endDate: Date?, completion: @escaping() -> Void ) {
         
         let context = container.viewContext
@@ -68,20 +85,43 @@ final class CoreDataManager {
     }
     
     func addTask(title: String, desc: String?, to project: Project, completion: @escaping() -> Void) {
-        // implementar mejor el uso de contextos para este caso!!
-        guard let existContext = project.managedObjectContext else { return }
         
-        let task = Task(context: existContext)
+        let context = container.viewContext
+        // verificamos que el proyecto exista en el MOC
+        guard let existingProject = context.object(with: project.objectID) as? Project else { return }
+        
+        let task = Task(context: context)
         task.id = UUID().uuidString.lowercased()
         task.createAt = Date()
         task.title = title
         task.status = "Pendiente"
-        project.addToTasks(task)
-        
+        task.project = existingProject // relation to parent
+        // save
         do {
-            try existContext.save()
+            try context.save()
             completion()
             print("Se agrego nueva tarea")
+        } catch {
+            print(error)
+        }
+    }
+    
+    func fetchTasksOf(_ project: Project, completion: @escaping([Task]) -> Void) {
+        
+        let context = container.viewContext
+        // verificamos que el proyecto exista en el MOC
+        guard let existingProject = context.object(with: project.objectID) as? Project else { return }
+        
+        let request: NSFetchRequest<Task> = Task.fetchRequest()
+        let predicate  = NSPredicate(format: "project == %@", existingProject)
+        let sort = NSSortDescriptor(key: #keyPath(Task.createAt), ascending: false)
+        
+        request.predicate = predicate
+        request.sortDescriptors = [sort]
+        
+        do {
+            let tasks = try context.fetch(request)
+            completion(tasks)
         } catch {
             print(error)
         }

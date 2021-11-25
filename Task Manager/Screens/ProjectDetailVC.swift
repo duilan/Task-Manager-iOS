@@ -13,8 +13,10 @@ class ProjectDetailVC: UIViewController {
     private let detailHeaderView = TMProjectHeaderDetailView()
     private let addFloatButton = TMCircleButton()
     
-    private let taskVC = TMTasksListVC()
-    private let taskVCContainer = UIView()
+    private let taskListVC = TMTasksListVC()
+    private let taskListContainer = UIView()
+    
+    private let coredata = CoreDataManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +24,7 @@ class ProjectDetailVC: UIViewController {
         setupDetailHeaderView()
         setupTaskVContainer()
         setupAddFloatButton()
+        updateTasksList()
     }
     
     init(project: Project) {
@@ -31,6 +34,12 @@ class ProjectDetailVC: UIViewController {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func updateTasksList() {
+        coredata.fetchTasksOf(self.project) { [weak self] (tasks) in
+            self?.taskListVC.tasksData = tasks
+        }
     }
     
     private func setup() {
@@ -54,23 +63,30 @@ class ProjectDetailVC: UIViewController {
     
     
     private func setupTaskVContainer() {
-        view.addSubview(taskVCContainer)
-        add(childVC: taskVC, to: taskVCContainer)
-        taskVC.tasksData = project.tasks?.allObjects as [Task]
+        view.addSubview(taskListContainer)
+        add(childVC: taskListVC, to: taskListContainer)
         
-        taskVCContainer.translatesAutoresizingMaskIntoConstraints = false
+        taskListContainer.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            taskVCContainer.topAnchor.constraint(equalTo: detailHeaderView.bottomAnchor),
-            taskVCContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            taskVCContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            taskVCContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            taskListContainer.topAnchor.constraint(equalTo: detailHeaderView.bottomAnchor),
+            taskListContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            taskListContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            taskListContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+    }
+    
+    @objc func showAddTaskVC() {
+        let taskVC = CreateTaskVC(project: project)
+        taskVC.delegate = self
+        let nav = UINavigationController(rootViewController: taskVC)
+        self.present(nav, animated: true, completion: nil)
     }
     
     private func setupAddFloatButton() {
         view.addSubview(addFloatButton)
-        addFloatButton.setSystemIcon(name: "plus", pointSize: 22)
         addFloatButton.setSystemIcon(name: "pencil", pointSize: 25)
+        addFloatButton.addTarget(self, action: #selector(showAddTaskVC), for: .touchUpInside)
+        
         NSLayoutConstraint.activate([
             addFloatButton.heightAnchor.constraint(equalToConstant: 60),
             addFloatButton.widthAnchor.constraint(equalToConstant: 60),
@@ -79,4 +95,10 @@ class ProjectDetailVC: UIViewController {
         ])
     }
     
+}
+
+extension ProjectDetailVC: CreateTaskProtocol {
+    func taskAdded() {
+        self.updateTasksList()
+    }
 }
