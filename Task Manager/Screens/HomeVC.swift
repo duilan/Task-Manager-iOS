@@ -39,21 +39,20 @@ class HomeVC: UIViewController {
         setupWelcomeHeader()
         setupSegmentedControl()
         setupChildProjectsVC()
-        loadProjects()
         setupChildTasksVC()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setDefaultSegmentSelection()
-        loadProjects()
+        updateProjects()
     }
     
     private func setDefaultSegmentSelection() {
         segmentedControl.setIndex(1, animated: false, shouldSendValueChangedEvent: true)
     }
     
-    private func loadProjects() {
+    private func updateProjects() {
         coredata.fetchAllProjects { [weak self] (projects) in
             guard let self = self else { return }
             self.projectsData = projects
@@ -207,8 +206,16 @@ class HomeVC: UIViewController {
 }
 
 extension HomeVC: TMProjectsProtocol {
-    func projectDidChange(project: Project) {
-        taskVC.tasksData = project.tasks?.allObjects as [Task]
-        print("cambiar datos de tabla inferior")
+    func projectDidChange(project: Project?) {
+        
+        guard let project = project else {
+            self.tasksVCContainer.isHidden = true
+            return
+        }
+        
+        coredata.fetchTasksOf(project) { [weak self] (tasks) in
+            self?.taskVC.tasksData = tasks
+            self?.tasksVCContainer.isHidden = false
+        }
     }
 }

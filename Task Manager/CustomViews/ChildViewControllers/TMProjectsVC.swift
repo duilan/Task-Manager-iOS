@@ -8,7 +8,7 @@
 import UIKit
 
 protocol TMProjectsProtocol: class {
-    func projectDidChange(project: Project)
+    func projectDidChange(project: Project?)
 }
 
 class TMProjectsVC: UIViewController {
@@ -30,9 +30,7 @@ class TMProjectsVC: UIViewController {
     
     private var currentProjectSelected: Project?   {
         didSet {
-            if let projectSelected = currentProjectSelected {
-                delegate?.projectDidChange(project: projectSelected)
-            }
+            delegate?.projectDidChange(project: currentProjectSelected)
         }
     }
     
@@ -96,6 +94,7 @@ class TMProjectsVC: UIViewController {
         collectionView.transform = CGAffineTransform(translationX: (self.view.bounds.width), y: 0).concatenating(CGAffineTransform(scaleX: 0.6, y: 0.6))
         collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .centeredHorizontally, animated: false)
         pageIndicatorIndex = 0
+        currentProjectSelected = self.projectsData.first
         UIView.animate(withDuration: 0.35, delay: 0, options: [.curveEaseInOut]) {
             self.collectionView.transform = .identity
             self.pageIndicator.numberOfPages = self.projectsData.count
