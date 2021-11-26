@@ -82,13 +82,28 @@ class TMTasksListVC: UIViewController {
     private func updateSnapshot(with tasks: [Task], animatingDifferences: Bool = true) {
         var snapshopt = TaskSnapshot()
         
+        defer {
+            dataSource.apply(snapshopt, animatingDifferences: animatingDifferences)
+        }
+        
         let pendingTasks = tasks.filter { $0.status == "Pendiente" }
         let completedTasks = tasks.filter { $0.status == "Completada" }
         
-        snapshopt.appendSections([.pending,.completed])
-        snapshopt.appendItems(pendingTasks, toSection: .pending)
-        snapshopt.appendItems(completedTasks, toSection: .completed)
-        dataSource.apply(snapshopt, animatingDifferences: animatingDifferences)
+        var sectionsData: [(Section,[Task])] = [] // tuple
+        
+        if !pendingTasks.isEmpty {
+            sectionsData.append((.pending, pendingTasks))
+        }
+        
+        if !completedTasks.isEmpty {
+            sectionsData.append((.completed, completedTasks))
+        }
+        
+        for section in sectionsData {
+            // section.0 = section category, section.1 = [Tasks]
+            snapshopt.appendSections([section.0])
+            snapshopt.appendItems(section.1, toSection: section.0)
+        }
     }
 }
 
@@ -104,15 +119,9 @@ extension TMTasksListVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
-        let InSection = Section.allCases[section]
         let headerView = TMSectionHeaderView()
-        
-        switch InSection {
-        case .pending :
-            headerView.configure(title: InSection.rawValue.uppercased())
-        case .completed:
-            headerView.configure(title: InSection.rawValue.uppercased())
-        }
+        let currentSection = dataSource.snapshot().sectionIdentifiers[section]
+        headerView.configure(title: currentSection.rawValue.uppercased())
         return headerView
     }
     
