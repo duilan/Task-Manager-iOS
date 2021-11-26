@@ -45,6 +45,7 @@ class TaskTableViewCell: UITableViewCell {
         containerView.layer.cornerRadius = 15
         containerView.layer.cornerCurve = .circular
         // shadow
+        containerView.layer.shadowPath = UIBezierPath(rect: containerView.bounds).cgPath
         containerView.layer.shadowColor = UIColor.gray.cgColor
         containerView.layer.shadowOffset = CGSize(width: 0, height: 1)
         containerView.layer.shadowOpacity = 0.1
