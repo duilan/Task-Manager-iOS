@@ -14,6 +14,7 @@ class TMTasksListVC: UIViewController {
     
     private var tableView = UITableView(frame: .zero, style: .plain)
     private var dataSource: TaskDataSource!
+    private let emptyView = TMEmptyView(message: "Agrega algunas tareas 🎯 \n al proyecto")
     
     private enum Section: String, CaseIterable {
         case pending = "Pendientes"
@@ -84,6 +85,12 @@ class TMTasksListVC: UIViewController {
         
         defer {
             dataSource.apply(snapshopt, animatingDifferences: animatingDifferences)
+        }
+        
+        tableView.backgroundView = nil
+        if tasks.isEmpty  {
+            tableView.backgroundView = emptyView
+            return
         }
         
         let pendingTasks = tasks.filter { $0.status == "Pendiente" }
