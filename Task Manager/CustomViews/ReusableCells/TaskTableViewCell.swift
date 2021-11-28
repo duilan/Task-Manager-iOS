@@ -36,7 +36,8 @@ class TaskTableViewCell: UITableViewCell {
     }
     
     private func setup() {
-        backgroundColor = .clear
+        self.backgroundColor = .clear
+        self.selectionStyle = .none
     }
     
     private func setupContainer() {
