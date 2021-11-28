@@ -55,10 +55,14 @@ class TMDateField: UITextField {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setDefaultDate(_ date: Date = Date() ) {
-        self.date = date
-        self.datePicker.date = date
-        self.text = self.dateFormatter.string(from: date)
+    func setDefaultDate(_ date: Date? = Date() ) {
+        if let date = date {
+            self.date = date
+            self.datePicker.date = date
+            self.text = self.dateFormatter.string(from: date)
+        } else {
+            self.text = "Sin Fecha"
+        }
     }
     
     @objc private func updateDate() {

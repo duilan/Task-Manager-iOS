@@ -31,12 +31,9 @@ class TMEmptyView: UIView {
         messageLabel.numberOfLines = 0
         messageLabel.textColor = ThemeColors.textDisabled
         NSLayoutConstraint.activate([
-            
-            messageLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 40),
-            messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -40),
-            
-            messageLabel.topAnchor.constraint(equalTo: topAnchor),
-            messageLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
+            messageLabel.widthAnchor.constraint(greaterThanOrEqualTo: widthAnchor, constant: -40),
+            messageLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            messageLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
     }
     

@@ -25,6 +25,17 @@ struct ThemeColors {
     
     static let green = UIColor(named: "Green") ?? .gray
     
-    
+    // genera una layer con gradiente
+    static func createGradientLayer(colorSet: [UIColor], startAndEndPoints: (CGPoint, CGPoint)? = nil) -> CAGradientLayer {
+        
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = colorSet.map { $0.cgColor }
+        
+        if let points = startAndEndPoints {
+            gradientLayer.startPoint = points.0
+            gradientLayer.endPoint = points.1
+        }
+        return gradientLayer
+    }
 }
 

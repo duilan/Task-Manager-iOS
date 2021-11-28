@@ -8,7 +8,7 @@
 import UIKit
 
 protocol TMProjectsProtocol: class {
-    func projectDidChange(project: Project)
+    func projectDidChange(project: Project?)
 }
 
 class TMProjectsVC: UIViewController {
@@ -30,9 +30,7 @@ class TMProjectsVC: UIViewController {
     
     private var currentProjectSelected: Project?   {
         didSet {
-            if let projectSelected = currentProjectSelected {
-                delegate?.projectDidChange(project: projectSelected)
-            }
+            delegate?.projectDidChange(project: currentProjectSelected)
         }
     }
     
@@ -80,6 +78,7 @@ class TMProjectsVC: UIViewController {
         collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.delegate = self
         // Registro de cell reusable
         collectionView.register(ProjectViewCell.self, forCellWithReuseIdentifier: ProjectViewCell.cellID)
         // Contraints
@@ -95,6 +94,7 @@ class TMProjectsVC: UIViewController {
         collectionView.transform = CGAffineTransform(translationX: (self.view.bounds.width), y: 0).concatenating(CGAffineTransform(scaleX: 0.6, y: 0.6))
         collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .centeredHorizontally, animated: false)
         pageIndicatorIndex = 0
+        currentProjectSelected = self.projectsData.first
         UIView.animate(withDuration: 0.35, delay: 0, options: [.curveEaseInOut]) {
             self.collectionView.transform = .identity
             self.pageIndicator.numberOfPages = self.projectsData.count
@@ -126,18 +126,17 @@ class TMProjectsVC: UIViewController {
     
     private func updateDataSourceSnapshot() {
         collectionView.backgroundView = nil
-        if projectsData.isEmpty {
-            DispatchQueue.main.async {
-                self.collectionView.backgroundView = TMEmptyView(message: "Sin Proyectos ☝️")
-            }
-        }
         
         var snapshot = ProjectSnapshot()
         snapshot.appendSections([.projects])
         snapshot.appendItems( projectsData, toSection: .projects)
+        
         DispatchQueue.main.async {
             self.dataSource.apply(snapshot,animatingDifferences: false)
             self.animateToStartItem()
+            if self.projectsData.isEmpty {
+                self.collectionView.backgroundView = TMEmptyView(message: "Sin Proyectos ☝️")
+            }
         }
     }
     
@@ -176,4 +175,14 @@ class TMProjectsVC: UIViewController {
         return layout
     }
     
+}
+
+extension TMProjectsVC: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        guard let projectSelected = dataSource.itemIdentifier(for: indexPath) else { return }
+        
+        let projectDetailVC = ProjectDetailVC(project: projectSelected)
+        navigationController?.pushViewController(projectDetailVC, animated: true)
+    }
 }
