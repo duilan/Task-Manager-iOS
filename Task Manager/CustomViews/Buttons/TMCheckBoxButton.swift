@@ -47,10 +47,10 @@ class TMCheckBoxButton: UIButton {
     private func updateIcon() {
         if isChecked {
             self.setImage(checkedIcon, for: .normal)
-            self.tintColor = ThemeColors.green
+            self.tintColor = ThemeColors.checked
         } else {
             self.setImage(uncheckedIcon, for: .normal)
-            self.tintColor = UIColor.lightGray.withAlphaComponent(0.2)
+            self.tintColor = ThemeColors.unchecked
         }
     }
     

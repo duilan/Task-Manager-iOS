@@ -23,7 +23,8 @@ struct ThemeColors {
     
     static let navbar = UIColor(named: "Navbar") ?? .gray
     
-    static let green = UIColor(named: "Green") ?? .gray
+    static let checked = UIColor(named: "Checked") ?? .gray
+    static let unchecked = UIColor(named: "Unchecked") ?? .gray
     
     // genera una layer con gradiente
     static func createGradientLayer(colorSet: [UIColor], startAndEndPoints: (CGPoint, CGPoint)? = nil) -> CAGradientLayer {
