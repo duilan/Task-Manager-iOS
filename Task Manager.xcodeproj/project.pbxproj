@@ -29,6 +29,7 @@
 		3A6462F92727925800FA7F95 /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6462F82727925800FA7F95 /* TaskTableViewCell.swift */; };
 		3A69C77D271892E50078668B /* TMTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A69C77C271892E40078668B /* TMTitleLabel.swift */; };
 		3A69C780271899E10078668B /* TMSubtitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A69C77F271899E10078668B /* TMSubtitleLabel.swift */; };
+		3A6B9FFE27547482004E47BF /* TMCheckBoxButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6B9FFD27547482004E47BF /* TMCheckBoxButton.swift */; };
 		3A7080572711240E00D2F06E /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7080562711240E00D2F06E /* HomeVC.swift */; };
 		3AA1930A2730D88300D213CB /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA193092730D88300D213CB /* UIColor+Ext.swift */; };
 		3AA39A962738ABF000711E51 /* ProjectDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA39A952738ABF000711E51 /* ProjectDetailVC.swift */; };
@@ -64,6 +65,7 @@
 		3A6462F82727925800FA7F95 /* TaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
 		3A69C77C271892E40078668B /* TMTitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMTitleLabel.swift; sourceTree = "<group>"; };
 		3A69C77F271899E10078668B /* TMSubtitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMSubtitleLabel.swift; sourceTree = "<group>"; };
+		3A6B9FFD27547482004E47BF /* TMCheckBoxButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMCheckBoxButton.swift; sourceTree = "<group>"; };
 		3A7080562711240E00D2F06E /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		3AA193092730D88300D213CB /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
 		3AA39A952738ABF000711E51 /* ProjectDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetailVC.swift; sourceTree = "<group>"; };
@@ -206,6 +208,7 @@
 			children = (
 				3A468132272FB78C00142B4E /* TMButton.swift */,
 				3AFBCF7227471E0100AEB1C4 /* TMCircleButton.swift */,
+				3A6B9FFD27547482004E47BF /* TMCheckBoxButton.swift */,
 			);
 			path = Buttons;
 			sourceTree = "<group>";
@@ -331,6 +334,7 @@
 				3A3300AD271D2F62001DD4F3 /* ViewController+Ext.swift in Sources */,
 				3ADB3DBA273CC84E00944A08 /* TMProjectHeaderDetailView.swift in Sources */,
 				3AD69170272A4AC5000279B2 /* CoreDataManager.swift in Sources */,
+				3A6B9FFE27547482004E47BF /* TMCheckBoxButton.swift in Sources */,
 				3A032FF02717E0FA00EA11B9 /* TMWelcomeHeaderView.swift in Sources */,
 				3A7080572711240E00D2F06E /* HomeVC.swift in Sources */,
 				3A3300A9271CCF56001DD4F3 /* ProjectViewCell.swift in Sources */,
