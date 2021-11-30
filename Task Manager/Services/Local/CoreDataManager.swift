@@ -94,7 +94,8 @@ final class CoreDataManager {
         task.id = UUID().uuidString.lowercased()
         task.createAt = Date()
         task.title = title
-        task.status = "Pendiente"
+        task.desc = desc
+        task.isDone = false
         task.project = existingProject // relation to parent
         // save
         do {

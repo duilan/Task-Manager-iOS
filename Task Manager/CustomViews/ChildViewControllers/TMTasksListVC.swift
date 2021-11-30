@@ -93,8 +93,8 @@ class TMTasksListVC: UIViewController {
             return
         }
         
-        let pendingTasks = tasks.filter { $0.status == "Pendiente" }
-        let completedTasks = tasks.filter { $0.status == "Completada" }
+        let pendingTasks = tasks.filter { $0.isDone == false }
+        let completedTasks = tasks.filter { $0.isDone == true }
         
         var sectionsData: [(Section,[Task])] = [] // tuple
         
