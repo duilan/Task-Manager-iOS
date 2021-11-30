@@ -19,7 +19,7 @@ class HomeVC: UIViewController {
     // 0 : All, 1: InProgress, 2:Completed
     private var segmentIndex: Int = 1
     
-    private let coredata = CoreDataManager()
+    private let coredata = CoreDataManager.shared
     
     //ScrollView Container
     let scrollView = UIScrollView()

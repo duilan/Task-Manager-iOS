@@ -20,8 +20,6 @@ class CreateProjectVC: UIViewController {
     private let scrollView = UIScrollView()
     private let contentView = UIView()
     
-    private let coredata = CoreDataManager()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
@@ -169,7 +167,7 @@ class CreateProjectVC: UIViewController {
         let endDate = endDateTextField.date
         let descValue = descTextView.text
         
-        coredata.createProject(
+        CoreDataManager.shared.createProject(
             alias: aliasValue, title: titleValue, desc: descValue, startDate: startDate, endDate: endDate) { [weak self] in
             self?.navigationController?.popViewController(animated: true)
         }

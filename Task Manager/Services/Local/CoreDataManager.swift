@@ -9,10 +9,13 @@ import CoreData
 
 final class CoreDataManager {
     
+    // singleton access
+    public static var shared = CoreDataManager()
+    
     private let dataBaseName = "TaskManager"
     private let container: NSPersistentContainer!
     
-    init() {
+    private init() {
         container = NSPersistentContainer(name: dataBaseName)
         configureDatabase()
     }

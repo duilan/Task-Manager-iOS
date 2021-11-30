@@ -16,7 +16,7 @@ class ProjectDetailVC: UIViewController {
     private let taskListVC = TMTasksListVC()
     private let taskListContainer = UIView()
     
-    private let coredata = CoreDataManager()
+    private let coredata = CoreDataManager.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()

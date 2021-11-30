@@ -19,7 +19,7 @@ class CreateTaskVC: UIViewController {
     private let saveButton = TMButton("Guardar")
     
     private var project: Project!
-    private let coredata = CoreDataManager()
+    private let coredata = CoreDataManager.shared
     
     weak var delegate: CreateTaskProtocol?
     
