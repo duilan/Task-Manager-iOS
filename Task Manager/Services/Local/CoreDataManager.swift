@@ -131,4 +131,16 @@ final class CoreDataManager {
         }
     }
     
+    
+    func delete(_ object: NSManagedObject, completion: @escaping() -> Void) {
+        let context = container.viewContext
+        context.delete(object)
+        do {
+            try context.save()
+            completion()
+        } catch {
+            print(error)
+        }
+    }
+        
 }
