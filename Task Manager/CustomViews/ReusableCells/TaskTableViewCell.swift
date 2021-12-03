@@ -16,6 +16,8 @@ class TaskTableViewCell: UITableViewCell {
     private let subtitleTask = TMSubtitleLabel(fontSize: 12, weight: .regular, textAlignment: .left)
     private let stackTitles = UIStackView()
     private let containerView = UIView()
+    public  let doneButton = TMCheckBoxButton()
+    public var doneButtonAction : (() -> ()) = {}
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -23,6 +25,7 @@ class TaskTableViewCell: UITableViewCell {
         setupContainer()
         setupIconView()
         setupTitleAndSubtitle()
+        setupCheckMarkButton()
     }
     
     required init?(coder: NSCoder) {
@@ -33,6 +36,11 @@ class TaskTableViewCell: UITableViewCell {
         titleTask.text = task.title
         #warning("Faltan atributos en el modelo del task ")
         subtitleTask.text = "Hace 2 Días"
+        doneButton.isChecked = task.isDone
+    }
+    
+    @objc func doneButtonTapped(_ sender: TMCheckBoxButton) {
+        doneButtonAction()
     }
     
     private func setup() {
@@ -63,7 +71,7 @@ class TaskTableViewCell: UITableViewCell {
     }
     
     private func setupIconView() {
-        contentView.addSubview(iconView)
+        containerView.addSubview(iconView)
         iconView.systemNameIcon = "note.text"
         // Contraints
         NSLayoutConstraint.activate([
@@ -75,7 +83,7 @@ class TaskTableViewCell: UITableViewCell {
     }
     
     private func setupTitleAndSubtitle() {
-        contentView.addSubview(stackTitles)
+        containerView.addSubview(stackTitles)
         stackTitles.addArrangedSubview(titleTask)
         stackTitles.addArrangedSubview(subtitleTask)
         titleTask.numberOfLines = 1
@@ -90,6 +98,18 @@ class TaskTableViewCell: UITableViewCell {
             stackTitles.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
             stackTitles.leadingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: 16),
             stackTitles.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+        ])
+    }
+    
+    private func setupCheckMarkButton() {
+        containerView.addSubview(doneButton)
+        doneButton.addTarget(self, action: #selector(doneButtonTapped(_:)), for: .touchUpInside )
+        
+        NSLayoutConstraint.activate([
+            doneButton.heightAnchor.constraint(equalToConstant: 30),
+            doneButton.widthAnchor.constraint(equalToConstant: 30),
+            doneButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor,constant: -20),
+            doneButton.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
         ])
     }
     
