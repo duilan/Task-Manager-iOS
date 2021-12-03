@@ -131,6 +131,17 @@ final class CoreDataManager {
         }
     }
     
+    func updateTask(with task: Task, completion: @escaping() -> Void) {
+        
+        guard let context = task.managedObjectContext else { return }
+        
+        do {
+            try context.save()
+            completion()
+        } catch {
+            print(error)
+        }
+    }
     
     func delete(_ object: NSManagedObject, completion: @escaping() -> Void) {
         let context = container.viewContext
