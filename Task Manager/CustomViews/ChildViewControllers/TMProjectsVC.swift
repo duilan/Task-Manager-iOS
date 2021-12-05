@@ -90,6 +90,29 @@ class TMProjectsVC: UIViewController {
         ])
     }
     
+    private func contextMenuConfigurationActions(indexPath: IndexPath) ->UIContextMenuConfiguration {
+        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { (menuElement) -> UIMenu? in
+            
+            let deleteAction = UIAction(title: "Eliminar",
+                                        image: UIImage(systemName: "trash"),
+                                        attributes: .destructive) { (action) in
+                
+                guard let project = self.dataSource.itemIdentifier(for: indexPath) else { return }
+                
+                CoreDataManager.shared.delete(project) { [weak self] in
+                    self?.projectsData.remove(at: indexPath.row)
+                    self?.updateDataSourceSnapshot()
+                }
+            }
+            
+            return UIMenu(title: "OPCIONES DEL PROYECTO",
+                          image: nil,
+                          identifier: nil,
+                          options: .displayInline,
+                          children: [deleteAction])
+        }
+    }
+    
     private func animateToStartItem() {
         collectionView.transform = CGAffineTransform(translationX: (self.view.bounds.width), y: 0).concatenating(CGAffineTransform(scaleX: 0.6, y: 0.6))
         collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .centeredHorizontally, animated: false)
@@ -184,5 +207,9 @@ extension TMProjectsVC: UICollectionViewDelegate {
         
         let projectDetailVC = ProjectDetailVC(project: projectSelected)
         navigationController?.pushViewController(projectDetailVC, animated: true)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        contextMenuConfigurationActions(indexPath: indexPath)
     }
 }
