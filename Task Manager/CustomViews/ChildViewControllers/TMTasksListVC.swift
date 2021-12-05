@@ -42,6 +42,25 @@ class TMTasksListVC: UIViewController {
         preferredContentSize.height = tableViewHeight + tableView.contentInset.top + tableView.contentInset.bottom
     }
     
+    func contextMenuConfigurationActions(indexPath: IndexPath) -> UIContextMenuConfiguration {
+        let context =  UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { (menuElement) -> UIMenu? in
+            
+            let deleteAction =
+                UIAction(title: NSLocalizedString("Eliminar Tarea", comment: ""),
+                         image: UIImage(systemName: "trash"),
+                         attributes: .destructive) { action in
+                    guard let task = self.dataSource.itemIdentifier(for: indexPath) else { return }
+                    CoreDataManager.shared.delete(task) {
+                        // update task data
+                        self.updateData()
+                    }
+                }
+            
+            return UIMenu(title: "OPCIONES", options: .displayInline , children: [deleteAction])
+        }
+        return context
+    }
+    
     private func setup() {
         view.backgroundColor = ThemeColors.backgroundPrimary
     }
@@ -145,6 +164,10 @@ extension TMTasksListVC: UITableViewDelegate {
         let currentSection = dataSource.snapshot().sectionIdentifiers[section]
         headerView.configure(title: currentSection.rawValue.uppercased())
         return headerView
+    }
+    
+    func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        contextMenuConfigurationActions(indexPath: indexPath)
     }
     
 }

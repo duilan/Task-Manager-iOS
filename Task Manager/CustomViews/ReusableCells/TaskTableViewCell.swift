@@ -35,7 +35,9 @@ class TaskTableViewCell: UITableViewCell {
     func configure(with task: Task) {
         titleTask.text = task.title
         #warning("Faltan atributos en el modelo del task ")
-        subtitleTask.text = "Hace 2 Días"
+        let formater = DateFormatter()
+        formater.dateFormat = "d MMM yyyy"
+        subtitleTask.text = "Prioridad Baja"
         doneButton.isChecked = task.isDone
     }
     
@@ -77,8 +79,8 @@ class TaskTableViewCell: UITableViewCell {
         NSLayoutConstraint.activate([
             iconView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
             iconView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
-            iconView.heightAnchor.constraint(equalToConstant: 40),
-            iconView.widthAnchor.constraint(equalToConstant: 40)
+            iconView.heightAnchor.constraint(equalToConstant: 35),
+            iconView.widthAnchor.constraint(equalToConstant: 30)
         ])
     }
     
