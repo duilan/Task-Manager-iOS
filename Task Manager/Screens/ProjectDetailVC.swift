@@ -24,7 +24,7 @@ class ProjectDetailVC: UIViewController {
         setupDetailHeaderView()
         setupTaskVContainer()
         setupAddFloatButton()
-        updateTasksList()
+        updateTasksListProject()
     }
     
     init(project: Project) {
@@ -36,10 +36,8 @@ class ProjectDetailVC: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func updateTasksList() {
-        coredata.fetchTasksOf(self.project) { [weak self] (tasks) in
-            self?.taskListVC.tasksData = tasks
-        }
+    private func updateTasksListProject() {
+        self.taskListVC.setProject(project)
     }
     
     private func setup() {
@@ -60,7 +58,6 @@ class ProjectDetailVC: UIViewController {
             detailHeaderView.heightAnchor.constraint(greaterThanOrEqualToConstant: 100)
         ])
     }
-    
     
     private func setupTaskVContainer() {
         view.addSubview(taskListContainer)
@@ -99,6 +96,6 @@ class ProjectDetailVC: UIViewController {
 
 extension ProjectDetailVC: CreateTaskProtocol {
     func taskAdded() {
-        self.updateTasksList()
+        self.updateTasksListProject()
     }
 }

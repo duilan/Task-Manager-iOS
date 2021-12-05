@@ -15,17 +15,11 @@ class TMTasksListVC: UIViewController {
     private var tableView = UITableView(frame: .zero, style: .plain)
     private var dataSource: TaskDataSource!
     private let emptyView = TMEmptyView(message: "Agrega algunas tareas 🎯 \n al proyecto")
+    private var project: Project?
     
     private enum Section: String, CaseIterable {
         case pending = "Pendientes"
         case completed = "Completadas"
-    }
-    
-    var tasksData: [Task] = [] {
-        didSet {
-            updateSnapshot(with: tasksData, animatingDifferences: false)
-            preferredContentSize.height = tableViewHeight + tableView.contentInset.top + tableView.contentInset.bottom
-        }
     }
     
     private var tableViewHeight: CGFloat {
@@ -39,7 +33,13 @@ class TMTasksListVC: UIViewController {
         setup()
         setupTable()
         setupDataSource()
-        updateSnapshot(with: tasksData, animatingDifferences: false)
+    }
+    
+    func setProject(_ project: Project) {
+        self.project = project
+        updateData(animatingDifferences: false)
+        // actualizamos el alto de la tabla
+        preferredContentSize.height = tableViewHeight + tableView.contentInset.top + tableView.contentInset.bottom
     }
     
     private func setup() {
@@ -65,6 +65,15 @@ class TMTasksListVC: UIViewController {
         ])
     }
     
+    func updateData(animatingDifferences: Bool = true){
+        guard let currentProject = self.project else { return }
+        
+        CoreDataManager.shared.fetchTasksOf(currentProject) { [weak self] (tasks) in
+            self?.updateSnapshot(with: tasks, animatingDifferences: animatingDifferences)
+        }
+        
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         preferredContentSize.height = tableViewHeight + tableView.contentInset.top + tableView.contentInset .bottom
@@ -76,6 +85,12 @@ class TMTasksListVC: UIViewController {
                 return TaskTableViewCell()
             }
             cell.configure(with: item)
+            cell.doneButtonAction = {
+                item.isDone = !item.isDone
+                CoreDataManager.shared.updateTask(with: item) { [weak self] in
+                    self?.updateData()
+                }
+            }
             return cell
         })
     }
@@ -131,6 +146,5 @@ extension TMTasksListVC: UITableViewDelegate {
         headerView.configure(title: currentSection.rawValue.uppercased())
         return headerView
     }
-    
     
 }

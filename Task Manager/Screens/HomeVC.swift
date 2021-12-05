@@ -207,15 +207,7 @@ class HomeVC: UIViewController {
 
 extension HomeVC: TMProjectsProtocol {
     func projectDidChange(project: Project?) {
-        
-        guard let project = project else {
-            self.tasksVCContainer.isHidden = true
-            return
-        }
-        
-        coredata.fetchTasksOf(project) { [weak self] (tasks) in
-            self?.taskVC.tasksData = tasks
-            self?.tasksVCContainer.isHidden = false
-        }
+        guard let project = project else { return }
+        taskVC.setProject(project)
     }
 }
