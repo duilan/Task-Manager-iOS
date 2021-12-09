@@ -15,7 +15,7 @@ class CreateTaskVC: UIViewController {
     
     private let formStackView = UIStackView()
     private let titleTextField = TMTextField()
-    private let descTextView = TMTextView()
+    private let notesTextView = TMTextView()
     private let saveButton = TMButton("Guardar")
     
     private var project: Project!
@@ -29,7 +29,7 @@ class CreateTaskVC: UIViewController {
         setupNavbarItems()
         setupContentView()
         setupTitleTextField()
-        setupDescTextView()
+        setupNotesTextView()
         setupSaveButton()
     }
     
@@ -47,9 +47,9 @@ class CreateTaskVC: UIViewController {
             titleTextField.becomeFirstResponder()
             return
         }
-        let descValue = descTextView.text
+        let descValue = notesTextView.text
         
-        coredata.addTask(title: titleValue, desc: descValue, to: self.project) { [weak self] in
+        coredata.addTask(title: titleValue, notes: descValue, to: self.project) { [weak self] in
             guard let self = self else { return }
             
             self.dismiss(animated: true) {
@@ -98,13 +98,13 @@ class CreateTaskVC: UIViewController {
         titleTextField.heightAnchor.constraint(equalToConstant: 60).isActive = true
     }
     
-    private func setupDescTextView() {
-        formStackView.addArrangedSubview(descTextView)
-        formStackView.setCustomSpacing(20, after: descTextView)
-        descTextView.title = "Detalle de tarea"
-        descTextView.isScrollEnabled = false
-        descTextView.maximumNumberOfLines = 5
-        descTextView.heightAnchor.constraint(greaterThanOrEqualToConstant: 120).isActive = true
+    private func setupNotesTextView() {
+        formStackView.addArrangedSubview(notesTextView)
+        formStackView.setCustomSpacing(20, after: notesTextView)
+        notesTextView.title = "Notas"
+        notesTextView.isScrollEnabled = false
+        notesTextView.maximumNumberOfLines = 5
+        notesTextView.heightAnchor.constraint(greaterThanOrEqualToConstant: 120).isActive = true
     }
     
     private func setupSaveButton() {

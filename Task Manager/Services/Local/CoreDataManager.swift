@@ -87,7 +87,7 @@ final class CoreDataManager {
         }
     }
     
-    func addTask(title: String, desc: String?, to project: Project, completion: @escaping() -> Void) {
+    func addTask(title: String, notes: String?, to project: Project, completion: @escaping() -> Void) {
         
         let context = container.viewContext
         // verificamos que el proyecto exista en el MOC
@@ -97,7 +97,7 @@ final class CoreDataManager {
         task.id = UUID().uuidString.lowercased()
         task.createAt = Date()
         task.title = title
-        task.desc = desc
+        task.notes = notes
         task.isDone = false
         task.project = existingProject // relation to parent
         // save
