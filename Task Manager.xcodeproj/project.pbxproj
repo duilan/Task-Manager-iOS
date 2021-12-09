@@ -31,6 +31,7 @@
 		3A69C780271899E10078668B /* TMSubtitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A69C77F271899E10078668B /* TMSubtitleLabel.swift */; };
 		3A6B9FFE27547482004E47BF /* TMCheckBoxButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6B9FFD27547482004E47BF /* TMCheckBoxButton.swift */; };
 		3A7080572711240E00D2F06E /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7080562711240E00D2F06E /* HomeVC.swift */; };
+		3A8CBFC72762AC7E00E1A43A /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8CBFC62762AC7E00E1A43A /* Date+Ext.swift */; };
 		3AA1930A2730D88300D213CB /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA193092730D88300D213CB /* UIColor+Ext.swift */; };
 		3AA39A962738ABF000711E51 /* ProjectDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA39A952738ABF000711E51 /* ProjectDetailVC.swift */; };
 		3AD69170272A4AC5000279B2 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD6916F272A4AC5000279B2 /* CoreDataManager.swift */; };
@@ -67,6 +68,7 @@
 		3A69C77F271899E10078668B /* TMSubtitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMSubtitleLabel.swift; sourceTree = "<group>"; };
 		3A6B9FFD27547482004E47BF /* TMCheckBoxButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMCheckBoxButton.swift; sourceTree = "<group>"; };
 		3A7080562711240E00D2F06E /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
+		3A8CBFC62762AC7E00E1A43A /* Date+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
 		3AA193092730D88300D213CB /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
 		3AA39A952738ABF000711E51 /* ProjectDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetailVC.swift; sourceTree = "<group>"; };
 		3AD6916F272A4AC5000279B2 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 				3A3300AC271D2F62001DD4F3 /* ViewController+Ext.swift */,
 				3AFECF7D271FB31300404F1F /* UIView+Ext.swift */,
 				3AA193092730D88300D213CB /* UIColor+Ext.swift */,
+				3A8CBFC62762AC7E00E1A43A /* Date+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -328,6 +331,7 @@
 				3A022AE2272CD815009BD2B3 /* CreateProjectVC.swift in Sources */,
 				3A07CB36272B798A00E20F3A /* TaskManager.xcdatamodeld in Sources */,
 				3A3720F0271643CE00FE1A75 /* ThemeColors.swift in Sources */,
+				3A8CBFC72762AC7E00E1A43A /* Date+Ext.swift in Sources */,
 				3A330095271B72FB001DD4F3 /* TMProjectsVC.swift in Sources */,
 				3A43078D27323843005D98D9 /* TMTextView.swift in Sources */,
 				3AFECF7E271FB31300404F1F /* UIView+Ext.swift in Sources */,
