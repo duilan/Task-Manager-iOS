@@ -106,6 +106,7 @@ class TMTasksListVC: UIViewController {
             cell.configure(with: item)
             cell.doneButtonAction = {
                 item.isDone = !item.isDone
+                item.doneAt = Date() // current date
                 CoreDataManager.shared.updateTask(with: item) { [weak self] in
                     self?.updateData()
                 }

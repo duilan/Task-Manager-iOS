@@ -11,10 +11,10 @@ class TaskTableViewCell: UITableViewCell {
     
     static let cellID = "TaskTableViewCell"
     
-    private let iconView = TMSquareIconView(withGradient: true)
     private let titleTask = TMTitleLabel(fontSize: 16, weight: .semibold, textAlignment: .left)
-    private let subtitleTask = TMSubtitleLabel(fontSize: 12, weight: .regular, textAlignment: .left)
+    private let creationTimeLabel = TMSubtitleLabel(fontSize: 12, weight: .regular, textAlignment: .left)
     private let stackTitles = UIStackView()
+    private let priorityLine = UIView()
     private let containerView = UIView()
     public  let doneButton = TMCheckBoxButton()
     public var doneButtonAction : (() -> ()) = {}
@@ -23,9 +23,9 @@ class TaskTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setup()
         setupContainer()
-        setupIconView()
-        setupTitleAndSubtitle()
+        //setupPriorityLine()
         setupCheckMarkButton()
+        setupTitleAndCreateDateLabel()
     }
     
     required init?(coder: NSCoder) {
@@ -34,10 +34,7 @@ class TaskTableViewCell: UITableViewCell {
     
     func configure(with task: Task) {
         titleTask.text = task.title
-        #warning("Faltan atributos en el modelo del task ")
-        let formater = DateFormatter()
-        formater.dateFormat = "d MMM yyyy"
-        subtitleTask.text = "Prioridad Baja"
+        creationTimeLabel.text = "Hace \( Date().countFrom(date: task.createAt!))"
         doneButton.isChecked = task.isDone
     }
     
@@ -55,6 +52,7 @@ class TaskTableViewCell: UITableViewCell {
         containerView.backgroundColor = .white
         containerView.layer.cornerRadius = 15
         containerView.layer.cornerCurve = .circular
+        containerView.clipsToBounds = true
         // shadow
         containerView.layer.shadowPath = UIBezierPath(rect: containerView.bounds).cgPath
         containerView.layer.shadowColor = UIColor.gray.cgColor
@@ -72,37 +70,6 @@ class TaskTableViewCell: UITableViewCell {
         ])
     }
     
-    private func setupIconView() {
-        containerView.addSubview(iconView)
-        iconView.systemNameIcon = "note.text"
-        // Contraints
-        NSLayoutConstraint.activate([
-            iconView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
-            iconView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
-            iconView.heightAnchor.constraint(equalToConstant: 35),
-            iconView.widthAnchor.constraint(equalToConstant: 30)
-        ])
-    }
-    
-    private func setupTitleAndSubtitle() {
-        containerView.addSubview(stackTitles)
-        stackTitles.addArrangedSubview(titleTask)
-        stackTitles.addArrangedSubview(subtitleTask)
-        titleTask.numberOfLines = 1
-        subtitleTask.numberOfLines = 1
-        
-        stackTitles.axis = .vertical
-        stackTitles.translatesAutoresizingMaskIntoConstraints = false
-        // Contraints
-        NSLayoutConstraint.activate([
-            titleTask.heightAnchor.constraint(equalToConstant: 20),
-            subtitleTask.heightAnchor.constraint(equalToConstant: 20),
-            stackTitles.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
-            stackTitles.leadingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: 16),
-            stackTitles.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
-        ])
-    }
-    
     private func setupCheckMarkButton() {
         containerView.addSubview(doneButton)
         doneButton.addTarget(self, action: #selector(doneButtonTapped(_:)), for: .touchUpInside )
@@ -110,9 +77,46 @@ class TaskTableViewCell: UITableViewCell {
         NSLayoutConstraint.activate([
             doneButton.heightAnchor.constraint(equalToConstant: 30),
             doneButton.widthAnchor.constraint(equalToConstant: 30),
-            doneButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor,constant: -20),
+            doneButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
             doneButton.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
         ])
+    }
+    
+    private func setupTitleAndCreateDateLabel() {
+        containerView.addSubview(stackTitles)
+        stackTitles.addArrangedSubview(titleTask)
+        stackTitles.addArrangedSubview(creationTimeLabel)
+        titleTask.numberOfLines = 1
+        creationTimeLabel.numberOfLines = 1
+        
+        stackTitles.axis = .vertical
+        stackTitles.translatesAutoresizingMaskIntoConstraints = false
+        // Contraints
+        NSLayoutConstraint.activate([
+            titleTask.heightAnchor.constraint(equalToConstant: 20),
+            creationTimeLabel.heightAnchor.constraint(equalToConstant: 20),
+            stackTitles.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
+            stackTitles.leadingAnchor.constraint(equalTo: doneButton.trailingAnchor, constant: 16),
+            stackTitles.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+        ])
+    }
+    
+    private func setupPriorityLine() {
+        containerView.addSubview(priorityLine)
+        #warning("Este color debe ser segun la prioridad")
+        priorityLine.backgroundColor = ThemeColors.accentColor
+        priorityLine.layer.cornerRadius = 2
+        priorityLine.layer.cornerCurve = .continuous
+        //priorityLine.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMaxXMaxYCorner]
+        priorityLine.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            priorityLine.widthAnchor.constraint(equalToConstant: 4),
+            priorityLine.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            priorityLine.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 15),
+            priorityLine.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -15)
+        ])
+        
     }
     
 }
