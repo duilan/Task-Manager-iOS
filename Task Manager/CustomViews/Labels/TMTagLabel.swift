@@ -34,6 +34,9 @@ class TMTagLabel: UILabel {
         textAlignment = .center
         numberOfLines = 1
         lineBreakMode = .byTruncatingTail
+        layer.cornerRadius = 6
+        layer.cornerCurve = .continuous
+        clipsToBounds = true
         translatesAutoresizingMaskIntoConstraints = false
     }
     
