@@ -14,7 +14,7 @@ class TaskTableViewCell: UITableViewCell {
     private let titleTask = TMTitleLabel(fontSize: 16, weight: .semibold, textAlignment: .left)
     private let creationTimeLabel = TMSubtitleLabel(fontSize: 12, weight: .regular, textAlignment: .left)
     private let stackTitles = UIStackView()
-    private let priorityLine = UIView()
+    private let priorityLabel = TMTagLabel()
     private let containerView = UIView()
     public  let doneButton = TMCheckBoxButton()
     public var doneButtonAction : (() -> ()) = {}
@@ -23,9 +23,9 @@ class TaskTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setup()
         setupContainer()
-        //setupPriorityLine()
         setupCheckMarkButton()
         setupTitleAndCreateDateLabel()
+        setupPriorityLabel()
     }
     
     required init?(coder: NSCoder) {
@@ -36,6 +36,22 @@ class TaskTableViewCell: UITableViewCell {
         titleTask.text = task.title
         creationTimeLabel.text = "Hace \( Date().countFrom(date: task.createAt!))"
         doneButton.isChecked = task.isDone
+        let priority = Priority.allCases[Int(task.priority)]
+        configurePriority(priority)
+    }
+    
+    func configurePriority(_ priority: Priority) {
+        // text
+        priorityLabel.text = priority.rawValue
+        // color
+        switch priority {
+        case .normal:
+            priorityLabel.accentColor = .systemTeal
+        case .moderada:
+            priorityLabel.accentColor = .systemYellow
+        case .importante:
+            priorityLabel.accentColor = .systemRed
+        }
     }
     
     @objc func doneButtonTapped(_ sender: TMCheckBoxButton) {
@@ -101,22 +117,13 @@ class TaskTableViewCell: UITableViewCell {
         ])
     }
     
-    private func setupPriorityLine() {
-        containerView.addSubview(priorityLine)
-        #warning("Este color debe ser segun la prioridad")
-        priorityLine.backgroundColor = ThemeColors.accentColor
-        priorityLine.layer.cornerRadius = 2
-        priorityLine.layer.cornerCurve = .continuous
-        //priorityLine.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMaxXMaxYCorner]
-        priorityLine.translatesAutoresizingMaskIntoConstraints = false
-        
+    private func setupPriorityLabel() {
+        containerView.addSubview(priorityLabel)
         NSLayoutConstraint.activate([
-            priorityLine.widthAnchor.constraint(equalToConstant: 4),
-            priorityLine.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-            priorityLine.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 15),
-            priorityLine.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -15)
+            priorityLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
+            priorityLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -24),
+            priorityLabel.heightAnchor.constraint(equalToConstant: 20)
         ])
-        
     }
     
 }

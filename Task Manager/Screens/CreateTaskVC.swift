@@ -16,6 +16,7 @@ class CreateTaskVC: UIViewController {
     private let formStackView = UIStackView()
     private let titleTextField = TMTextField()
     private let notesTextView = TMTextView()
+    private let prioritiesView = TMPriorityOptionsView()
     private let saveButton = TMButton("Guardar")
     
     private var project: Project!
@@ -30,6 +31,7 @@ class CreateTaskVC: UIViewController {
         setupContentView()
         setupTitleTextField()
         setupNotesTextView()
+        setupPrioritiesView()
         setupSaveButton()
     }
     
@@ -47,9 +49,11 @@ class CreateTaskVC: UIViewController {
             titleTextField.becomeFirstResponder()
             return
         }
-        let descValue = notesTextView.text
         
-        coredata.addTask(title: titleValue, notes: descValue, to: self.project) { [weak self] in
+        let descValue = notesTextView.text
+        let priorityID = prioritiesView.currentPriority
+        
+        coredata.addTask(title: titleValue, notes: descValue, priority: priorityID, to: self.project) { [weak self] in
             guard let self = self else { return }
             
             self.dismiss(animated: true) {
@@ -100,7 +104,6 @@ class CreateTaskVC: UIViewController {
     
     private func setupNotesTextView() {
         formStackView.addArrangedSubview(notesTextView)
-        formStackView.setCustomSpacing(20, after: notesTextView)
         notesTextView.title = "Notas"
         notesTextView.isScrollEnabled = false
         notesTextView.maximumNumberOfLines = 5
@@ -111,6 +114,11 @@ class CreateTaskVC: UIViewController {
         formStackView.addArrangedSubview(saveButton)
         saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         saveButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+    }
+    
+    private func setupPrioritiesView() {
+        formStackView.addArrangedSubview(prioritiesView)
+        formStackView.setCustomSpacing(24, after: prioritiesView)
     }
     
 }

@@ -25,3 +25,9 @@ enum StatusProject: String, CaseIterable {
     case inProgress = "En Progreso"
     case completed = "Completado"
 }
+
+enum Priority: String, CaseIterable {
+    case normal = "Normal"
+    case moderada = "Moderada"
+    case importante = "Importante"
+}
