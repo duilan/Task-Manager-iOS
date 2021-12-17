@@ -153,6 +153,11 @@ extension TMTasksListVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.cellForRow(at: indexPath)?.isSelected = false
+        
+        guard let task = dataSource.itemIdentifier(for: indexPath) else { return }
+        let taskDetailVC = TaskDetailVC(task: task)
+        let nav = UINavigationController(rootViewController: taskDetailVC)
+        present(nav, animated: true, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
