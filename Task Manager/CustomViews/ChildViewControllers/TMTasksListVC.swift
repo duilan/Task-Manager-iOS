@@ -120,6 +120,7 @@ class TMTasksListVC: UIViewController {
         
         defer {
             dataSource.apply(snapshopt, animatingDifferences: animatingDifferences)
+            tableView.reloadData()
         }
         
         tableView.backgroundView = nil
@@ -156,6 +157,7 @@ extension TMTasksListVC: UITableViewDelegate {
         
         guard let task = dataSource.itemIdentifier(for: indexPath) else { return }
         let taskDetailVC = TaskDetailVC(task: task)
+        taskDetailVC.delegate = self
         let nav = UINavigationController(rootViewController: taskDetailVC)
         present(nav, animated: true, completion: nil)
     }
@@ -177,3 +179,10 @@ extension TMTasksListVC: UITableViewDelegate {
     }
     
 }
+
+extension TMTasksListVC: TaskDetailProtocol {
+    func taskDidUpdate() {
+        self.updateData()
+    }
+}
+

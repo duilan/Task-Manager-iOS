@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol TaskDetailProtocol: class {
+    func taskDidUpdate()
+}
+
 class TaskDetailVC: UIViewController {
     
     private let formStackView = UIStackView()
@@ -18,6 +22,8 @@ class TaskDetailVC: UIViewController {
     private let coredata = CoreDataManager.shared
     
     private var task: Task!
+    
+    weak var delegate: TaskDetailProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,8 +70,10 @@ class TaskDetailVC: UIViewController {
         task.priority = Int64(priorityID)
         
         coredata.updateTask(with: task ) { [weak self] in
-            print("Se actualizo")
-            self?.dismissThis()
+            guard let self = self else { return }
+            self.dismiss(animated: true, completion: {
+                self.delegate?.taskDidUpdate()
+            })            
         }
         
     }
