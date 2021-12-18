@@ -41,7 +41,7 @@ class TaskDetailVC: UIViewController {
         self.task = task
         titleTextField.text = task.title
         notesTextView.text = task.notes        
-        prioritiesView.currentPriority = Int(task.priority)
+        prioritiesView.indexOption = Int(task.priority)
     }
     
     required init?(coder: NSCoder) {
@@ -63,7 +63,7 @@ class TaskDetailVC: UIViewController {
         }
         
         let notes = notesTextView.text
-        let priorityID = prioritiesView.currentPriority
+        let priorityID = prioritiesView.indexOption
         
         task.title = titleValue
         task.notes = notes

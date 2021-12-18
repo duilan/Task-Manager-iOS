@@ -120,7 +120,6 @@ class TMTasksListVC: UIViewController {
         
         defer {
             dataSource.apply(snapshopt, animatingDifferences: animatingDifferences)
-            tableView.reloadData()
         }
         
         tableView.backgroundView = nil
@@ -182,7 +181,8 @@ extension TMTasksListVC: UITableViewDelegate {
 
 extension TMTasksListVC: TaskDetailProtocol {
     func taskDidUpdate() {
-        self.updateData()
+        self.updateData(animatingDifferences: false)
+        preferredContentSize.height = tableViewHeight + tableView.contentInset.top + tableView.contentInset.bottom
     }
 }
 

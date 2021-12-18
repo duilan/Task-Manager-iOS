@@ -42,7 +42,7 @@ class TaskTableViewCell: UITableViewCell {
     
     func configurePriority(_ priority: Priority) {
         // text
-        priorityLabel.text = priority.rawValue
+        priorityLabel.text = priority.value
         // color
         switch priority {
         case .normal:

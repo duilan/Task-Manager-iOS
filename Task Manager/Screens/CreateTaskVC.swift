@@ -37,7 +37,7 @@ class CreateTaskVC: UIViewController {
     
     init(project: Project) {
         super.init(nibName: nil, bundle: nil)
-        self.project = project        
+        self.project = project
     }
     
     required init?(coder: NSCoder) {
@@ -51,7 +51,7 @@ class CreateTaskVC: UIViewController {
         }
         
         let descValue = notesTextView.text
-        let priorityID = prioritiesView.currentPriority
+        let priorityID = prioritiesView.indexOption
         
         coredata.addTask(title: titleValue, notes: descValue, priority: priorityID, to: self.project) { [weak self] in
             guard let self = self else { return }

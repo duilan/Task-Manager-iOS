@@ -12,8 +12,14 @@ class TMPriorityOptionsView: UIView {
     
     private let titleLabel = UILabel()
     private let stackH = UIStackView()
+    private let defaultIndexOption: Int = Priority.normal.index
     
-    var currentPriority: Int = 0
+    var indexOption: Int = 0 {
+        didSet {
+            guard let option = Priority(rawValue: indexOption) else { return }
+            setPriority(priority: option)
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -24,6 +30,15 @@ class TMPriorityOptionsView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setPriority(priority: Priority) {
+        for priorityButton in stackH.arrangedSubviews {
+            priorityButton.alpha = 0.3
+            if priorityButton.tag == priority.index {
+                priorityButton.alpha = 1
+            }
+        }
     }
     
     private func setup() {
@@ -84,6 +99,9 @@ class TMPriorityOptionsView: UIView {
             stackH.addArrangedSubview(btn)
         }
         
+        // after all options are created, set the default option
+        self.indexOption = defaultIndexOption
+        
         stackH.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             stackH.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
@@ -94,11 +112,7 @@ class TMPriorityOptionsView: UIView {
     }
     
     @objc private func priorityTapped(_ sender: UIButton) {
-        for priorityButton in stackH.arrangedSubviews {
-            priorityButton.alpha = 0.3
-        }
-        sender.alpha = 1
-        self.currentPriority = sender.tag
+        indexOption = sender.tag
     }
     
 }
