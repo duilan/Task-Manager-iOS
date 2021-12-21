@@ -18,6 +18,7 @@ class TaskDetailVC: UIViewController {
     private let notesTextView = TMTextView()
     private let prioritiesView = TMPriorityOptionsView()
     private let saveButton = TMButton("Guardar cambios")
+    private let closeButton = UIButton(type: .close)
     
     private let coredata = CoreDataManager.shared
     
@@ -34,6 +35,13 @@ class TaskDetailVC: UIViewController {
         setupNotesTextView()
         setupPrioritiesView()
         setupSaveButton()
+        setupCloseButton()
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        animateFormView()
     }
     
     init(task: Task) {
@@ -49,8 +57,8 @@ class TaskDetailVC: UIViewController {
     }
     
     private func setup() {
-        view.backgroundColor = ThemeColors.backgroundPrimary
-        navigationItem.title = "Detalle"        
+        view.backgroundColor = .clear
+        definesPresentationContext = true
     }
     
     @objc private func saveButtonTapped() {
@@ -82,6 +90,16 @@ class TaskDetailVC: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
+    private func animateFormView() {
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 0.3) {
+                self.formStackView.transform = .identity
+                self.formStackView.alpha = 1
+                self.view.backgroundColor = UIColor.darkGray.withAlphaComponent(0.3)
+            }
+        }
+    }
+    
     private func setupNavbarItems() {
         let cancelButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(dismissThis))
         navigationItem.rightBarButtonItem = cancelButtonItem
@@ -89,11 +107,21 @@ class TaskDetailVC: UIViewController {
     
     private func setupContentView() {
         view.addSubview(formStackView)
+        formStackView.backgroundColor = .white
         formStackView.axis = .vertical
         formStackView.spacing = 4
         formStackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        formStackView.layer.cornerRadius = 15
+        formStackView.layer.cornerCurve = .continuous
+        formStackView.clipsToBounds = true
+        
+        // initial state for animation
+        self.formStackView.alpha = 0
+        self.formStackView.transform = CGAffineTransform(scaleX: 0, y: 0)
+        
         NSLayoutConstraint.activate([
-            formStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,constant: 16),
+            formStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -70),
             formStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             formStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             formStackView.heightAnchor.constraint(greaterThanOrEqualToConstant: 100)
@@ -120,9 +148,27 @@ class TaskDetailVC: UIViewController {
     }
     
     private func setupSaveButton() {
-        formStackView.addArrangedSubview(saveButton)
+        view.addSubview(saveButton)
         saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         saveButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        saveButton.topAnchor.constraint(equalTo: formStackView.bottomAnchor, constant: 20).isActive = true
+        saveButton.widthAnchor.constraint(equalTo: formStackView.widthAnchor).isActive = true
+        saveButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+    }
+    
+    private func setupCloseButton() {
+        view.addSubview(closeButton)
+        closeButton.backgroundColor = .secondarySystemBackground
+        closeButton.layer.cornerRadius = 30
+        closeButton.addTarget(self, action: #selector(dismissThis), for: .touchUpInside)
+        closeButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            closeButton.topAnchor.constraint(equalTo: saveButton.bottomAnchor, constant: 60),
+            closeButton.widthAnchor.constraint(equalToConstant: 60),
+            closeButton.heightAnchor.constraint(equalToConstant: 60),
+            closeButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ])
     }
     
     private func setupPrioritiesView() {

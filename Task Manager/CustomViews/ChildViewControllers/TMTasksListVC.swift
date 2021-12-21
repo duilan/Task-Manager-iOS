@@ -157,8 +157,8 @@ extension TMTasksListVC: UITableViewDelegate {
         guard let task = dataSource.itemIdentifier(for: indexPath) else { return }
         let taskDetailVC = TaskDetailVC(task: task)
         taskDetailVC.delegate = self
-        let nav = UINavigationController(rootViewController: taskDetailVC)
-        present(nav, animated: true, completion: nil)
+        taskDetailVC.modalPresentationStyle = .overCurrentContext
+        present(taskDetailVC, animated: true, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
