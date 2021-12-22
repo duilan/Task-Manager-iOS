@@ -29,6 +29,7 @@ class TaskDetailVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
+        setupBlurView()
         setupNavbarItems()
         setupContentView()
         setupTitleTextField()
@@ -37,11 +38,6 @@ class TaskDetailVC: UIViewController {
         setupSaveButton()
         setupCloseButton()
         
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        animateFormView()
     }
     
     init(task: Task) {
@@ -57,8 +53,14 @@ class TaskDetailVC: UIViewController {
     }
     
     private func setup() {
-        view.backgroundColor = .clear
+        view.backgroundColor = UIColor.darkGray.withAlphaComponent(0.3)
         definesPresentationContext = true
+    }
+    
+    private func setupBlurView(){
+        let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
+        blurView.frame = view.frame
+        view.addSubview(blurView)
     }
     
     @objc private func saveButtonTapped() {
@@ -90,16 +92,6 @@ class TaskDetailVC: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-    private func animateFormView() {
-        DispatchQueue.main.async {
-            UIView.animate(withDuration: 0.3) {
-                self.formStackView.transform = .identity
-                self.formStackView.alpha = 1
-                self.view.backgroundColor = UIColor.darkGray.withAlphaComponent(0.3)
-            }
-        }
-    }
-    
     private func setupNavbarItems() {
         let cancelButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(dismissThis))
         navigationItem.rightBarButtonItem = cancelButtonItem
@@ -115,10 +107,6 @@ class TaskDetailVC: UIViewController {
         formStackView.layer.cornerRadius = 15
         formStackView.layer.cornerCurve = .continuous
         formStackView.clipsToBounds = true
-        
-        // initial state for animation
-        self.formStackView.alpha = 0
-        self.formStackView.transform = CGAffineTransform(scaleX: 0, y: 0)
         
         NSLayoutConstraint.activate([
             formStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -70),
@@ -152,7 +140,7 @@ class TaskDetailVC: UIViewController {
         saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         saveButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         saveButton.topAnchor.constraint(equalTo: formStackView.bottomAnchor, constant: 20).isActive = true
-        saveButton.widthAnchor.constraint(equalTo: formStackView.widthAnchor).isActive = true
+        saveButton.widthAnchor.constraint(equalToConstant: 200).isActive = true
         saveButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
     

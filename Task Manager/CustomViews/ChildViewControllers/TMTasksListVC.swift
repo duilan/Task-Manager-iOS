@@ -158,6 +158,7 @@ extension TMTasksListVC: UITableViewDelegate {
         let taskDetailVC = TaskDetailVC(task: task)
         taskDetailVC.delegate = self
         taskDetailVC.modalPresentationStyle = .overCurrentContext
+        taskDetailVC.modalTransitionStyle = .crossDissolve
         present(taskDetailVC, animated: true, completion: nil)
     }
     
