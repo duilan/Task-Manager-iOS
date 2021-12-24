@@ -194,7 +194,6 @@ class HomeVC: UIViewController {
         super.preferredContentSizeDidChange(forChildContentContainer: container)
         if container as? TMTasksListVC != nil {
             tableHeight.constant = container.preferredContentSize.height
-            print(tableHeight.constant)
         }
     }
     
@@ -206,8 +205,7 @@ class HomeVC: UIViewController {
 }
 
 extension HomeVC: TMProjectsProtocol {
-    func projectDidChange(project: Project?) {
-        guard let project = project else { return }
+    func projectDidChange(project: Project?) {        
         taskVC.setProject(project)
     }
 }

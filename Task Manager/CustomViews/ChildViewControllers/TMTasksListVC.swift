@@ -35,11 +35,17 @@ class TMTasksListVC: UIViewController {
         setupDataSource()
     }
     
-    func setProject(_ project: Project) {
+    func setProject(_ project: Project?) {
+        guard let project = project else {
+            updateSnapshot(with: [], animatingDifferences: false)
+            resizeContentTable()
+            return
+        }
+        
         self.project = project
         updateData(animatingDifferences: false)
         // actualizamos el alto de la tabla
-        preferredContentSize.height = tableViewHeight + tableView.contentInset.top + tableView.contentInset.bottom
+        resizeContentTable()
     }
     
     func contextMenuConfigurationActions(indexPath: IndexPath) -> UIContextMenuConfiguration {
@@ -59,6 +65,10 @@ class TMTasksListVC: UIViewController {
             return UIMenu(title: "OPCIONES", options: .displayInline , children: [deleteAction])
         }
         return context
+    }
+    
+    private func resizeContentTable() {
+        preferredContentSize.height = tableViewHeight + tableView.contentInset.top + tableView.contentInset.bottom
     }
     
     private func setup() {
@@ -183,7 +193,7 @@ extension TMTasksListVC: UITableViewDelegate {
 extension TMTasksListVC: TaskDetailProtocol {
     func taskDidUpdate() {
         self.updateData(animatingDifferences: false)
-        preferredContentSize.height = tableViewHeight + tableView.contentInset.top + tableView.contentInset.bottom
+        self.resizeContentTable()
     }
 }
 
