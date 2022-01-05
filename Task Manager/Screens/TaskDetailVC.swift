@@ -1,76 +1,95 @@
 //
-//  CreateTaskVC.swift
+//  TaskDetailVC.swift
 //  Task Manager
 //
-//  Created by Duilan on 19/11/21.
+//  Created by Duilan on 14/12/21.
 //
 
 import UIKit
 
-protocol CreateTaskProtocol: class {
-    func taskAdded()
+protocol TaskDetailProtocol: class {
+    func taskDidUpdate()
 }
 
-class CreateTaskVC: UIViewController {
+class TaskDetailVC: UIViewController {
     
     private let formStackView = UIStackView()
     private let titleTextField = TMTextField()
     private let notesTextView = TMTextView()
     private let prioritiesView = TMPriorityOptionsView()
-    private let saveButton = TMButton("Guardar")
+    private let saveButton = TMButton("Guardar cambios")
+    private let closeButton = UIButton(type: .close)
     
-    private var project: Project!
     private let coredata = CoreDataManager.shared
     
-    weak var delegate: CreateTaskProtocol?
+    private var task: Task!
+    
+    weak var delegate: TaskDetailProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
+        setupBlurView()
         setupNavbarItems()
         setupContentView()
         setupTitleTextField()
         setupNotesTextView()
         setupPrioritiesView()
         setupSaveButton()
+        setupCloseButton()
+        
     }
     
-    init(project: Project) {
+    init(task: Task) {
         super.init(nibName: nil, bundle: nil)
-        self.project = project
+        self.task = task
+        titleTextField.text = task.title
+        notesTextView.text = task.notes        
+        prioritiesView.indexOption = Int(task.priority)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func setup() {
+        view.backgroundColor = UIColor.darkGray.withAlphaComponent(0.3)
+        definesPresentationContext = true
+    }
+    
+    private func setupBlurView(){
+        let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
+        blurView.frame = view.frame
+        view.addSubview(blurView)
+    }
+    
     @objc private func saveButtonTapped() {
+        
+        guard let task = self.task else { return }
+        
         guard let titleValue = titleTextField.text, !titleValue.isEmpty else {
             titleTextField.becomeFirstResponder()
             return
         }
         
-        let descValue = notesTextView.text
+        let notes = notesTextView.text
         let priorityID = prioritiesView.indexOption
         
-        coredata.addTask(title: titleValue, notes: descValue, priority: priorityID, to: self.project) { [weak self] in
+        task.title = titleValue
+        task.notes = notes
+        task.priority = Int64(priorityID)
+        
+        coredata.updateTask(with: task ) { [weak self] in
             guard let self = self else { return }
-            
-            self.dismiss(animated: true) {
-                self.delegate?.taskAdded()
-            }
+            self.dismiss(animated: true, completion: {
+                self.delegate?.taskDidUpdate()
+            })            
         }
         
     }
     
     @objc private func dismissThis() {
         self.dismiss(animated: true, completion: nil)
-    }
-    
-    private func setup() {
-        title = "Nueva Tarea"
-        view.backgroundColor = ThemeColors.backgroundPrimary
-        navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     private func setupNavbarItems() {
@@ -80,11 +99,17 @@ class CreateTaskVC: UIViewController {
     
     private func setupContentView() {
         view.addSubview(formStackView)
+        formStackView.backgroundColor = .white
         formStackView.axis = .vertical
         formStackView.spacing = 4
         formStackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        formStackView.layer.cornerRadius = 15
+        formStackView.layer.cornerCurve = .continuous
+        formStackView.clipsToBounds = true
+        
         NSLayoutConstraint.activate([
-            formStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,constant: 16),
+            formStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -70),
             formStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             formStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             formStackView.heightAnchor.constraint(greaterThanOrEqualToConstant: 100)
@@ -111,9 +136,27 @@ class CreateTaskVC: UIViewController {
     }
     
     private func setupSaveButton() {
-        formStackView.addArrangedSubview(saveButton)
+        view.addSubview(saveButton)
         saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         saveButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        saveButton.topAnchor.constraint(equalTo: formStackView.bottomAnchor, constant: 20).isActive = true
+        saveButton.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        saveButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+    }
+    
+    private func setupCloseButton() {
+        view.addSubview(closeButton)
+        closeButton.backgroundColor = .secondarySystemBackground
+        closeButton.layer.cornerRadius = 30
+        closeButton.addTarget(self, action: #selector(dismissThis), for: .touchUpInside)
+        closeButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            closeButton.topAnchor.constraint(equalTo: saveButton.bottomAnchor, constant: 60),
+            closeButton.widthAnchor.constraint(equalToConstant: 60),
+            closeButton.heightAnchor.constraint(equalToConstant: 60),
+            closeButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ])
     }
     
     private func setupPrioritiesView() {

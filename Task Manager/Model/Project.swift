@@ -25,3 +25,24 @@ enum StatusProject: String, CaseIterable {
     case inProgress = "En Progreso"
     case completed = "Completado"
 }
+
+enum Priority: Int, CaseIterable {
+    case normal = 0
+    case moderada = 1
+    case importante = 2
+    
+    var index: Int {
+        return self.rawValue
+    }
+    
+    var value: String {
+        switch self {
+        case .normal:
+            return "Normal"
+        case .moderada:
+            return "Moderada"
+        case .importante:
+            return "Importante"
+        }
+    }
+}

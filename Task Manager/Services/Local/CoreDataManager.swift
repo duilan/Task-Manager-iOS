@@ -9,10 +9,13 @@ import CoreData
 
 final class CoreDataManager {
     
+    // singleton access
+    public static var shared = CoreDataManager()
+    
     private let dataBaseName = "TaskManager"
     private let container: NSPersistentContainer!
     
-    init() {
+    private init() {
         container = NSPersistentContainer(name: dataBaseName)
         configureDatabase()
     }
@@ -84,7 +87,7 @@ final class CoreDataManager {
         }
     }
     
-    func addTask(title: String, desc: String?, to project: Project, completion: @escaping() -> Void) {
+    func addTask(title: String, notes: String?, priority: Int, to project: Project, completion: @escaping() -> Void) {
         
         let context = container.viewContext
         // verificamos que el proyecto exista en el MOC
@@ -94,7 +97,9 @@ final class CoreDataManager {
         task.id = UUID().uuidString.lowercased()
         task.createAt = Date()
         task.title = title
-        task.status = "Pendiente"
+        task.notes = notes
+        task.priority = Int64(priority)
+        task.isDone = false
         task.project = existingProject // relation to parent
         // save
         do {
@@ -127,4 +132,27 @@ final class CoreDataManager {
         }
     }
     
+    func updateTask(with task: Task, completion: @escaping() -> Void) {
+        
+        guard let context = task.managedObjectContext else { return }
+        
+        do {
+            try context.save()
+            completion()
+        } catch {
+            print(error)
+        }
+    }
+    
+    func delete(_ object: NSManagedObject, completion: @escaping() -> Void) {
+        let context = container.viewContext
+        context.delete(object)
+        do {
+            try context.save()
+            completion()
+        } catch {
+            print(error)
+        }
+    }
+        
 }

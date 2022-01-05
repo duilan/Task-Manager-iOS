@@ -19,7 +19,7 @@ class HomeVC: UIViewController {
     // 0 : All, 1: InProgress, 2:Completed
     private var segmentIndex: Int = 1
     
-    private let coredata = CoreDataManager()
+    private let coredata = CoreDataManager.shared
     
     //ScrollView Container
     let scrollView = UIScrollView()
@@ -194,7 +194,6 @@ class HomeVC: UIViewController {
         super.preferredContentSizeDidChange(forChildContentContainer: container)
         if container as? TMTasksListVC != nil {
             tableHeight.constant = container.preferredContentSize.height
-            print(tableHeight.constant)
         }
     }
     
@@ -206,16 +205,7 @@ class HomeVC: UIViewController {
 }
 
 extension HomeVC: TMProjectsProtocol {
-    func projectDidChange(project: Project?) {
-        
-        guard let project = project else {
-            self.tasksVCContainer.isHidden = true
-            return
-        }
-        
-        coredata.fetchTasksOf(project) { [weak self] (tasks) in
-            self?.taskVC.tasksData = tasks
-            self?.tasksVCContainer.isHidden = false
-        }
+    func projectDidChange(project: Project?) {        
+        taskVC.setProject(project)
     }
 }

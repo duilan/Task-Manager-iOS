@@ -15,17 +15,11 @@ class TMTasksListVC: UIViewController {
     private var tableView = UITableView(frame: .zero, style: .plain)
     private var dataSource: TaskDataSource!
     private let emptyView = TMEmptyView(message: "Agrega algunas tareas 🎯 \n al proyecto")
+    private var project: Project?
     
     private enum Section: String, CaseIterable {
         case pending = "Pendientes"
         case completed = "Completadas"
-    }
-    
-    var tasksData: [Task] = [] {
-        didSet {
-            updateSnapshot(with: tasksData, animatingDifferences: false)
-            preferredContentSize.height = tableViewHeight + tableView.contentInset.top + tableView.contentInset.bottom
-        }
     }
     
     private var tableViewHeight: CGFloat {
@@ -39,7 +33,42 @@ class TMTasksListVC: UIViewController {
         setup()
         setupTable()
         setupDataSource()
-        updateSnapshot(with: tasksData, animatingDifferences: false)
+    }
+    
+    func setProject(_ project: Project?) {
+        guard let project = project else {
+            updateSnapshot(with: [], animatingDifferences: false)
+            resizeContentTable()
+            return
+        }
+        
+        self.project = project
+        updateData(animatingDifferences: false)
+        // actualizamos el alto de la tabla
+        resizeContentTable()
+    }
+    
+    func contextMenuConfigurationActions(indexPath: IndexPath) -> UIContextMenuConfiguration {
+        let context =  UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { (menuElement) -> UIMenu? in
+            
+            let deleteAction =
+                UIAction(title: NSLocalizedString("Eliminar Tarea", comment: ""),
+                         image: UIImage(systemName: "trash"),
+                         attributes: .destructive) { action in
+                    guard let task = self.dataSource.itemIdentifier(for: indexPath) else { return }
+                    CoreDataManager.shared.delete(task) {
+                        // update task data
+                        self.updateData()
+                    }
+                }
+            
+            return UIMenu(title: "OPCIONES", options: .displayInline , children: [deleteAction])
+        }
+        return context
+    }
+    
+    private func resizeContentTable() {
+        preferredContentSize.height = tableViewHeight + tableView.contentInset.top + tableView.contentInset.bottom
     }
     
     private func setup() {
@@ -65,6 +94,15 @@ class TMTasksListVC: UIViewController {
         ])
     }
     
+    func updateData(animatingDifferences: Bool = true){
+        guard let currentProject = self.project else { return }
+        
+        CoreDataManager.shared.fetchTasksOf(currentProject) { [weak self] (tasks) in
+            self?.updateSnapshot(with: tasks, animatingDifferences: animatingDifferences)
+        }
+        
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         preferredContentSize.height = tableViewHeight + tableView.contentInset.top + tableView.contentInset .bottom
@@ -76,6 +114,13 @@ class TMTasksListVC: UIViewController {
                 return TaskTableViewCell()
             }
             cell.configure(with: item)
+            cell.doneButtonAction = {
+                item.isDone = !item.isDone
+                item.doneAt = Date() // current date
+                CoreDataManager.shared.updateTask(with: item) { [weak self] in
+                    self?.updateData()
+                }
+            }
             return cell
         })
     }
@@ -93,8 +138,8 @@ class TMTasksListVC: UIViewController {
             return
         }
         
-        let pendingTasks = tasks.filter { $0.status == "Pendiente" }
-        let completedTasks = tasks.filter { $0.status == "Completada" }
+        let pendingTasks = tasks.filter { $0.isDone == false }
+        let completedTasks = tasks.filter { $0.isDone == true }
         
         var sectionsData: [(Section,[Task])] = [] // tuple
         
@@ -118,6 +163,13 @@ extension TMTasksListVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.cellForRow(at: indexPath)?.isSelected = false
+        
+        guard let task = dataSource.itemIdentifier(for: indexPath) else { return }
+        let taskDetailVC = TaskDetailVC(task: task)
+        taskDetailVC.delegate = self
+        taskDetailVC.modalPresentationStyle = .overCurrentContext
+        taskDetailVC.modalTransitionStyle = .crossDissolve
+        present(taskDetailVC, animated: true, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -132,5 +184,16 @@ extension TMTasksListVC: UITableViewDelegate {
         return headerView
     }
     
+    func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        contextMenuConfigurationActions(indexPath: indexPath)
+    }
     
 }
+
+extension TMTasksListVC: TaskDetailProtocol {
+    func taskDidUpdate() {
+        self.updateData(animatingDifferences: false)
+        self.resizeContentTable()
+    }
+}
+
