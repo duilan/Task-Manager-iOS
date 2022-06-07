@@ -87,6 +87,18 @@ final class CoreDataManager {
         }
     }
     
+    func update(status: StatusProject, project: Project, completion: @escaping() -> Void) {
+        project.status = status.rawValue
+        guard let context = project.managedObjectContext else { return }
+        
+        do {
+            try context.save()
+            completion()
+        } catch  {
+            print(error)
+        }
+    }
+    
     func addTask(title: String, notes: String?, priority: Int, to project: Project, completion: @escaping() -> Void) {
         
         let context = container.viewContext
