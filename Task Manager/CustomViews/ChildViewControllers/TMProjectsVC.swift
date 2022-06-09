@@ -94,7 +94,7 @@ class TMProjectsVC: UIViewController {
         
         let project = self.dataSource.itemIdentifier(for: indexPath)!
         
-        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { (menuElement) -> UIMenu? in
+        return UIContextMenuConfiguration(identifier: NSIndexPath(item: indexPath.item, section: indexPath.section), previewProvider: nil) { (menuElement) -> UIMenu? in
             
             let deleteAction = UIAction(title: "Eliminar",
                                         image: UIImage(systemName: "trash"),
@@ -228,4 +228,18 @@ extension TMProjectsVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         contextMenuConfigurationActions(indexPath: indexPath)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview?
+    {
+        guard let indexPath = configuration.identifier as? IndexPath,
+              let cell = collectionView.cellForItem(at: indexPath)
+        else {
+            return nil
+        }
+        
+        let targetedPreview = UITargetedPreview(view: cell)
+        targetedPreview.parameters.backgroundColor = .clear
+        return targetedPreview
+    }
+    
 }
