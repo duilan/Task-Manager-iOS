@@ -31,6 +31,15 @@ class TMButton: UIButton {
         clipsToBounds = true
         titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
         translatesAutoresizingMaskIntoConstraints = false
+        // animacion
+        self.addTarget(self, action: #selector(pulseAnimation), for: .touchUpInside)
+    }
+    
+    @objc func pulseAnimation() {
+        self.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+        UIView.animate(withDuration: 0.3, delay: 0, options: .allowUserInteraction, animations: {
+            self.transform = CGAffineTransform.identity
+        })
     }
     
     override func layoutSublayers(of layer: CALayer) {
