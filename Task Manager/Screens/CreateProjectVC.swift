@@ -20,6 +20,8 @@ class CreateProjectVC: UIViewController {
     private let scrollView = UIScrollView()
     private let contentView = UIView()
     
+    private var colorOfProject = 0 // default blue = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
@@ -30,6 +32,7 @@ class CreateProjectVC: UIViewController {
         setupAliasTextField()
         setupDescTextView()
         setupDateTextFields()
+        setupColorProject()
         setupSaveButton()
     }
     
@@ -142,6 +145,36 @@ class CreateProjectVC: UIViewController {
         endDateTextField.heightAnchor.constraint(equalToConstant: 60).isActive = true
     }
     
+    private func setupColorProject() {
+        let hStack = UIStackView()
+        hStack.axis = .horizontal
+        hStack.distribution = .fillEqually
+        hStack.spacing = 20
+        formStackView.addArrangedSubview(hStack)
+        
+        // crea lista de colores existentes eb el model
+        ProjectColors.allCases.forEach { (color) in
+            let btnColor = UIButton(frame: .zero)
+            hStack.addArrangedSubview(btnColor)
+            btnColor.backgroundColor = color.value // uicolor
+            btnColor.tag = color.rawValue // int que se almacenara en coredata
+            
+            btnColor.clipsToBounds = true
+            btnColor.layer.cornerRadius = 20
+            btnColor.translatesAutoresizingMaskIntoConstraints = false
+            btnColor.heightAnchor.constraint(equalToConstant: 40).isActive = true
+            //touch action
+            btnColor.addTarget(self, action: #selector(colorProjectButton(_:)), for: .touchUpInside)
+            
+        }
+        formStackView.setCustomSpacing(24, after: hStack)
+    }
+    
+    @objc private func colorProjectButton(_ btn: UIButton) {
+        colorOfProject = btn.tag
+        saveButton.backgroundColor = ProjectColors.init(rawValue: colorOfProject)?.value
+    }
+    
     private func setupSaveButton() {
         formStackView.addArrangedSubview(saveButton)
         saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
@@ -166,9 +199,15 @@ class CreateProjectVC: UIViewController {
         
         let endDate = endDateTextField.date
         let descValue = descTextView.text
+        let colorSelected = colorOfProject
         
         CoreDataManager.shared.createProject(
-            alias: aliasValue, title: titleValue, desc: descValue, startDate: startDate, endDate: endDate) { [weak self] in
+            alias: aliasValue,
+            title: titleValue,
+            desc: descValue,
+            startDate: startDate,
+            endDate: endDate,
+            color: colorSelected) { [weak self] in
             self?.navigationController?.popViewController(animated: true)
         }
     }
