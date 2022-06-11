@@ -197,7 +197,11 @@ class CreateProjectVC: UIViewController {
             return
         }
         
-        let endDate = endDateTextField.date
+        guard let endDate = endDateTextField.date else {
+            endDateTextField.becomeFirstResponder()
+            return
+        }
+        
         let descValue = descTextView.text
         let colorSelected = colorOfProject
         
