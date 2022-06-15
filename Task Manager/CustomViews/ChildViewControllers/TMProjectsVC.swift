@@ -140,7 +140,7 @@ class TMProjectsVC: UIViewController {
         }
     }
     
-    private func getProjectAtCenterPoint() {
+    private func updateCurrentProjectSelected() {
         let centerPoint = self.view.convert(collectionView.center, to: collectionView)
         guard let indexPathSafe = collectionView.indexPathForItem(at: centerPoint) else { return }
         guard let item = dataSource.itemIdentifier(for: indexPathSafe) else { return }
@@ -185,9 +185,9 @@ class TMProjectsVC: UIViewController {
             // 1.0 = 100%
             let itemFractionalWidth: CGFloat = 1.0
             let itemFractionalHeight: CGFloat = 1.0
-            let groupFractionalWidth: CGFloat = 0.65
+            let groupFractionalWidth: CGFloat = 0.6
             let groupFractionalHeight: CGFloat = 1.0
-            let spacingBetweenGroups: CGFloat = 24
+            let spacingBetweenGroups: CGFloat = 10
             // calcula el espacio lateral entre el item para centrarlo !!!
             // groupPagingCenter no funciona adecuadamente!!!!
             let actuaLayoutContainerWidth = layoutEnvironment.container.effectiveContentSize.width
@@ -204,10 +204,16 @@ class TMProjectsVC: UIViewController {
             section.orthogonalScrollingBehavior = .groupPaging
             section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: paddingToCenterItem, bottom: 0, trailing: paddingToCenterItem)
             
-            section.visibleItemsInvalidationHandler = { [weak self] (visibleItems, point, env) -> Void in
-                guard let self = self else { return }
-                // Obtener el item que se muestra al centro cada vez que las celdas visibles cambien
-                self.getProjectAtCenterPoint()
+            section.visibleItemsInvalidationHandler = { (items, offset, environment) in
+                items.forEach { item in
+                    let distanceFromCenter = abs((item.frame.midX - offset.x) - environment.container.contentSize.width / 2.0)
+                    let minScale: CGFloat = 0.85
+                    let maxScale: CGFloat = 1
+                    let scale = max(maxScale - (distanceFromCenter / environment.container.contentSize.width), minScale)
+                    item.transform = CGAffineTransform(scaleX: scale, y: scale)
+                    // Obtener el item que se muestra al centro cada vez que las celdas visibles cambien
+                    self.updateCurrentProjectSelected()
+                }
             }
             return section
         }
