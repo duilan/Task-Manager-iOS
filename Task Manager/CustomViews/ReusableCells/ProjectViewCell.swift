@@ -23,7 +23,6 @@ class ProjectViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
-        setupBackgroundGradient()
         setupTriangeShapes()
         setupIcon()
         setupAliasAndStatusLabel()
@@ -36,6 +35,7 @@ class ProjectViewCell: UICollectionViewCell {
     }
     
     func configure(with project: Project) {
+        setupBackgroundGradient(numberColor: Int(project.color))
         iconView.systemNameIcon = "wrench.and.screwdriver"
         aliasLabel.text = project.alias
         titleLabel.text = project.title
@@ -51,9 +51,10 @@ class ProjectViewCell: UICollectionViewCell {
         clipsToBounds = true
     }
     
-    private func setupBackgroundGradient() {
+    private func setupBackgroundGradient(numberColor: Int = 0 ) {
+        let color = ProjectColors(rawValue: numberColor) ?? .blue
         let startEndPointsGradient = (CGPoint(x: 0, y: 0), CGPoint(x: 0, y: 1))
-        self.addGradientBackground(colorSet: [ThemeColors.accentColor.darker(), ThemeColors.accentColor.lighter()],
+        self.addGradientBackground(colorSet: [color.value.darker(), color.value.lighter()],
                                    startAndEndPoints: startEndPointsGradient)
     }
     
