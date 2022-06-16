@@ -32,6 +32,7 @@ class TMProjectsVC: UIViewController {
     private var currentProjectSelected: Project?   {
         didSet {
             delegate?.projectDidChange(project: currentProjectSelected)
+            updatePageIndicatorColor()
         }
     }
     
@@ -152,6 +153,13 @@ class TMProjectsVC: UIViewController {
             pageIndicatorIndex = indexPathSafe.row
             impactFeedback.impactOccurred()
         }
+    }
+    
+    private func updatePageIndicatorColor() {
+        guard let project = currentProjectSelected,
+              let color =  ProjectColors(rawValue: Int(project.color ))?.value else { return }
+        pageIndicator.currentPageIndicatorTintColor = color
+        pageIndicator.pageIndicatorTintColor = color.withAlphaComponent(0.2)
     }
     
     private func setupDataSource() {
