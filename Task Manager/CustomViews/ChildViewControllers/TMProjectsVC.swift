@@ -9,6 +9,7 @@ import UIKit
 
 protocol TMProjectsProtocol: class {
     func projectDidChange(project: Project?)
+    func projectDeleted()
 }
 
 class TMProjectsVC: UIViewController {
@@ -102,7 +103,7 @@ class TMProjectsVC: UIViewController {
                 
                 CoreDataManager.shared.delete(project) { [weak self] in
                     self?.projectsData.remove(at: indexPath.row)
-                    self?.updateDataSourceSnapshot()
+                    self?.delegate?.projectDeleted()
                 }
             }
             

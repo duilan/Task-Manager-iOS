@@ -208,4 +208,8 @@ extension HomeVC: TMProjectsProtocol {
     func projectDidChange(project: Project?) {        
         taskVC.setProject(project)
     }
+    
+    func projectDeleted() {
+        updateProjects()
+    }
 }
