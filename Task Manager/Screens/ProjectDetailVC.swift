@@ -30,6 +30,9 @@ class ProjectDetailVC: UIViewController {
     init(project: Project) {
         super.init(nibName: nil, bundle: nil)
         self.project = project
+        
+        guard let color = ProjectColors(rawValue: Int(project.color))?.value else { return }
+        addFloatButton.backgroundColor = color
     }
     
     required init?(coder: NSCoder) {
