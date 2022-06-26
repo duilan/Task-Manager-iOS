@@ -16,6 +16,7 @@ class CreateProjectVC: UIViewController {
     private let endDateTextField = TMDateField()
     private let descTextView = TMTextView()
     private let saveButton = TMButton("Guardar")
+    private let colorPicker = TMColorPickerView()
     
     private let scrollView = UIScrollView()
     private let contentView = UIView()
@@ -32,7 +33,7 @@ class CreateProjectVC: UIViewController {
         setupAliasTextField()
         setupDescTextView()
         setupDateTextFields()
-        setupColorProject()
+        setupColorPicker()
         setupSaveButton()
     }
     
@@ -145,34 +146,9 @@ class CreateProjectVC: UIViewController {
         endDateTextField.heightAnchor.constraint(equalToConstant: 60).isActive = true
     }
     
-    private func setupColorProject() {
-        let hStack = UIStackView()
-        hStack.axis = .horizontal
-        hStack.distribution = .fillEqually
-        hStack.spacing = 20
-        formStackView.addArrangedSubview(hStack)
-        
-        // crea lista de colores existentes eb el model
-        ProjectColors.allCases.forEach { (color) in
-            let btnColor = UIButton(frame: .zero)
-            hStack.addArrangedSubview(btnColor)
-            btnColor.backgroundColor = color.value // uicolor
-            btnColor.tag = color.rawValue // int que se almacenara en coredata
-            
-            btnColor.clipsToBounds = true
-            btnColor.layer.cornerRadius = 20
-            btnColor.translatesAutoresizingMaskIntoConstraints = false
-            btnColor.heightAnchor.constraint(equalToConstant: 40).isActive = true
-            //touch action
-            btnColor.addTarget(self, action: #selector(colorProjectButton(_:)), for: .touchUpInside)
-            
-        }
-        formStackView.setCustomSpacing(24, after: hStack)
-    }
-    
-    @objc private func colorProjectButton(_ btn: UIButton) {
-        colorOfProject = btn.tag
-        saveButton.backgroundColor = ProjectColors.init(rawValue: colorOfProject)?.value
+    private func setupColorPicker() {
+        formStackView.addArrangedSubview(colorPicker)
+        formStackView.setCustomSpacing(24, after: colorPicker)
     }
     
     private func setupSaveButton() {
@@ -203,7 +179,7 @@ class CreateProjectVC: UIViewController {
         }
         
         let descValue = descTextView.text
-        let colorSelected = colorOfProject
+        let colorProject = colorPicker.indexColor
         
         CoreDataManager.shared.createProject(
             alias: aliasValue,
@@ -211,7 +187,7 @@ class CreateProjectVC: UIViewController {
             desc: descValue,
             startDate: startDate,
             endDate: endDate,
-            color: colorSelected) { [weak self] in
+            color: colorProject) { [weak self] in
             self?.navigationController?.popViewController(animated: true)
         }
     }
