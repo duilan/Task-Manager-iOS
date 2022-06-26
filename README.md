@@ -1,8 +1,8 @@
 # Task-Manager-iOS
 
 ### Video Preview
- 
-https://user-images.githubusercontent.com/4230964/172530114-af623405-9ee5-4773-b91a-de825e9000fb.mp4
+
+https://user-images.githubusercontent.com/4230964/175794385-260dd302-c759-453a-bc47-a45b7dd51437.mp4
 
 
 ## Desarrollado con:
