@@ -2,8 +2,7 @@
 
 ### Video Preview
 
-https://user-images.githubusercontent.com/4230964/175794385-260dd302-c759-453a-bc47-a45b7dd51437.mp4
-
+https://user-images.githubusercontent.com/4230964/175794873-20e0b7b9-675c-4aee-be60-a7faf088ca76.mp4
 
 ## Desarrollado con:
 - UIKit - UI Programmatically
@@ -13,5 +12,8 @@ https://user-images.githubusercontent.com/4230964/175794385-260dd302-c759-453a-b
 - CoreData - Base de datos local
  > - Create, Read, Update, Delete.
   
+- SPM - Swift Package Manager
+ > - IQKeyboardManager 2.0.x
+ > - BetterSegmentedControl 6.5.x
 
 ###### Repo https://github.com/duilan/Task-Manager-iOS/ 
