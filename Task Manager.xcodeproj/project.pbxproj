@@ -27,6 +27,7 @@
 		3A43078D27323843005D98D9 /* TMTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A43078C27323843005D98D9 /* TMTextView.swift */; };
 		3A468130272F67C900142B4E /* TMTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A46812F272F67C900142B4E /* TMTextField.swift */; };
 		3A468133272FB78C00142B4E /* TMButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A468132272FB78C00142B4E /* TMButton.swift */; };
+		3A5097E72867E98100AB1B02 /* TMColorPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5097E62867E98100AB1B02 /* TMColorPickerView.swift */; };
 		3A56C64A2769B99A00B91ACF /* TaskDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A56C6492769B99A00B91ACF /* TaskDetailVC.swift */; };
 		3A6462F92727925800FA7F95 /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6462F82727925800FA7F95 /* TaskTableViewCell.swift */; };
 		3A69C77D271892E50078668B /* TMTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A69C77C271892E40078668B /* TMTitleLabel.swift */; };
@@ -67,6 +68,7 @@
 		3A43078C27323843005D98D9 /* TMTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMTextView.swift; sourceTree = "<group>"; };
 		3A46812F272F67C900142B4E /* TMTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMTextField.swift; sourceTree = "<group>"; };
 		3A468132272FB78C00142B4E /* TMButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMButton.swift; sourceTree = "<group>"; };
+		3A5097E62867E98100AB1B02 /* TMColorPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMColorPickerView.swift; sourceTree = "<group>"; };
 		3A56C6492769B99A00B91ACF /* TaskDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailVC.swift; sourceTree = "<group>"; };
 		3A6462F82727925800FA7F95 /* TaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
 		3A69C77C271892E40078668B /* TMTitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMTitleLabel.swift; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 				3A46812F272F67C900142B4E /* TMTextField.swift */,
 				3A43078C27323843005D98D9 /* TMTextView.swift */,
 				3A2983D827364D6A006B9448 /* TMDateField.swift */,
+				3A5097E62867E98100AB1B02 /* TMColorPickerView.swift */,
 				3AF5FAEF27659906007342DB /* TMPriorityOptionsView.swift */,
 			);
 			path = FormElements;
@@ -364,6 +367,7 @@
 				3AFBCF7327471E0100AEB1C4 /* TMCircleButton.swift in Sources */,
 				3AA1930A2730D88300D213CB /* UIColor+Ext.swift in Sources */,
 				3AFECF87271FCC8000404F1F /* TMSquareIconView.swift in Sources */,
+				3A5097E72867E98100AB1B02 /* TMColorPickerView.swift in Sources */,
 				3AA39A962738ABF000711E51 /* ProjectDetailVC.swift in Sources */,
 				3A468130272F67C900142B4E /* TMTextField.swift in Sources */,
 				3A69C77D271892E50078668B /* TMTitleLabel.swift in Sources */,
