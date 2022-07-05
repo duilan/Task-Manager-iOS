@@ -16,8 +16,8 @@ class HomeVC: UIViewController {
     private var projectsData: [Project] = []
     private let taskVC = TMTasksListVC()
     private var tableHeight: NSLayoutConstraint!
-    // 0 : All, 1: InProgress, 2:Completed
-    private var segmentIndex: Int = 1
+    // 0 : InProgress, 1:Completed
+    private var segmentIndex: Int = 0
     
     private let coredata = CoreDataManager.shared
     
@@ -49,7 +49,7 @@ class HomeVC: UIViewController {
     }
     
     private func setDefaultSegmentSelection() {
-        segmentedControl.setIndex(1, animated: false, shouldSendValueChangedEvent: true)
+        segmentedControl.setIndex(0, animated: false, shouldSendValueChangedEvent: true)
     }
     
     private func updateProjects() {
@@ -63,14 +63,13 @@ class HomeVC: UIViewController {
     private func filterProjectData() {
         switch self.segmentIndex {
         case 0 :
-            // show all project
-            projectsVC.projectsData = projectsData
-        case 1 :
-            self.projectsVC.projectsData = projectsData.filter({ (project) -> Bool in
+            // show just in progress projects
+            self.projectsVC.projectsData = projectsData.filter({ (project)  in
                 return project.status == StatusProject.inProgress.rawValue
             })
-        case 2:
-            projectsVC.projectsData = projectsData.filter({ (project) -> Bool in
+        case 1 :
+            // show just complete projects
+            projectsVC.projectsData = projectsData.filter({ (project)  in
                 return project.status == StatusProject.completed.rawValue
             })
         default:
@@ -148,7 +147,7 @@ class HomeVC: UIViewController {
         
         // Configure BettersegmentedControl segmets
         segmentedControl.segments = LabelSegment.segments(
-            withTitles: ["Mis Proyectos", "En Progreso", "Completados"],
+            withTitles: ["En Progreso", "Completados"],
             normalFont: .systemFont(ofSize: 12.0, weight: .regular),
             normalTextColor: .lightGray,
             selectedFont: .systemFont(ofSize: 12.0, weight: .bold),
