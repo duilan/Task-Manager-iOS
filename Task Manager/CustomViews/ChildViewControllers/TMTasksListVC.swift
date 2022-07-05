@@ -109,7 +109,7 @@ class TMTasksListVC: UIViewController {
     }
     
     private func setupDataSource() {
-        dataSource = TaskDataSource(tableView: tableView, cellProvider: { (tableView, indexPath, item) -> UITableViewCell? in
+        dataSource = TaskDataSource(tableView: tableView, cellProvider: { [weak self] (tableView, indexPath, item) -> UITableViewCell? in
             guard  let cell = tableView.dequeueReusableCell(withIdentifier: TaskTableViewCell.cellID, for: indexPath) as? TaskTableViewCell else {
                 return TaskTableViewCell()
             }
