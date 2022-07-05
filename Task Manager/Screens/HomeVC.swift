@@ -211,4 +211,8 @@ extension HomeVC: TMProjectsProtocol {
     func projectDeleted() {
         updateProjects()
     }
+    
+    func projectUpdated() {
+        updateProjects()
+    }
 }

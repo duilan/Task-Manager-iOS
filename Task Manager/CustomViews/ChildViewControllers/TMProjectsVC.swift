@@ -10,6 +10,7 @@ import UIKit
 protocol TMProjectsProtocol: class {
     func projectDidChange(project: Project?)
     func projectDeleted()
+    func projectUpdated()
 }
 
 class TMProjectsVC: UIViewController {
@@ -103,7 +104,7 @@ class TMProjectsVC: UIViewController {
                                         attributes: .destructive) { (action) in
                 
                 CoreDataManager.shared.delete(project) { [weak self] in
-                    self?.projectsData.remove(at: indexPath.row)
+                    self?.removeInSnapshot(project)
                     self?.delegate?.projectDeleted()
                 }
             }
@@ -113,13 +114,16 @@ class TMProjectsVC: UIViewController {
             if project.status == StatusProject.inProgress.rawValue {
                 toggleStatusAction = UIAction(title: "Pasar a Completados", image: UIImage(systemName: "tray.and.arrow.down")) { (action) in
                     CoreDataManager.shared.update(status: .completed, project: project) { [weak self] in
-                        self?.projectsData.remove(at: indexPath.row)
+                        self?.removeInSnapshot(project)
+                        self?.delegate?.projectUpdated()
                     }
                 }
             } else if project.status == StatusProject.completed.rawValue{
                 toggleStatusAction = UIAction(title: "Pasar a En Progreso", image: UIImage(systemName: "tray.and.arrow.up")) { (action) in
                     CoreDataManager.shared.update(status: .inProgress, project: project) { [weak self] in
-                        self?.projectsData.remove(at: indexPath.row)                    }
+                        self?.removeInSnapshot(project)
+                        self?.delegate?.projectUpdated()
+                    }
                 }
             }
             
@@ -140,6 +144,12 @@ class TMProjectsVC: UIViewController {
             self.collectionView.transform = .identity
             self.pageIndicator.numberOfPages = self.projectsData.count
         }
+    }
+    
+    private func removeInSnapshot(_ project: Project) {
+         var currentSnapshot =  dataSource.snapshot()
+            currentSnapshot.deleteItems([project])
+            dataSource.apply(currentSnapshot, animatingDifferences: false)
     }
     
     private func updateCurrentProjectSelected() {
