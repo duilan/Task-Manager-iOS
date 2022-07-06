@@ -55,6 +55,9 @@ enum ProjectColors: Int, CaseIterable {
     case purple = 3
     case red = 4
     case brown = 5
+    case indigo = 6
+    case yellow = 7
+    case cyan = 8
     
     var value: UIColor {
         switch self {
@@ -70,6 +73,12 @@ enum ProjectColors: Int, CaseIterable {
             return UIColor.systemRed
         case .brown:
             return UIColor.brown
+        case .indigo:
+            return UIColor.systemIndigo
+        case .yellow:
+            return UIColor.yellow.darker()
+        case .cyan:
+            return UIColor.systemTeal.darker()
         }
     }
 }
