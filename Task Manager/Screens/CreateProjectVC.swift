@@ -138,7 +138,6 @@ class CreateProjectVC: UIViewController {
         startDateTextField.heightAnchor.constraint(equalToConstant: 60).isActive = true
         
         hStack.addArrangedSubview(endDateTextField)
-        formStackView.setCustomSpacing(24, after: hStack)
         endDateTextField.title = "Fecha Termino"
         endDateTextField.layer.cornerCurve = .continuous
         endDateTextField.layer.cornerRadius = 10
@@ -149,6 +148,9 @@ class CreateProjectVC: UIViewController {
     private func setupColorPicker() {
         formStackView.addArrangedSubview(colorPicker)
         formStackView.setCustomSpacing(24, after: colorPicker)
+        colorPicker.layer.cornerCurve = .continuous
+        colorPicker.layer.cornerRadius = 10
+        colorPicker.backgroundColor = .white
     }
     
     private func setupSaveButton() {
