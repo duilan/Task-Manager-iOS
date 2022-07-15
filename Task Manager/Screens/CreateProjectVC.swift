@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol CreateProjectProtocol: class {
+    func projectAdded()
+}
+
 class CreateProjectVC: UIViewController {
     
     private let formStackView = UIStackView()
@@ -22,6 +26,8 @@ class CreateProjectVC: UIViewController {
     private let contentView = UIView()
     
     private var colorOfProject = 0 // default blue = 0
+    
+    weak var delegate: CreateProjectProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -191,6 +197,7 @@ class CreateProjectVC: UIViewController {
             endDate: endDate,
             color: colorProject) { [weak self] in
             self?.navigationController?.popViewController(animated: true)
+            self?.delegate?.projectAdded()
         }
     }
     
