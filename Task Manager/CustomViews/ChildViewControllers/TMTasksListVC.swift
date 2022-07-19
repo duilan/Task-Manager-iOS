@@ -35,6 +35,11 @@ class TMTasksListVC: UIViewController {
         setupDataSource()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        calculatePreferredContentSize()
+    }
+    
     func setProject(_ project: Project?) {
         self.project = project
         
@@ -64,7 +69,7 @@ class TMTasksListVC: UIViewController {
         return context
     }
     
-    private func resizeContentTable() {
+    private func calculatePreferredContentSize() {
         preferredContentSize.height = tableViewHeight + tableView.contentInset.top + tableView.contentInset.bottom
     }
     
@@ -97,12 +102,6 @@ class TMTasksListVC: UIViewController {
         CoreDataManager.shared.fetchTasksOf(currentProject) { [weak self] (tasks) in
             self?.updateSnapshot(with: tasks, animatingDifferences: animatingDifferences)
         }
-        
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        preferredContentSize.height = tableViewHeight + tableView.contentInset.top + tableView.contentInset .bottom
     }
     
     private func setupDataSource() {
@@ -126,7 +125,9 @@ class TMTasksListVC: UIViewController {
         var snapshopt = TaskSnapshot()
         
         defer {
-            dataSource.apply(snapshopt, animatingDifferences: animatingDifferences)
+            dataSource.apply(snapshopt, animatingDifferences: animatingDifferences) { [weak self] in
+                self?.calculatePreferredContentSize()
+            }
         }
         
         tableView.backgroundView = nil
@@ -190,7 +191,6 @@ extension TMTasksListVC: UITableViewDelegate {
 extension TMTasksListVC: TaskDetailProtocol {
     func taskDidUpdate() {
         self.updateData(animatingDifferences: false)
-        self.resizeContentTable()
     }
 }
 
