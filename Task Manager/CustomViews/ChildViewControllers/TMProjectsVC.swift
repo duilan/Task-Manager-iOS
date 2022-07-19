@@ -60,7 +60,7 @@ class TMProjectsVC: UIViewController {
     private func setupPageIndicator() {
         view.addSubview(pageIndicator)
         pageIndicator.currentPageIndicatorTintColor = ThemeColors.accentColor
-        pageIndicator.pageIndicatorTintColor = ThemeColors.accentColor.withAlphaComponent(0.2)
+        pageIndicator.pageIndicatorTintColor = UIColor.gray.withAlphaComponent(0.2)
         pageIndicator.isUserInteractionEnabled = false
         pageIndicator.translatesAutoresizingMaskIntoConstraints = false
         
@@ -135,21 +135,16 @@ class TMProjectsVC: UIViewController {
         }
     }
     
-    private func animateToStartItem() {
-        collectionView.transform = CGAffineTransform(translationX: (self.view.bounds.width), y: 0).concatenating(CGAffineTransform(scaleX: 0.6, y: 0.6))
-        collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .centeredHorizontally, animated: false)
+    func animateToStartItem() {
+        collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .centeredHorizontally, animated: true)
         pageIndicatorIndex = 0
         currentProjectSelected = self.projectsData.first
-        UIView.animate(withDuration: 0.35, delay: 0, options: [.curveEaseInOut]) {
-            self.collectionView.transform = .identity
-            self.pageIndicator.numberOfPages = self.projectsData.count
-        }
     }
     
     private func removeInSnapshot(_ project: Project) {
-         var currentSnapshot =  dataSource.snapshot()
-            currentSnapshot.deleteItems([project])
-            dataSource.apply(currentSnapshot, animatingDifferences: false)
+        var currentSnapshot =  dataSource.snapshot()
+        currentSnapshot.deleteItems([project])
+        dataSource.apply(currentSnapshot, animatingDifferences: false)
     }
     
     private func updateCurrentProjectSelected() {
@@ -169,7 +164,6 @@ class TMProjectsVC: UIViewController {
         guard let project = currentProjectSelected,
               let color =  ProjectColors(rawValue: Int(project.color ))?.value else { return }
         pageIndicator.currentPageIndicatorTintColor = color
-        pageIndicator.pageIndicatorTintColor = color.withAlphaComponent(0.2)
     }
     
     private func setupDataSource() {
@@ -191,9 +185,10 @@ class TMProjectsVC: UIViewController {
         
         DispatchQueue.main.async {
             self.dataSource.apply(snapshot,animatingDifferences: false)
-            self.animateToStartItem()
+            self.pageIndicator.numberOfPages = self.projectsData.count
             if self.projectsData.isEmpty {
                 self.collectionView.backgroundView = TMEmptyView(message: "Sin Proyectos ☝️")
+                self.currentProjectSelected = nil
             }
         }
     }
