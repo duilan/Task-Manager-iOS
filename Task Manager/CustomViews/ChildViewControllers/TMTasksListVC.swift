@@ -36,16 +36,13 @@ class TMTasksListVC: UIViewController {
     }
     
     func setProject(_ project: Project?) {
-        guard let project = project else {
-            updateSnapshot(with: [], animatingDifferences: false)
-            resizeContentTable()
-            return
-        }
-        
         self.project = project
-        updateData(animatingDifferences: false)
-        // actualizamos el alto de la tabla
-        resizeContentTable()
+        
+        if project != nil {
+            updateData(animatingDifferences: false)
+        } else {
+            updateSnapshot(with: [], animatingDifferences: false)
+        }
     }
     
     func contextMenuConfigurationActions(indexPath: IndexPath) -> UIContextMenuConfiguration {
@@ -85,12 +82,12 @@ class TMTasksListVC: UIViewController {
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
         tableView.backgroundColor = ThemeColors.backgroundPrimary
         tableView.register(TaskTableViewCell.self, forCellReuseIdentifier: TaskTableViewCell.cellID)
-        //registrar celdas        
+        //registrar celdas
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)                        
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
     
@@ -133,7 +130,7 @@ class TMTasksListVC: UIViewController {
         }
         
         tableView.backgroundView = nil
-        if tasks.isEmpty  {
+        if tasks.isEmpty && project != nil {
             tableView.backgroundView = emptyView
             return
         }
