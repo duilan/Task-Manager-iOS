@@ -18,6 +18,11 @@ class HomeVC: UIViewController {
     private var tableHeight: NSLayoutConstraint!
     // 0 : InProgress, 1:Completed
     private var segmentIndex: Int = 0
+    private var currentProject: Project? {
+        didSet {
+            taskVC.setProject(currentProject)
+        }
+    }
     
     private let coredata = CoreDataManager.shared
     
@@ -40,11 +45,12 @@ class HomeVC: UIViewController {
         setupSegmentedControl()
         setupChildProjectsVC()
         setupChildTasksVC()
+        setDefaultSegmentSelection()
+        updateProjects()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setDefaultSegmentSelection()
         updateProjects()
     }
     
@@ -58,6 +64,8 @@ class HomeVC: UIViewController {
             self.projectsData = projects
             self.filterProjectData()
         }
+        
+        taskVC.updateData(animatingDifferences: false)
     }
     
     private func filterProjectData() {
@@ -79,10 +87,10 @@ class HomeVC: UIViewController {
     }
     
     @objc private func GoToCreateProjectVC() {
-        let createProjectVC = CreateProjectVC()        
+        let createProjectVC = CreateProjectVC()
+        createProjectVC.delegate = self
         navigationController?.pushViewController(createProjectVC, animated: true)
     }
-    
     
     private func setup() {
         view.backgroundColor = ThemeColors.backgroundPrimary
@@ -177,7 +185,7 @@ class HomeVC: UIViewController {
     private func setupChildTasksVC() {
         stackContentView.addArrangedSubview(tasksVCContainer)
         add(childVC: taskVC, to: tasksVCContainer)
-        tableHeight =  tasksVCContainer.heightAnchor.constraint(equalToConstant: 100)
+        tableHeight =  tasksVCContainer.heightAnchor.constraint(equalToConstant: 400)
         taskVC.view.translatesAutoresizingMaskIntoConstraints = false
         tasksVCContainer.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -191,9 +199,11 @@ class HomeVC: UIViewController {
     
     override func preferredContentSizeDidChange(forChildContentContainer container: UIContentContainer) {
         super.preferredContentSizeDidChange(forChildContentContainer: container)
-        if container as? TMTasksListVC != nil {
-            tableHeight.constant = container.preferredContentSize.height
-        }
+        
+        guard let container = container as? TMTasksListVC  else { return }
+        let contentHeight = container.preferredContentSize.height
+        
+        tableHeight.constant = contentHeight < 150 ? 150 : contentHeight
     }
     
     @objc private func segmentIndexChanged(_ sender: BetterSegmentedControl) {
@@ -204,8 +214,8 @@ class HomeVC: UIViewController {
 }
 
 extension HomeVC: TMProjectsProtocol {
-    func projectDidChange(project: Project?) {        
-        taskVC.setProject(project)
+    func projectDidChange(project: Project?) {
+        currentProject = project
     }
     
     func projectDeleted() {
@@ -214,5 +224,15 @@ extension HomeVC: TMProjectsProtocol {
     
     func projectUpdated() {
         updateProjects()
+    }
+}
+
+extension HomeVC: CreateProjectProtocol {
+    func projectAdded() {
+        updateProjects()
+        segmentedControl.setIndex(0, animated: false, shouldSendValueChangedEvent: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
+            self?.projectsVC.animateToStartItem()
+        }
     }
 }
