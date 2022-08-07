@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 //struct Project: Hashable {
 //    let id = UUID().uuidString.lowercased()
@@ -43,6 +44,41 @@ enum Priority: Int, CaseIterable {
             return "Moderada"
         case .importante:
             return "Importante"
+        }
+    }
+}
+
+enum ProjectColors: Int, CaseIterable {
+    case blue = 0
+    case green = 1
+    case orange = 2
+    case purple = 3
+    case red = 4
+    case brown = 5
+    case indigo = 6
+    case yellow = 7
+    case cyan = 8
+    
+    var value: UIColor {
+        switch self {
+        case .blue:
+            return UIColor.systemBlue
+        case .green:
+            return UIColor.systemGreen
+        case .orange:
+            return UIColor.systemOrange
+        case .purple:
+            return UIColor.systemPurple
+        case .red:
+            return UIColor.systemRed
+        case .brown:
+            return UIColor.brown
+        case .indigo:
+            return UIColor.systemIndigo
+        case .yellow:
+            return UIColor.yellow.darker()
+        case .cyan:
+            return UIColor.systemTeal.darker()
         }
     }
 }

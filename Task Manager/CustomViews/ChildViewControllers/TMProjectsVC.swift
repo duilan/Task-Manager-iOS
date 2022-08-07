@@ -9,6 +9,8 @@ import UIKit
 
 protocol TMProjectsProtocol: class {
     func projectDidChange(project: Project?)
+    func projectDeleted()
+    func projectUpdated()
 }
 
 class TMProjectsVC: UIViewController {
@@ -31,6 +33,7 @@ class TMProjectsVC: UIViewController {
     private var currentProjectSelected: Project?   {
         didSet {
             delegate?.projectDidChange(project: currentProjectSelected)
+            updatePageIndicatorColor()
         }
     }
     
@@ -57,7 +60,7 @@ class TMProjectsVC: UIViewController {
     private func setupPageIndicator() {
         view.addSubview(pageIndicator)
         pageIndicator.currentPageIndicatorTintColor = ThemeColors.accentColor
-        pageIndicator.pageIndicatorTintColor = ThemeColors.accentColor.withAlphaComponent(0.2)
+        pageIndicator.pageIndicatorTintColor = UIColor.gray.withAlphaComponent(0.2)
         pageIndicator.isUserInteractionEnabled = false
         pageIndicator.translatesAutoresizingMaskIntoConstraints = false
         
@@ -90,18 +93,37 @@ class TMProjectsVC: UIViewController {
         ])
     }
     
-    private func contextMenuConfigurationActions(indexPath: IndexPath) ->UIContextMenuConfiguration {
-        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { (menuElement) -> UIMenu? in
+    private func contextMenuConfigurationActions(indexPath: IndexPath) ->UIContextMenuConfiguration? {
+        
+        let project = self.dataSource.itemIdentifier(for: indexPath)!
+        
+        return UIContextMenuConfiguration(identifier: NSIndexPath(item: indexPath.item, section: indexPath.section), previewProvider: nil) { (menuElement) -> UIMenu? in
             
             let deleteAction = UIAction(title: "Eliminar",
                                         image: UIImage(systemName: "trash"),
                                         attributes: .destructive) { (action) in
                 
-                guard let project = self.dataSource.itemIdentifier(for: indexPath) else { return }
-                
                 CoreDataManager.shared.delete(project) { [weak self] in
-                    self?.projectsData.remove(at: indexPath.row)
-                    self?.updateDataSourceSnapshot()
+                    self?.removeInSnapshot(project)
+                    self?.delegate?.projectDeleted()
+                }
+            }
+            
+            var toggleStatusAction: UIAction!
+            
+            if project.status == StatusProject.inProgress.rawValue {
+                toggleStatusAction = UIAction(title: "Pasar a Completados", image: UIImage(systemName: "tray.and.arrow.down")) { (action) in
+                    CoreDataManager.shared.update(status: .completed, project: project) { [weak self] in
+                        self?.removeInSnapshot(project)
+                        self?.delegate?.projectUpdated()
+                    }
+                }
+            } else if project.status == StatusProject.completed.rawValue{
+                toggleStatusAction = UIAction(title: "Pasar a En Progreso", image: UIImage(systemName: "tray.and.arrow.up")) { (action) in
+                    CoreDataManager.shared.update(status: .inProgress, project: project) { [weak self] in
+                        self?.removeInSnapshot(project)
+                        self?.delegate?.projectUpdated()
+                    }
                 }
             }
             
@@ -109,22 +131,23 @@ class TMProjectsVC: UIViewController {
                           image: nil,
                           identifier: nil,
                           options: .displayInline,
-                          children: [deleteAction])
+                          children: [deleteAction, toggleStatusAction])
         }
     }
     
-    private func animateToStartItem() {
-        collectionView.transform = CGAffineTransform(translationX: (self.view.bounds.width), y: 0).concatenating(CGAffineTransform(scaleX: 0.6, y: 0.6))
-        collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .centeredHorizontally, animated: false)
+    func animateToStartItem() {
+        collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .centeredHorizontally, animated: true)
         pageIndicatorIndex = 0
         currentProjectSelected = self.projectsData.first
-        UIView.animate(withDuration: 0.35, delay: 0, options: [.curveEaseInOut]) {
-            self.collectionView.transform = .identity
-            self.pageIndicator.numberOfPages = self.projectsData.count
-        }
     }
     
-    private func getProjectAtCenterPoint() {
+    private func removeInSnapshot(_ project: Project) {
+        var currentSnapshot =  dataSource.snapshot()
+        currentSnapshot.deleteItems([project])
+        dataSource.apply(currentSnapshot, animatingDifferences: false)
+    }
+    
+    private func updateCurrentProjectSelected() {
         let centerPoint = self.view.convert(collectionView.center, to: collectionView)
         guard let indexPathSafe = collectionView.indexPathForItem(at: centerPoint) else { return }
         guard let item = dataSource.itemIdentifier(for: indexPathSafe) else { return }
@@ -135,6 +158,12 @@ class TMProjectsVC: UIViewController {
             pageIndicatorIndex = indexPathSafe.row
             impactFeedback.impactOccurred()
         }
+    }
+    
+    private func updatePageIndicatorColor() {
+        guard let project = currentProjectSelected,
+              let color =  ProjectColors(rawValue: Int(project.color ))?.value else { return }
+        pageIndicator.currentPageIndicatorTintColor = color
     }
     
     private func setupDataSource() {
@@ -156,9 +185,10 @@ class TMProjectsVC: UIViewController {
         
         DispatchQueue.main.async {
             self.dataSource.apply(snapshot,animatingDifferences: false)
-            self.animateToStartItem()
+            self.pageIndicator.numberOfPages = self.projectsData.count
             if self.projectsData.isEmpty {
                 self.collectionView.backgroundView = TMEmptyView(message: "Sin Proyectos ☝️")
+                self.currentProjectSelected = nil
             }
         }
     }
@@ -169,9 +199,9 @@ class TMProjectsVC: UIViewController {
             // 1.0 = 100%
             let itemFractionalWidth: CGFloat = 1.0
             let itemFractionalHeight: CGFloat = 1.0
-            let groupFractionalWidth: CGFloat = 0.65
+            let groupFractionalWidth: CGFloat = 0.6
             let groupFractionalHeight: CGFloat = 1.0
-            let spacingBetweenGroups: CGFloat = 24
+            let spacingBetweenGroups: CGFloat = 10
             // calcula el espacio lateral entre el item para centrarlo !!!
             // groupPagingCenter no funciona adecuadamente!!!!
             let actuaLayoutContainerWidth = layoutEnvironment.container.effectiveContentSize.width
@@ -188,10 +218,16 @@ class TMProjectsVC: UIViewController {
             section.orthogonalScrollingBehavior = .groupPaging
             section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: paddingToCenterItem, bottom: 0, trailing: paddingToCenterItem)
             
-            section.visibleItemsInvalidationHandler = { [weak self] (visibleItems, point, env) -> Void in
-                guard let self = self else { return }
-                // Obtener el item que se muestra al centro cada vez que las celdas visibles cambien
-                self.getProjectAtCenterPoint()
+            section.visibleItemsInvalidationHandler = { (items, offset, environment) in
+                items.forEach { item in
+                    let distanceFromCenter = abs((item.frame.midX - offset.x) - environment.container.contentSize.width / 2.0)
+                    let minScale: CGFloat = 0.85
+                    let maxScale: CGFloat = 1
+                    let scale = max(maxScale - (distanceFromCenter / environment.container.contentSize.width), minScale)
+                    item.transform = CGAffineTransform(scaleX: scale, y: scale)
+                    // Obtener el item que se muestra al centro cada vez que las celdas visibles cambien
+                    self.updateCurrentProjectSelected()
+                }
             }
             return section
         }
@@ -212,4 +248,18 @@ extension TMProjectsVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         contextMenuConfigurationActions(indexPath: indexPath)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview?
+    {
+        guard let indexPath = configuration.identifier as? IndexPath,
+              let cell = collectionView.cellForItem(at: indexPath)
+        else {
+            return nil
+        }
+        
+        let targetedPreview = UITargetedPreview(view: cell)
+        targetedPreview.parameters.backgroundColor = .clear
+        return targetedPreview
+    }
+    
 }

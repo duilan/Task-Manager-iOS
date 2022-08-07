@@ -64,7 +64,7 @@ final class CoreDataManager {
         
     }
     
-    func createProject(alias: String, title: String , desc: String? = nil, startDate: Date, endDate: Date?, completion: @escaping() -> Void ) {
+    func createProject(alias: String, title: String , desc: String? = nil, startDate: Date, endDate: Date?, color: Int, completion: @escaping() -> Void ) {
         
         let context = container.viewContext
         let project = Project(context: context)
@@ -77,12 +77,25 @@ final class CoreDataManager {
         project.createAt = Date()
         project.startDate = startDate
         project.endDate = endDate
+        project.color = Int64(color)
         // save
         do {
             try context.save()
             print("Se guardo")
             completion()
         } catch {
+            print(error)
+        }
+    }
+    
+    func update(status: StatusProject, project: Project, completion: @escaping() -> Void) {
+        project.status = status.rawValue
+        guard let context = project.managedObjectContext else { return }
+        
+        do {
+            try context.save()
+            completion()
+        } catch  {
             print(error)
         }
     }

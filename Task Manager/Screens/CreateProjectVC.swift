@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol CreateProjectProtocol: class {
+    func projectAdded()
+}
+
 class CreateProjectVC: UIViewController {
     
     private let formStackView = UIStackView()
@@ -16,9 +20,14 @@ class CreateProjectVC: UIViewController {
     private let endDateTextField = TMDateField()
     private let descTextView = TMTextView()
     private let saveButton = TMButton("Guardar")
+    private let colorPicker = TMColorPickerView()
     
     private let scrollView = UIScrollView()
     private let contentView = UIView()
+    
+    private var colorOfProject = 0 // default blue = 0
+    
+    weak var delegate: CreateProjectProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +39,7 @@ class CreateProjectVC: UIViewController {
         setupAliasTextField()
         setupDescTextView()
         setupDateTextFields()
+        setupColorPicker()
         setupSaveButton()
     }
     
@@ -134,12 +144,19 @@ class CreateProjectVC: UIViewController {
         startDateTextField.heightAnchor.constraint(equalToConstant: 60).isActive = true
         
         hStack.addArrangedSubview(endDateTextField)
-        formStackView.setCustomSpacing(24, after: hStack)
         endDateTextField.title = "Fecha Termino"
         endDateTextField.layer.cornerCurve = .continuous
         endDateTextField.layer.cornerRadius = 10
         endDateTextField.translatesAutoresizingMaskIntoConstraints = false
         endDateTextField.heightAnchor.constraint(equalToConstant: 60).isActive = true
+    }
+    
+    private func setupColorPicker() {
+        formStackView.addArrangedSubview(colorPicker)
+        formStackView.setCustomSpacing(24, after: colorPicker)
+        colorPicker.layer.cornerCurve = .continuous
+        colorPicker.layer.cornerRadius = 10
+        colorPicker.backgroundColor = .white
     }
     
     private func setupSaveButton() {
@@ -164,12 +181,23 @@ class CreateProjectVC: UIViewController {
             return
         }
         
-        let endDate = endDateTextField.date
+        guard let endDate = endDateTextField.date else {
+            endDateTextField.becomeFirstResponder()
+            return
+        }
+        
         let descValue = descTextView.text
+        let colorProject = colorPicker.indexColor
         
         CoreDataManager.shared.createProject(
-            alias: aliasValue, title: titleValue, desc: descValue, startDate: startDate, endDate: endDate) { [weak self] in
+            alias: aliasValue,
+            title: titleValue,
+            desc: descValue,
+            startDate: startDate,
+            endDate: endDate,
+            color: colorProject) { [weak self] in
             self?.navigationController?.popViewController(animated: true)
+            self?.delegate?.projectAdded()
         }
     }
     

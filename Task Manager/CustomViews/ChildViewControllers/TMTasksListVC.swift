@@ -35,17 +35,19 @@ class TMTasksListVC: UIViewController {
         setupDataSource()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        calculatePreferredContentSize()
+    }
+    
     func setProject(_ project: Project?) {
-        guard let project = project else {
-            updateSnapshot(with: [], animatingDifferences: false)
-            resizeContentTable()
-            return
-        }
-        
         self.project = project
-        updateData(animatingDifferences: false)
-        // actualizamos el alto de la tabla
-        resizeContentTable()
+        
+        if project != nil {
+            updateData(animatingDifferences: false)
+        } else {
+            updateSnapshot(with: [], animatingDifferences: false)
+        }
     }
     
     func contextMenuConfigurationActions(indexPath: IndexPath) -> UIContextMenuConfiguration {
@@ -67,7 +69,7 @@ class TMTasksListVC: UIViewController {
         return context
     }
     
-    private func resizeContentTable() {
+    private func calculatePreferredContentSize() {
         preferredContentSize.height = tableViewHeight + tableView.contentInset.top + tableView.contentInset.bottom
     }
     
@@ -85,12 +87,12 @@ class TMTasksListVC: UIViewController {
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
         tableView.backgroundColor = ThemeColors.backgroundPrimary
         tableView.register(TaskTableViewCell.self, forCellReuseIdentifier: TaskTableViewCell.cellID)
-        //registrar celdas        
+        //registrar celdas
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)                        
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
     
@@ -100,16 +102,10 @@ class TMTasksListVC: UIViewController {
         CoreDataManager.shared.fetchTasksOf(currentProject) { [weak self] (tasks) in
             self?.updateSnapshot(with: tasks, animatingDifferences: animatingDifferences)
         }
-        
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        preferredContentSize.height = tableViewHeight + tableView.contentInset.top + tableView.contentInset .bottom
     }
     
     private func setupDataSource() {
-        dataSource = TaskDataSource(tableView: tableView, cellProvider: { (tableView, indexPath, item) -> UITableViewCell? in
+        dataSource = TaskDataSource(tableView: tableView, cellProvider: { [weak self] (tableView, indexPath, item) -> UITableViewCell? in
             guard  let cell = tableView.dequeueReusableCell(withIdentifier: TaskTableViewCell.cellID, for: indexPath) as? TaskTableViewCell else {
                 return TaskTableViewCell()
             }
@@ -129,11 +125,13 @@ class TMTasksListVC: UIViewController {
         var snapshopt = TaskSnapshot()
         
         defer {
-            dataSource.apply(snapshopt, animatingDifferences: animatingDifferences)
+            dataSource.apply(snapshopt, animatingDifferences: animatingDifferences) { [weak self] in
+                self?.calculatePreferredContentSize()
+            }
         }
         
         tableView.backgroundView = nil
-        if tasks.isEmpty  {
+        if tasks.isEmpty && project != nil {
             tableView.backgroundView = emptyView
             return
         }
@@ -193,7 +191,6 @@ extension TMTasksListVC: UITableViewDelegate {
 extension TMTasksListVC: TaskDetailProtocol {
     func taskDidUpdate() {
         self.updateData(animatingDifferences: false)
-        self.resizeContentTable()
     }
 }
 

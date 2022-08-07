@@ -14,18 +14,19 @@ class ProjectViewCell: UICollectionViewCell {
     private let iconView = TMSquareIconView()
     private let aliasLabel = TMTitleLabel(fontSize: 12, weight: .semibold, colorInverted: true)
     private let titleLabel = TMTitleLabel(fontSize: 24, weight: .bold, colorInverted: true)
-    private let createAtLabel = TMTitleLabel(fontSize: 12, weight: .regular, colorInverted: true)
-    private let statusLabel = TMTitleLabel(fontSize: 12, weight: .regular, colorInverted: true)
+    private let startDateLabel = TMTitleLabel(fontSize: 10, weight: .regular, colorInverted: true)
+    private let endDateLabel = TMTitleLabel(fontSize: 10, weight: .regular, colorInverted: true)
+    private let statusLabel = TMTitleLabel(fontSize: 10, weight: .regular, colorInverted: true)
     private let triangleShapesView = UIImageView()
+    private let dateFormatterGet = DateFormatter()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
-        setupBackgroundGradient()
         setupTriangeShapes()
         setupIcon()
-        setupAliasLabel()
-        setupDayLabelAndStatusLabel()
+        setupAliasAndStatusLabel()
+        setupStartAndEndDateLabel()
         setupTitleLabel()
     }
     
@@ -34,11 +35,13 @@ class ProjectViewCell: UICollectionViewCell {
     }
     
     func configure(with project: Project) {
+        setupBackgroundGradient(numberColor: Int(project.color))
         iconView.systemNameIcon = "wrench.and.screwdriver"
         aliasLabel.text = project.alias
         titleLabel.text = project.title
-        #warning("Formatear la fecha de project")
-        createAtLabel.text = "12/10/2021"
+        dateFormatterGet.dateFormat = "d MMM yyyy"
+        startDateLabel.text = "Del \(dateFormatterGet.string(from: project.startDate!))"
+        endDateLabel.text = "Hasta \(dateFormatterGet.string(from: project.endDate!))"
         statusLabel.text = project.status
     }
     
@@ -48,13 +51,14 @@ class ProjectViewCell: UICollectionViewCell {
         clipsToBounds = true
     }
     
-    private func setupBackgroundGradient() {
+    private func setupBackgroundGradient(numberColor: Int = 0 ) {
+        let color = ProjectColors(rawValue: numberColor) ?? .blue
         let startEndPointsGradient = (CGPoint(x: 0, y: 0), CGPoint(x: 0, y: 1))
-        self.addGradientBackground(colorSet: [ThemeColors.accentColor.darker(), ThemeColors.accentColor.lighter()],
+        self.addGradientBackground(colorSet: [color.value.darker(), color.value.lighter()],
                                    startAndEndPoints: startEndPointsGradient)
     }
     
-    func setupTriangeShapes() {
+    private func setupTriangeShapes() {
         let image = UIImage(named: "triangleShapes")?.withRenderingMode(.alwaysTemplate)
         addSubview(triangleShapesView)
         triangleShapesView.contentMode = .scaleAspectFill
@@ -76,32 +80,44 @@ class ProjectViewCell: UICollectionViewCell {
         ])
     }
     
-    private func setupAliasLabel() {
-        contentView.addSubview(aliasLabel)        
+    private func setupAliasAndStatusLabel() {
+        contentView.addSubview(aliasLabel)
+        contentView.addSubview(statusLabel)
+        
         aliasLabel.numberOfLines = 1
         aliasLabel.textAlignment = .left
+        
+        statusLabel.numberOfLines = 1
+        statusLabel.textAlignment = .left
+        
         // Constraints
         NSLayoutConstraint.activate([
             aliasLabel.topAnchor.constraint(equalTo: iconView.topAnchor, constant: 0),
             aliasLabel.leadingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: 8),
             aliasLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
-            aliasLabel.bottomAnchor.constraint(equalTo: iconView.bottomAnchor, constant: 0),
+            aliasLabel.heightAnchor.constraint(equalToConstant: 20),
+            
+            statusLabel.topAnchor.constraint(equalTo: aliasLabel.bottomAnchor),
+            statusLabel.leadingAnchor.constraint(equalTo: aliasLabel.leadingAnchor,constant: 0),
+            statusLabel.trailingAnchor.constraint(equalTo: aliasLabel.trailingAnchor, constant: 0),
+            statusLabel.heightAnchor.constraint(equalToConstant: 15)
         ])
     }
     
-    func setupDayLabelAndStatusLabel() {
+    private func setupStartAndEndDateLabel() {
         let HStack = UIStackView()
         contentView.addSubview(HStack)
         HStack.axis = .horizontal
         HStack.distribution = .equalSpacing
         HStack.translatesAutoresizingMaskIntoConstraints = false
-        HStack.addArrangedSubview(createAtLabel)
-        HStack.addArrangedSubview(statusLabel)
+        HStack.addArrangedSubview(startDateLabel)
+        HStack.addArrangedSubview(endDateLabel)
         // Labels
-        createAtLabel.numberOfLines = 1
-        createAtLabel.textAlignment = .left
-        statusLabel.numberOfLines = 1
-        statusLabel.textAlignment = .right
+        startDateLabel.numberOfLines = 1
+        startDateLabel.textAlignment = .left
+        
+        endDateLabel.numberOfLines = 1
+        endDateLabel.textAlignment = .right
         // Constraints
         NSLayoutConstraint.activate([
             HStack.heightAnchor.constraint(equalToConstant: 16),
@@ -120,7 +136,7 @@ class ProjectViewCell: UICollectionViewCell {
             titleLabel.topAnchor.constraint(equalTo: iconView.bottomAnchor, constant: 0),
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            titleLabel.bottomAnchor.constraint(equalTo: createAtLabel.topAnchor, constant: -8)
+            titleLabel.bottomAnchor.constraint(equalTo: startDateLabel.topAnchor, constant: -8)
         ])
     }
     

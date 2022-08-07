@@ -16,12 +16,11 @@ class TMProjectHeaderDetailView: UIView {
     private let endDateTextField = TMDateField()
     private let descTextView = TMTextView()
     private let buttonShowMore = TMButton()
-    private var gradientLayer: CAGradientLayer!
+    private var projectColor: ProjectColors?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
-        setupGradient()
         setupContentStack()
         setupAliasAndTitleLabel()
         setupDateTextFields()
@@ -39,6 +38,8 @@ class TMProjectHeaderDetailView: UIView {
         startDateTextField.setDefaultDate(project.startDate)
         endDateTextField.setDefaultDate(project.endDate)
         descTextView.text = project.desc
+        projectColor = ProjectColors(rawValue: Int(project.color))
+        setupGradientWith(color: projectColor)
     }
     
     @objc func showMoreInfo(_ sender: UIButton) {
@@ -65,9 +66,11 @@ class TMProjectHeaderDetailView: UIView {
         self.clipsToBounds = true
     }
     
-    private func setupGradient() {
-        gradientLayer = ThemeColors.createGradientLayer(colorSet: [ThemeColors.accentColor.darker(), ThemeColors.accentColor.lighter()])
-        self.layer.insertSublayer(gradientLayer, at: 0) // resize frame at layoutSubviews()
+    private func setupGradientWith(color: ProjectColors?) {
+        guard let color = color else { return }
+        let startEndPointsGradient = (CGPoint(x: 0, y: 0), CGPoint(x: 0, y: 1))
+        self.addGradientBackground(colorSet: [color.value.darker(), color.value.lighter()],
+                                   startAndEndPoints: startEndPointsGradient)
     }
     
     
@@ -151,7 +154,7 @@ class TMProjectHeaderDetailView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        gradientLayer.frame = bounds // resize gradient when view is expanded
+        setupGradientWith(color: projectColor)
     }
     
 }
