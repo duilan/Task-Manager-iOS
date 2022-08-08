@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol TMProjectsProtocol: class {
+protocol TMProjectsProtocol: AnyObject {
     func projectDidChange(project: Project?)
     func projectDeleted()
     func projectUpdated()
