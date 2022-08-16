@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol CreateTaskProtocol: class {
+protocol CreateTaskProtocol: AnyObject {
     func taskAdded()
 }
 

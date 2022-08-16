@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol CreateProjectProtocol: class {
+protocol CreateProjectProtocol: AnyObject {
     func projectAdded()
 }
 

@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol TaskDetailProtocol: class {
+protocol TaskDetailProtocol: AnyObject {
     func taskDidUpdate()
 }
 
