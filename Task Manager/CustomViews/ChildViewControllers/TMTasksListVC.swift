@@ -82,7 +82,7 @@ class TMTasksListVC: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         tableView.delegate = self
-        tableView.rowHeight = 80
+        tableView.rowHeight = 100
         tableView.separatorStyle = .none
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
         tableView.backgroundColor = ThemeColors.backgroundPrimary

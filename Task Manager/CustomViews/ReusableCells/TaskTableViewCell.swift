@@ -11,8 +11,9 @@ class TaskTableViewCell: UITableViewCell {
     
     static let cellID = "TaskTableViewCell"
     
-    private let titleTask = TMTitleLabel(fontSize: 16, weight: .semibold, textAlignment: .left)
-    private let creationTimeLabel = TMSubtitleLabel(fontSize: 12, weight: .regular, textAlignment: .left)
+    private let titleTask = TMTitleLabel(fontSize: 14, weight: .medium, textAlignment: .left)
+    private let notesTask = TMSubtitleLabel(fontSize: 12, weight: .regular, textAlignment: .left)
+    private let creationTimeLabel = TMSubtitleLabel(fontSize: 11, weight: .light, textAlignment: .right)
     private let stackTitles = UIStackView()
     private let priorityLabel = TMTagLabel()
     private let containerView = UIView()
@@ -23,8 +24,8 @@ class TaskTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setup()
         setupContainer()
-        setupCheckMarkButton()
         setupTitleAndCreateDateLabel()
+        setupCheckMarkButton()
         setupPriorityLabel()
     }
     
@@ -34,6 +35,7 @@ class TaskTableViewCell: UITableViewCell {
     
     func configure(with task: Task) {
         titleTask.text = task.title
+        notesTask.text = task.notes
         creationTimeLabel.text = "Hace \( Date().countFrom(date: task.createAt!))"
         doneButton.isChecked = task.isDone
         let priority = Priority.allCases[Int(task.priority)]
@@ -88,40 +90,58 @@ class TaskTableViewCell: UITableViewCell {
     
     private func setupCheckMarkButton() {
         containerView.addSubview(doneButton)
+        doneButton.backgroundColor = .white
         doneButton.addTarget(self, action: #selector(doneButtonTapped(_:)), for: .touchUpInside )
         
         NSLayoutConstraint.activate([
             doneButton.heightAnchor.constraint(equalToConstant: 30),
             doneButton.widthAnchor.constraint(equalToConstant: 30),
-            doneButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
-            doneButton.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
+            doneButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -14),
+            doneButton.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 10),
         ])
     }
     
     private func setupTitleAndCreateDateLabel() {
-        containerView.addSubview(stackTitles)
-        stackTitles.addArrangedSubview(titleTask)
-        stackTitles.addArrangedSubview(creationTimeLabel)
-        titleTask.numberOfLines = 1
-        creationTimeLabel.numberOfLines = 1
+        let separatorView = UIView()
+        separatorView.backgroundColor = UIColor.gray.withAlphaComponent(0.1)
+        separatorView.translatesAutoresizingMaskIntoConstraints = false
+        separatorView.heightAnchor.constraint(equalToConstant: 1).isActive = true
         
+        // StackView
+        containerView.addSubview(stackTitles)
         stackTitles.axis = .vertical
         stackTitles.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Title
+        stackTitles.addArrangedSubview(titleTask)
+        titleTask.numberOfLines = 1
+        stackTitles.setCustomSpacing(2, after: titleTask)
+        // Notes
+        stackTitles.addArrangedSubview(notesTask)
+        notesTask.numberOfLines = 1
+        stackTitles.setCustomSpacing(8, after: notesTask)
+        // separator
+        stackTitles.addArrangedSubview(separatorView)
+        stackTitles.setCustomSpacing(8, after: separatorView)
+        // Time
+        stackTitles.addArrangedSubview(creationTimeLabel)
+        creationTimeLabel.numberOfLines = 1
+        
         // Contraints
         NSLayoutConstraint.activate([
             titleTask.heightAnchor.constraint(equalToConstant: 20),
             creationTimeLabel.heightAnchor.constraint(equalToConstant: 20),
             stackTitles.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
-            stackTitles.leadingAnchor.constraint(equalTo: doneButton.trailingAnchor, constant: 16),
-            stackTitles.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+            stackTitles.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            stackTitles.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16)
         ])
     }
     
     private func setupPriorityLabel() {
         containerView.addSubview(priorityLabel)
         NSLayoutConstraint.activate([
-            priorityLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
-            priorityLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -24),
+            priorityLabel.bottomAnchor.constraint(equalTo: stackTitles.bottomAnchor),
+            priorityLabel.leadingAnchor.constraint(equalTo: stackTitles.leadingAnchor),
             priorityLabel.heightAnchor.constraint(equalToConstant: 20)
         ])
     }
