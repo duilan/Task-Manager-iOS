@@ -132,11 +132,11 @@ class HomeVC: UIViewController {
     
     private func setupWelcomeHeader() {
         stackContentView.addArrangedSubview(headerContainer)
-        stackContentView.setCustomSpacing(20, after: headerContainer)
+        stackContentView.setCustomSpacing(8, after: headerContainer)
         headerContainer.addSubview(welcomeHeader)
         welcomeHeader.title = "Hola Adrián"
         NSLayoutConstraint.activate([
-            headerContainer.heightAnchor.constraint(equalToConstant: 60),
+            headerContainer.heightAnchor.constraint(equalToConstant: 50),
             welcomeHeader.topAnchor.constraint(equalTo: headerContainer.topAnchor),
             welcomeHeader.leadingAnchor.constraint(equalTo: headerContainer.leadingAnchor, constant: 16),
             welcomeHeader.trailingAnchor.constraint(equalTo: headerContainer.trailingAnchor, constant: -16),
