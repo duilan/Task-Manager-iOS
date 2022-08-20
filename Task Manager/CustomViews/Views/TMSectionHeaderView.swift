@@ -9,8 +9,8 @@ import UIKit
 
 class TMSectionHeaderView: UIView {
     
-    private let title = TMTitleLabel(fontSize: 18, weight: .black, textAlignment: .left)
-    let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
+    private let title = TMTitleLabel(fontSize: 12, weight: .bold, textAlignment: .left)
+    private let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -44,7 +44,7 @@ class TMSectionHeaderView: UIView {
     
     private func setupTitle() {
         addSubview(title)
-        title.alpha = 0.8
+        title.alpha = 0.6
         NSLayoutConstraint.activate([
             title.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             title.trailingAnchor.constraint(equalTo: trailingAnchor),
