@@ -33,5 +33,12 @@ extension UIView {
         }
     }
     
+    func debugThisView(withColor: UIColor = .systemPurple,_ withBackground: Bool = true) {
+        self.layer.borderWidth = 1
+        self.layer.borderColor = withColor.withAlphaComponent(0.5).cgColor
+        if withBackground {
+            self.backgroundColor = withColor.withAlphaComponent(0.1)
+        }
+    }
 }
 
