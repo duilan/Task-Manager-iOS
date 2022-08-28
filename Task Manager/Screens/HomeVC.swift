@@ -146,7 +146,6 @@ class HomeVC: UIViewController {
     
     private func setupSegmentedControl() {
         stackContentView.addArrangedSubview(segmentedControlContainer)
-        stackContentView.setCustomSpacing(20, after: segmentedControlContainer)
         segmentedControlContainer.addSubview(segmentedControl)
         segmentedControl.cornerRadius = 22.5
         segmentedControl.backgroundColor = #colorLiteral(red: 0.6156862745, green: 0.6156862745, blue: 0.6156862745, alpha: 0.08)
@@ -178,7 +177,7 @@ class HomeVC: UIViewController {
         
         projectsVCContainer.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            projectsVCContainer.heightAnchor.constraint(equalToConstant: 260)
+            projectsVCContainer.heightAnchor.constraint(equalToConstant: 200)
         ])
     }
     

@@ -65,7 +65,7 @@ class TMProjectsVC: UIViewController {
         pageIndicator.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            pageIndicator.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
+            pageIndicator.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 6 ),
             pageIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             pageIndicator.widthAnchor.constraint(equalToConstant: view.frame.width / 2)
         ])
@@ -89,7 +89,7 @@ class TMProjectsVC: UIViewController {
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: pageIndicator.topAnchor)
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
     
@@ -199,9 +199,10 @@ class TMProjectsVC: UIViewController {
             // 1.0 = 100%
             let itemFractionalWidth: CGFloat = 1.0
             let itemFractionalHeight: CGFloat = 1.0
-            let groupFractionalWidth: CGFloat = 0.6
+            let groupFractionalWidth: CGFloat = 0.75
             let groupFractionalHeight: CGFloat = 1.0
-            let spacingBetweenGroups: CGFloat = 10
+            let spacingBetweenGroups: CGFloat = 0
+            let sectionTopBottomInset: CGFloat = 20
             // calcula el espacio lateral entre el item para centrarlo !!!
             // groupPagingCenter no funciona adecuadamente!!!!
             let actuaLayoutContainerWidth = layoutEnvironment.container.effectiveContentSize.width
@@ -216,7 +217,7 @@ class TMProjectsVC: UIViewController {
             let section = NSCollectionLayoutSection(group: group)
             section.interGroupSpacing = spacingBetweenGroups
             section.orthogonalScrollingBehavior = .groupPaging
-            section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: paddingToCenterItem, bottom: 0, trailing: paddingToCenterItem)
+            section.contentInsets = NSDirectionalEdgeInsets(top: sectionTopBottomInset, leading: paddingToCenterItem, bottom:sectionTopBottomInset, trailing: paddingToCenterItem)
             
             section.visibleItemsInvalidationHandler = { (items, offset, environment) in
                 items.forEach { item in
