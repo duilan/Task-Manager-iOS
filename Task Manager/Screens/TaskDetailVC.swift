@@ -74,15 +74,20 @@ class TaskDetailVC: UIViewController {
         let notes = notesTextView.text
         let priorityID = prioritiesView.indexOption
         
-        task.title = titleValue
-        task.notes = notes
-        task.priority = Int64(priorityID)
-        
-        coredata.updateTask(with: task ) { [weak self] in
-            guard let self = self else { return }
-            self.dismiss(animated: true, completion: {
-                self.delegate?.taskDidUpdate()
-            })            
+        if (task.title != titleValue || task.notes != notes || task.priority != Int64(priorityID) ) {
+            
+            task.title = titleValue
+            task.notes = notes
+            task.priority = Int64(priorityID)
+            
+            coredata.updateTask(with: task ) { [weak self] in
+                guard let self = self else { return }
+                self.dismiss(animated: true, completion: {
+                    self.delegate?.taskDidUpdate()
+                })
+            }
+        } else {
+            self.dismiss(animated: true)
         }
         
     }
