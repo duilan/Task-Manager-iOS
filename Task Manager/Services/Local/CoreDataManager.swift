@@ -9,36 +9,33 @@ import CoreData
 
 final class CoreDataManager {
     
-    // singleton access
-    public static var shared = CoreDataManager()
+    // Singleton
+    public static let shared = CoreDataManager()
     
-    private let dataBaseName = "TaskManager"
-    private let container: NSPersistentContainer!
-    
-    private init() {
-        container = NSPersistentContainer(name: dataBaseName)
-        configureDatabase()
-    }
-    
-    private func configureDatabase() {
+    private let persistentContainer: NSPersistentContainer = {
+        let databaseName = "TaskManager"
+        let container = NSPersistentContainer(name: databaseName)
         container.loadPersistentStores { (storeDescription, error) in
             if let error = error as NSError? {
                 fatalError("Unable to load persistent stores: \(error) , \(error.userInfo)")
             }
-            print("CoreData: \(self.dataBaseName) Loaded!")
-            // Ruta del archivo sql
-            //print("Sqlite File: \(NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true).first!)")
+            print("CoreData: \(databaseName) Loaded!")
         }
+        return container
+    }()
+    
+    private let context: NSManagedObjectContext
+    
+    private init() {
+        context = persistentContainer.viewContext
     }
     
     func fetchAllProjects( completion: @escaping ([Project]) -> Void) {
-        
-        let context = container.viewContext
         let request : NSFetchRequest<Project> = Project.fetchRequest()
         // sort result by createAt date
-        let sort = NSSortDescriptor(key: #keyPath(Project.createAt), ascending: false)
+        let sort = NSSortDescriptor(keyPath: \Project.createAt, ascending: false)
         request.sortDescriptors = [sort]
-        // fetch
+        
         do {
             let result = try context.fetch(request)
             completion(result)
@@ -47,33 +44,27 @@ final class CoreDataManager {
         }
     }
     
-    func fetchProject(id: String, completion: @escaping(Project)-> Void) {
-        let context = container.viewContext
+    func fetchProject(id: UUID, completion: @escaping(Project?)-> Void) {
         let request: NSFetchRequest<Project> = Project.fetchRequest()
-        request.predicate = NSPredicate(format: "id == %@", id)
+        request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
         
         do {
-            if let project = try context.fetch(request).first {
-                completion(project)
-            } else {
-                print("peoject with id:\(id) doesnt exist")
-            }
+            let project = try context.fetch(request).first
+            completion(project)
         } catch {
             print(error)
         }
-        
     }
     
-    func createProject(alias: String, title: String , desc: String? = nil, startDate: Date, endDate: Date?, color: Int, completion: @escaping() -> Void ) {
+    func createProject(alias: String, title: String , desc: String? = nil, startDate: Date, endDate: Date, color: Int, completion: @escaping() -> Void ) {
         
-        let context = container.viewContext
         let project = Project(context: context)
         // setup project obj
-        project.id = UUID().uuidString.lowercased()
+        project.id = UUID()
         project.alias = alias
         project.title = title
         project.desc = desc
-        project.status = StatusProject.inProgress.rawValue
+        project.statusDescription = .inProgress // this will set raw value at status
         project.createAt = Date()
         project.startDate = startDate
         project.endDate = endDate
@@ -81,17 +72,14 @@ final class CoreDataManager {
         // save
         do {
             try context.save()
-            print("Se guardo")
+            print("Se creo el proyecto: \(project.title)")
             completion()
         } catch {
             print(error)
         }
     }
     
-    func update(status: StatusProject, project: Project, completion: @escaping() -> Void) {
-        project.status = status.rawValue
-        guard let context = project.managedObjectContext else { return }
-        
+    func update( completion: @escaping() -> Void) {
         do {
             try context.save()
             completion()
@@ -101,13 +89,11 @@ final class CoreDataManager {
     }
     
     func addTask(title: String, notes: String?, priority: Int, to project: Project, completion: @escaping() -> Void) {
-        
-        let context = container.viewContext
         // verificamos que el proyecto exista en el MOC
         guard let existingProject = context.object(with: project.objectID) as? Project else { return }
         
         let task = Task(context: context)
-        task.id = UUID().uuidString.lowercased()
+        task.id = UUID()
         task.createAt = Date()
         task.title = title
         task.notes = notes
@@ -118,21 +104,19 @@ final class CoreDataManager {
         do {
             try context.save()
             completion()
-            print("Se agrego nueva tarea")
+            print("Se creo tarea \(task.title) en el proyecto \(existingProject.title)")
         } catch {
             print(error)
         }
     }
     
     func fetchTasksOf(_ project: Project, completion: @escaping([Task]) -> Void) {
-        
-        let context = container.viewContext
         // verificamos que el proyecto exista en el MOC
         guard let existingProject = context.object(with: project.objectID) as? Project else { return }
         
         let request: NSFetchRequest<Task> = Task.fetchRequest()
         let predicate  = NSPredicate(format: "project == %@", existingProject)
-        let sort = NSSortDescriptor(key: #keyPath(Task.createAt), ascending: false)
+        let sort = NSSortDescriptor(keyPath: \Task.createAt, ascending: false)
         
         request.predicate = predicate
         request.sortDescriptors = [sort]
@@ -146,26 +130,28 @@ final class CoreDataManager {
     }
     
     func updateTask(with task: Task, completion: @escaping() -> Void) {
-        
-        guard let context = task.managedObjectContext else { return }
-        
         do {
             try context.save()
             completion()
+            print("Tarea actualizada")
         } catch {
             print(error)
         }
     }
     
     func delete(_ object: NSManagedObject, completion: @escaping() -> Void) {
-        let context = container.viewContext
         context.delete(object)
         do {
             try context.save()
             completion()
+            print("Se elimino")
         } catch {
             print(error)
         }
     }
-        
+    
+    func sqliteFilePath() {
+        print("SQLite File Path:  \(NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true).first!)")
+    }
+    
 }

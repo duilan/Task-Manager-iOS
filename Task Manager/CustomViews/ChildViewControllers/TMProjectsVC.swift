@@ -111,16 +111,20 @@ class TMProjectsVC: UIViewController {
             
             var toggleStatusAction: UIAction!
             
-            if project.status == StatusProject.inProgress.rawValue {
+            if project.statusDescription == .inProgress {
+                
                 toggleStatusAction = UIAction(title: "Pasar a Completados", image: UIImage(systemName: "tray.and.arrow.down")) { (action) in
-                    CoreDataManager.shared.update(status: .completed, project: project) { [weak self] in
+                    project.statusDescription = .completed
+                    CoreDataManager.shared.update() { [weak self] in
                         self?.removeInSnapshot(project)
                         self?.delegate?.projectUpdated()
                     }
                 }
-            } else if project.status == StatusProject.completed.rawValue{
+            } else if project.statusDescription == .completed{
+                
                 toggleStatusAction = UIAction(title: "Pasar a En Progreso", image: UIImage(systemName: "tray.and.arrow.up")) { (action) in
-                    CoreDataManager.shared.update(status: .inProgress, project: project) { [weak self] in
+                    project.statusDescription = .inProgress
+                    CoreDataManager.shared.update() { [weak self] in
                         self?.removeInSnapshot(project)
                         self?.delegate?.projectUpdated()
                     }

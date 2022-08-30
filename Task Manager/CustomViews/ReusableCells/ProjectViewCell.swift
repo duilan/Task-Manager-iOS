@@ -40,8 +40,8 @@ class ProjectViewCell: UICollectionViewCell {
         aliasLabel.text = project.alias
         titleLabel.text = project.title
         dateFormatterGet.dateFormat = "d MMM yyyy"
-        startDateLabel.text = "Del \(dateFormatterGet.string(from: project.startDate!))"
-        endDateLabel.text = "Hasta \(dateFormatterGet.string(from: project.endDate!))"
+        startDateLabel.text = "Del \(dateFormatterGet.string(from: project.startDate))"
+        endDateLabel.text = "Hasta \(dateFormatterGet.string(from: project.endDate))"
         statusLabel.text = project.status
     }
     
