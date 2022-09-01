@@ -109,33 +109,29 @@ class TMProjectsVC: UIViewController {
                 }
             }
             
-            var toggleStatusAction: UIAction!
+            let statusActions: [UIAction] = StatusProject.allCases.compactMap({ status in
+                if status == project.statusDescription { return nil }
+                return UIAction(
+                    title: "Pasar a \(status.rawValue)",
+                    image: UIImage(systemName: status.icon)) { (action) in
+                    
+                    project.statusDescription = status
+                    CoreDataManager.shared.update() { [weak self] in
+                        self?.removeInSnapshot(project)
+                        self?.delegate?.projectUpdated()
+                    }
+                }
+            })
             
-            if project.statusDescription == .inProgress {
-                
-                toggleStatusAction = UIAction(title: "Pasar a Completados", image: UIImage(systemName: "tray.and.arrow.down")) { (action) in
-                    project.statusDescription = .completed
-                    CoreDataManager.shared.update() { [weak self] in
-                        self?.removeInSnapshot(project)
-                        self?.delegate?.projectUpdated()
-                    }
-                }
-            } else if project.statusDescription == .completed{
-                
-                toggleStatusAction = UIAction(title: "Pasar a En Progreso", image: UIImage(systemName: "tray.and.arrow.up")) { (action) in
-                    project.statusDescription = .inProgress
-                    CoreDataManager.shared.update() { [weak self] in
-                        self?.removeInSnapshot(project)
-                        self?.delegate?.projectUpdated()
-                    }
-                }
-            }
+            var actionsForContextMenu: [UIAction] = []
+            actionsForContextMenu.append(deleteAction)
+            actionsForContextMenu.append(contentsOf: statusActions)
             
             return UIMenu(title: "OPCIONES DEL PROYECTO",
                           image: nil,
                           identifier: nil,
                           options: .displayInline,
-                          children: [deleteAction, toggleStatusAction])
+                          children: actionsForContextMenu)
         }
     }
     
