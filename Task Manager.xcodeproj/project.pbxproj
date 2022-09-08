@@ -59,10 +59,10 @@
 		3A032FEF2717E0FA00EA11B9 /* TMWelcomeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMWelcomeHeaderView.swift; sourceTree = "<group>"; };
 		3A07CB35272B798A00E20F3A /* TaskManager.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TaskManager.xcdatamodel; sourceTree = "<group>"; };
 		3A17BC29274341F800CE504B /* TMSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMSectionHeaderView.swift; sourceTree = "<group>"; };
-		3A1FE60F28BB0C0A00E80722 /* Project+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Project+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		3A1FE61028BB0C0A00E80722 /* Project+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Project+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
-		3A1FE61128BB0C0A00E80722 /* Task+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		3A1FE61228BB0C0A00E80722 /* Task+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		3A1FE60F28BB0C0A00E80722 /* Project+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Project+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3A1FE61028BB0C0A00E80722 /* Project+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Project+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3A1FE61128BB0C0A00E80722 /* Task+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3A1FE61228BB0C0A00E80722 /* Task+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3A23CA3127646F060030437E /* TMTagLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMTagLabel.swift; sourceTree = "<group>"; };
 		3A2983D827364D6A006B9448 /* TMDateField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDateField.swift; sourceTree = "<group>"; };
 		3A32C5FC274879B600AE1BA4 /* CreateTaskVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTaskVC.swift; sourceTree = "<group>"; };
