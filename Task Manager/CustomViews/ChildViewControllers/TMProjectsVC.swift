@@ -212,7 +212,7 @@ class TMProjectsVC: UIViewController {
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(groupFractionalWidth), heightDimension: .fractionalHeight(groupFractionalHeight))
-            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item , count: 1)
             
             let section = NSCollectionLayoutSection(group: group)
             section.interGroupSpacing = spacingBetweenGroups

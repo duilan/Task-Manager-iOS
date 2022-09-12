@@ -23,7 +23,6 @@ class TMTasksListVC: UIViewController {
     }
     
     private var tableViewHeight: CGFloat {
-        tableView.reloadData()
         tableView.setNeedsLayout()
         return tableView.contentSize.height
     }
