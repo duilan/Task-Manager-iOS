@@ -30,12 +30,7 @@ class TMProjectsVC: UIViewController {
         case projects = "Proyectos"
     }
     
-    private var currentProjectSelected: Project?   {
-        didSet {
-            delegate?.projectDidChange(project: currentProjectSelected)
-            updatePageIndicatorColor()
-        }
-    }
+    private var currentProjectSelected: Project?
     
     var projectsData: [Project] = [] {
         didSet {
@@ -61,6 +56,7 @@ class TMProjectsVC: UIViewController {
         view.addSubview(pageIndicator)
         pageIndicator.currentPageIndicatorTintColor = ThemeColors.accentColor
         pageIndicator.pageIndicatorTintColor = UIColor.gray.withAlphaComponent(0.2)
+        pageIndicator.hidesForSinglePage = true
         pageIndicator.isUserInteractionEnabled = false
         pageIndicator.translatesAutoresizingMaskIntoConstraints = false
         
@@ -138,7 +134,6 @@ class TMProjectsVC: UIViewController {
     func animateToStartItem() {
         collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .centeredHorizontally, animated: true)
         pageIndicatorIndex = 0
-        currentProjectSelected = self.projectsData.first
     }
     
     private func removeInSnapshot(_ project: Project) {
@@ -147,17 +142,18 @@ class TMProjectsVC: UIViewController {
         dataSource.apply(currentSnapshot, animatingDifferences: false)
     }
     
-    private func updateCurrentProjectSelected() {
-        let centerPoint = self.view.convert(collectionView.center, to: collectionView)
-        guard let indexPathSafe = collectionView.indexPathForItem(at: centerPoint) else { return }
-        guard let item = dataSource.itemIdentifier(for: indexPathSafe) else { return }
-        // como el metodo es ejectado varias veces,
-        // esto verifica si ya tenemos un valor igual no se asigne el mismo valor varias veces
-        if currentProjectSelected != item {
-            currentProjectSelected = item
-            pageIndicatorIndex = indexPathSafe.row
-            impactFeedback.impactOccurred()
-        }
+    private func changeProjectSelected( index: Int) {
+        guard index >= 0 && index < projectsData.count else { return }
+        let indexPath = IndexPath(row: index, section: 0)
+        // como el metodo es ejectado varias veces, se verifica si el item es diff al actual
+        guard let item = dataSource.itemIdentifier(for: indexPath),
+              currentProjectSelected != item else { return }
+        
+        currentProjectSelected = item
+        pageIndicatorIndex = index
+        updatePageIndicatorColor()
+        delegate?.projectDidChange(project: item)
+        impactFeedback.impactOccurred()
     }
     
     private func updatePageIndicatorColor() {
@@ -219,16 +215,25 @@ class TMProjectsVC: UIViewController {
             section.orthogonalScrollingBehavior = .groupPaging
             section.contentInsets = NSDirectionalEdgeInsets(top: sectionTopBottomInset, leading: paddingToCenterItem, bottom:sectionTopBottomInset, trailing: paddingToCenterItem)
             
-            section.visibleItemsInvalidationHandler = { (items, offset, environment) in
+            section.visibleItemsInvalidationHandler = { [weak self] (items, offset, environment) in
                 items.forEach { item in
+                    // animacion flow de los items al hacer scroll
                     let distanceFromCenter = abs((item.frame.midX - offset.x) - environment.container.contentSize.width / 2.0)
                     let minScale: CGFloat = 0.85
                     let maxScale: CGFloat = 1
                     let scale = max(maxScale - (distanceFromCenter / environment.container.contentSize.width), minScale)
                     item.transform = CGAffineTransform(scaleX: scale, y: scale)
-                    // Obtener el item que se muestra al centro cada vez que las celdas visibles cambien
-                    self.updateCurrentProjectSelected()
                 }
+                // Obtener el item que se muestra al centro cada vez que la celda visible
+                let widthContainer = environment.container.contentSize.width // 375
+                let scrollOffset = offset.x // anchura segun el scroll realizado
+                let withItem = widthContainer * groupFractionalWidth
+                let tolerance: CGFloat = 10.0 // tolerancia
+                // obtiene la posicion proxima del siguiente item 2
+                let indexFloat: CGFloat =  (scrollOffset-tolerance) / withItem
+                // redondeamos para obtener la posicion siguiente ejem: 1.49 = 1 , 1.50 = 2
+                let index = Int(indexFloat.rounded(.toNearestOrEven))
+                self?.changeProjectSelected(index: index)
             }
             return section
         }
