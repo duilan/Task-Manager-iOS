@@ -124,13 +124,17 @@
 			path = ChildViewControllers;
 			sourceTree = "<group>";
 		};
-		3A33009D271BCE37001DD4F3 /* Local */ = {
+		3A33009D271BCE37001DD4F3 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
 				3A33009E271BCE43001DD4F3 /* DummyData.swift */,
 				3AD6916F272A4AC5000279B2 /* CoreDataManager.swift */,
+				3A1FE60F28BB0C0A00E80722 /* CDProject+CoreDataClass.swift */,
+				3A1FE61028BB0C0A00E80722 /* CDProject+CoreDataProperties.swift */,
+				3A1FE61128BB0C0A00E80722 /* CDTask+CoreDataClass.swift */,
+				3A1FE61228BB0C0A00E80722 /* CDTask+CoreDataProperties.swift */,
 			);
-			path = Local;
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 		3A3300AB271D2F3A001DD4F3 /* Extensions */ = {
@@ -196,10 +200,6 @@
 			children = (
 				3A330099271BCBC3001DD4F3 /* Project.swift */,
 				3AFA32F82908EE5D0096CC52 /* Task.swift */,
-				3A1FE60F28BB0C0A00E80722 /* CDProject+CoreDataClass.swift */,
-				3A1FE61028BB0C0A00E80722 /* CDProject+CoreDataProperties.swift */,
-				3A1FE61128BB0C0A00E80722 /* CDTask+CoreDataClass.swift */,
-				3A1FE61228BB0C0A00E80722 /* CDTask+CoreDataProperties.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -207,7 +207,7 @@
 		3A3F2C75271A9156008BEEC5 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				3A33009D271BCE37001DD4F3 /* Local */,
+				3A33009D271BCE37001DD4F3 /* CoreData */,
 			);
 			path = Services;
 			sourceTree = "<group>";
