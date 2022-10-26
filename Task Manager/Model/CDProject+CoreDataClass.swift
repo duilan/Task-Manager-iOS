@@ -1,5 +1,5 @@
 //
-//  Project+CoreDataClass.swift
+//  CDProject+CoreDataClass.swift
 //  Task Manager
 //
 //  Created by Duilan on 27/08/22.
@@ -9,9 +9,9 @@
 import Foundation
 import CoreData
 
-@objc(Project)
-public class Project: NSManagedObject {
-
+@objc(CDProject)
+public class CDProject: NSManagedObject {
+    
     var statusDescription: StatusProject {
         get {
             return StatusProject(rawValue: self.status)!

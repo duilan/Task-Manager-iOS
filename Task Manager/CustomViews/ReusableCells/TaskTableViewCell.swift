@@ -33,7 +33,7 @@ class TaskTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(with task: Task) {
+    func configure(with task: CDTask) {
         titleTask.text = task.title
         notesTask.text = task.notes
         creationTimeLabel.text = "Hace \( Date().countFrom(date: task.createAt))"
@@ -44,7 +44,7 @@ class TaskTableViewCell: UITableViewCell {
     
     func configurePriority(_ priority: Priority) {
         // text
-        priorityLabel.text = priority.value
+        priorityLabel.text = priority.text
         // color
         switch priority {
         case .normal:

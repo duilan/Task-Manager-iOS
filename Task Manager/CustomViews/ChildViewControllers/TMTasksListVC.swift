@@ -9,13 +9,13 @@ import UIKit
 
 class TMTasksListVC: UIViewController {
     
-    private typealias TaskDataSource = UITableViewDiffableDataSource<Section,Task>
-    private typealias TaskSnapshot = NSDiffableDataSourceSnapshot<Section, Task>
+    private typealias TaskDataSource = UITableViewDiffableDataSource<Section,CDTask>
+    private typealias TaskSnapshot = NSDiffableDataSourceSnapshot<Section, CDTask>
     
     private var tableView = UITableView(frame: .zero, style: .plain)
     private var dataSource: TaskDataSource!
     private let emptyView = TMEmptyView(message: "Agrega algunas tareas 🎯 \n al proyecto")
-    private var project: Project?
+    private var project: CDProject?
     
     private enum Section: String, CaseIterable {
         case pending = "Pendientes"
@@ -39,7 +39,7 @@ class TMTasksListVC: UIViewController {
         calculatePreferredContentSize()
     }
     
-    func setProject(_ project: Project?) {
+    func setProject(_ project: CDProject?) {
         self.project = project
         
         if project != nil {
@@ -120,7 +120,7 @@ class TMTasksListVC: UIViewController {
         })
     }
     
-    private func updateSnapshot(with tasks: [Task], animatingDifferences: Bool = true) {
+    private func updateSnapshot(with tasks: [CDTask], animatingDifferences: Bool = true) {
         var snapshopt = TaskSnapshot()
         
         defer {
@@ -138,7 +138,7 @@ class TMTasksListVC: UIViewController {
         let pendingTasks = tasks.filter { $0.isDone == false }
         let completedTasks = tasks.filter { $0.isDone == true }
         
-        var sectionsData: [(Section,[Task])] = [] // tuple
+        var sectionsData: [(Section,[CDTask])] = [] // tuple
         
         if !pendingTasks.isEmpty {
             sectionsData.append((.pending, pendingTasks))

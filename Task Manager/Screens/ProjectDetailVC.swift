@@ -9,7 +9,7 @@ import UIKit
 
 class ProjectDetailVC: UIViewController {
     
-    private var project: Project!
+    private var project: CDProject!
     private let detailHeaderView = TMProjectHeaderDetailView()
     private let addFloatButton = TMCircleButton()
     
@@ -27,7 +27,7 @@ class ProjectDetailVC: UIViewController {
         updateTasksListProject()
     }
     
-    init(project: Project) {
+    init(project: CDProject) {
         super.init(nibName: nil, bundle: nil)
         self.project = project
         

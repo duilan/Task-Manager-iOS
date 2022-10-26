@@ -34,7 +34,7 @@ class ProjectViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(with project: Project) {
+    func configure(with project: CDProject) {
         setupBackgroundGradient(numberColor: Int(project.color))
         iconView.systemNameIcon = "wrench.and.screwdriver"
         aliasLabel.text = project.alias

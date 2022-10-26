@@ -12,33 +12,16 @@ enum StatusProject: String, CaseIterable {
     case inProgress = "En Progreso"
     case completed = "Completado"
     
+    var value: String {
+        return rawValue
+    }
+    
     var icon : String {
         switch self {
         case .inProgress:
             return "rectangle.stack"
         case .completed:
             return "sparkles.rectangle.stack"
-        }
-    }
-}
-
-enum Priority: Int, CaseIterable {
-    case normal = 0
-    case moderada = 1
-    case importante = 2
-    
-    var index: Int {
-        return self.rawValue
-    }
-    
-    var value: String {
-        switch self {
-        case .normal:
-            return "Normal"
-        case .moderada:
-            return "Moderada"
-        case .importante:
-            return "Importante"
         }
     }
 }

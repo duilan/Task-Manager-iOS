@@ -13,12 +13,12 @@ class HomeVC: UIViewController {
     private let welcomeHeader = TMWelcomeHeaderView()
     private let segmentedControl = BetterSegmentedControl()
     private let projectsVC = TMProjectsVC()
-    private var projectsData: [Project] = []
+    private var projectsData: [CDProject] = []
     private let taskVC = TMTasksListVC()
     private var tableHeight: NSLayoutConstraint!
     // 0 : InProgress, 1:Completed
     private var segmentIndex: Int = 0
-    private var currentProject: Project? {
+    private var currentProject: CDProject? {
         didSet {
             taskVC.setProject(currentProject)
         }
@@ -213,7 +213,7 @@ class HomeVC: UIViewController {
 }
 
 extension HomeVC: TMProjectsProtocol {
-    func projectDidChange(project: Project?) {
+    func projectDidChange(project: CDProject?) {
         currentProject = project
     }
     

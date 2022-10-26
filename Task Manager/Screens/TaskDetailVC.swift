@@ -22,7 +22,7 @@ class TaskDetailVC: UIViewController {
     
     private let coredata = CoreDataManager.shared
     
-    private var task: Task!
+    private var task: CDTask!
     
     weak var delegate: TaskDetailProtocol?
     
@@ -39,7 +39,7 @@ class TaskDetailVC: UIViewController {
         setupCloseButton()
     }
     
-    init(task: Task) {
+    init(task: CDTask) {
         super.init(nibName: nil, bundle: nil)
         self.task = task
         titleTextField.text = task.title

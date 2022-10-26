@@ -32,7 +32,7 @@ class TMProjectHeaderDetailView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(with project: Project) {
+    func configure(with project: CDProject) {
         titleLabel.text = project.title
         aliasLabel.text = project.alias
         startDateTextField.setDefaultDate(project.startDate)

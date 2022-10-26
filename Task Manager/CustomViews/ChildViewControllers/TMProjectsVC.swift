@@ -8,15 +8,15 @@
 import UIKit
 
 protocol TMProjectsProtocol: AnyObject {
-    func projectDidChange(project: Project?)
+    func projectDidChange(project: CDProject?)
     func projectDeleted()
     func projectUpdated()
 }
 
 class TMProjectsVC: UIViewController {
     
-    private typealias ProjectDataSource = UICollectionViewDiffableDataSource<Section,Project>
-    private typealias ProjectSnapshot = NSDiffableDataSourceSnapshot<Section,Project>
+    private typealias ProjectDataSource = UICollectionViewDiffableDataSource<Section,CDProject>
+    private typealias ProjectSnapshot = NSDiffableDataSourceSnapshot<Section,CDProject>
     
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: generateLayout())
     private var dataSource: ProjectDataSource!
@@ -30,9 +30,9 @@ class TMProjectsVC: UIViewController {
         case projects = "Proyectos"
     }
     
-    private var currentProjectSelected: Project?
+    private var currentProjectSelected: CDProject?
     
-    var projectsData: [Project] = [] {
+    var projectsData: [CDProject] = [] {
         didSet {
             updateDataSourceSnapshot()
         }
@@ -136,7 +136,7 @@ class TMProjectsVC: UIViewController {
         pageIndicatorIndex = 0
     }
     
-    private func removeInSnapshot(_ project: Project) {
+    private func removeInSnapshot(_ project: CDProject) {
         var currentSnapshot =  dataSource.snapshot()
         currentSnapshot.deleteItems([project])
         dataSource.apply(currentSnapshot, animatingDifferences: false)

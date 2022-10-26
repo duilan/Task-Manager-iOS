@@ -74,10 +74,10 @@ final class CoreDataManager {
         }
     }
     
-    func fetchAllProjects( completion: @escaping ([Project]) -> Void) {
-        let request : NSFetchRequest<Project> = Project.fetchRequest()
+    func fetchAllProjects( completion: @escaping ([CDProject]) -> Void) {
+        let request : NSFetchRequest<CDProject> = CDProject.fetchRequest()
         // sort result by createAt date
-        let sort = NSSortDescriptor(keyPath: \Project.createAt, ascending: false)
+        let sort = NSSortDescriptor(keyPath: \CDProject.createAt, ascending: false)
         request.sortDescriptors = [sort]
         
         do {
@@ -88,8 +88,8 @@ final class CoreDataManager {
         }
     }
     
-    func fetchProject(id: UUID, completion: @escaping(Project?)-> Void) {
-        let request: NSFetchRequest<Project> = Project.fetchRequest()
+    func fetchProject(id: UUID, completion: @escaping(CDProject?)-> Void) {
+        let request: NSFetchRequest<CDProject> = CDProject.fetchRequest()
         request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
         
         do {
@@ -102,7 +102,7 @@ final class CoreDataManager {
     
     func createProject(alias: String, title: String , desc: String? = nil, startDate: Date, endDate: Date, color: Int, completion: @escaping() -> Void ) {
         
-        let project = Project(context: context)
+        let project = CDProject(context: context)
         // setup project obj
         project.id = UUID()
         project.alias = alias
@@ -132,11 +132,11 @@ final class CoreDataManager {
         }
     }
     
-    func addTask(title: String, notes: String?, priority: Int, to project: Project, completion: @escaping() -> Void) {
+    func addTask(title: String, notes: String?, priority: Int, to project: CDProject, completion: @escaping() -> Void) {
         // verificamos que el proyecto exista en el MOC
-        guard let existingProject = context.object(with: project.objectID) as? Project else { return }
+        guard let existingProject = context.object(with: project.objectID) as? CDProject else { return }
         
-        let task = Task(context: context)
+        let task = CDTask(context: context)
         task.id = UUID()
         task.createAt = Date()
         task.title = title
@@ -154,13 +154,13 @@ final class CoreDataManager {
         }
     }
     
-    func fetchTasksOf(_ project: Project, completion: @escaping([Task]) -> Void) {
+    func fetchTasksOf(_ project: CDProject, completion: @escaping([CDTask]) -> Void) {
         // verificamos que el proyecto exista en el MOC
-        guard let existingProject = context.object(with: project.objectID) as? Project else { return }
+        guard let existingProject = context.object(with: project.objectID) as? CDProject else { return }
         
-        let request: NSFetchRequest<Task> = Task.fetchRequest()
+        let request: NSFetchRequest<CDTask> = CDTask.fetchRequest()
         let predicate  = NSPredicate(format: "project == %@", existingProject)
-        let sort = NSSortDescriptor(keyPath: \Task.createAt, ascending: false)
+        let sort = NSSortDescriptor(keyPath: \CDTask.createAt, ascending: false)
         
         request.predicate = predicate
         request.sortDescriptors = [sort]
@@ -173,7 +173,7 @@ final class CoreDataManager {
         }
     }
     
-    func updateTask(with task: Task, completion: @escaping() -> Void) {
+    func updateTask(with task: CDTask, completion: @escaping() -> Void) {
         do {
             try context.save()
             completion()
