@@ -8,6 +8,19 @@
 import Foundation
 import UIKit
 
+struct Project {
+    let id: UUID
+    let title: String
+    let alias: String
+    let desc: String?
+    let startDate: Date
+    let endDate: Date
+    let color: Int
+    let status: StatusProject
+    let tasks: [Task]
+    let createAt: Date
+}
+
 enum StatusProject: String, CaseIterable {
     case inProgress = "En Progreso"
     case completed = "Completado"

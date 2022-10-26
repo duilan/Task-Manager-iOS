@@ -7,6 +7,17 @@
 
 import Foundation
 
+struct Task {
+    let id: UUID
+    let title: String
+    let notes: String?
+    let priority: Priority
+    let isDone: Bool
+    let doneAt: Date?
+    let createAt: Date
+    let projectID: UUID
+}
+
 enum Priority: Int, CaseIterable {
     case normal = 0
     case moderada = 1
