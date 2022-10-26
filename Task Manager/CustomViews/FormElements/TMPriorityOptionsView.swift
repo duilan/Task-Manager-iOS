@@ -12,7 +12,7 @@ class TMPriorityOptionsView: UIView {
     
     private let titleLabel = UILabel()
     private let stackH = UIStackView()
-    private let defaultIndexOption: Int = Priority.normal.index
+    private let defaultIndexOption: Int = Priority.normal.value
     
     var indexOption: Int = 0 {
         didSet {
@@ -35,7 +35,7 @@ class TMPriorityOptionsView: UIView {
     private func setPriority(priority: Priority) {
         for priorityButton in stackH.arrangedSubviews {
             priorityButton.alpha = 0.3
-            if priorityButton.tag == priority.index {
+            if priorityButton.tag == priority.value {
                 priorityButton.alpha = 1
             }
         }

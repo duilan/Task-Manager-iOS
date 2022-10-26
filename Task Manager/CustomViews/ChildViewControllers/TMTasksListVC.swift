@@ -9,13 +9,13 @@ import UIKit
 
 class TMTasksListVC: UIViewController {
     
-    private typealias TaskDataSource = UITableViewDiffableDataSource<Section,Task>
-    private typealias TaskSnapshot = NSDiffableDataSourceSnapshot<Section, Task>
+    private typealias TaskDataSource = UITableViewDiffableDataSource<Section,CDTask>
+    private typealias TaskSnapshot = NSDiffableDataSourceSnapshot<Section, CDTask>
     
     private var tableView = UITableView(frame: .zero, style: .plain)
     private var dataSource: TaskDataSource!
     private let emptyView = TMEmptyView(message: "Agrega algunas tareas 🎯 \n al proyecto")
-    private var project: Project?
+    private var project: CDProject?
     
     private enum Section: String, CaseIterable {
         case pending = "Pendientes"
@@ -23,8 +23,7 @@ class TMTasksListVC: UIViewController {
     }
     
     private var tableViewHeight: CGFloat {
-        tableView.reloadData()
-        tableView.layoutIfNeeded()
+        tableView.setNeedsLayout()
         return tableView.contentSize.height
     }
     
@@ -40,7 +39,7 @@ class TMTasksListVC: UIViewController {
         calculatePreferredContentSize()
     }
     
-    func setProject(_ project: Project?) {
+    func setProject(_ project: CDProject?) {
         self.project = project
         
         if project != nil {
@@ -82,7 +81,7 @@ class TMTasksListVC: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         tableView.delegate = self
-        tableView.rowHeight = 80
+        tableView.rowHeight = 100
         tableView.separatorStyle = .none
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
         tableView.backgroundColor = ThemeColors.backgroundPrimary
@@ -121,7 +120,7 @@ class TMTasksListVC: UIViewController {
         })
     }
     
-    private func updateSnapshot(with tasks: [Task], animatingDifferences: Bool = true) {
+    private func updateSnapshot(with tasks: [CDTask], animatingDifferences: Bool = true) {
         var snapshopt = TaskSnapshot()
         
         defer {
@@ -139,7 +138,7 @@ class TMTasksListVC: UIViewController {
         let pendingTasks = tasks.filter { $0.isDone == false }
         let completedTasks = tasks.filter { $0.isDone == true }
         
-        var sectionsData: [(Section,[Task])] = [] // tuple
+        var sectionsData: [(Section,[CDTask])] = [] // tuple
         
         if !pendingTasks.isEmpty {
             sectionsData.append((.pending, pendingTasks))
@@ -171,7 +170,7 @@ extension TMTasksListVC: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 50
+        return 40
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

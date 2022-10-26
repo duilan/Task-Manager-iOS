@@ -8,15 +8,15 @@
 import UIKit
 
 protocol TMProjectsProtocol: AnyObject {
-    func projectDidChange(project: Project?)
+    func projectDidChange(project: CDProject?)
     func projectDeleted()
     func projectUpdated()
 }
 
 class TMProjectsVC: UIViewController {
     
-    private typealias ProjectDataSource = UICollectionViewDiffableDataSource<Section,Project>
-    private typealias ProjectSnapshot = NSDiffableDataSourceSnapshot<Section,Project>
+    private typealias ProjectDataSource = UICollectionViewDiffableDataSource<Section,CDProject>
+    private typealias ProjectSnapshot = NSDiffableDataSourceSnapshot<Section,CDProject>
     
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: generateLayout())
     private var dataSource: ProjectDataSource!
@@ -30,14 +30,9 @@ class TMProjectsVC: UIViewController {
         case projects = "Proyectos"
     }
     
-    private var currentProjectSelected: Project?   {
-        didSet {
-            delegate?.projectDidChange(project: currentProjectSelected)
-            updatePageIndicatorColor()
-        }
-    }
+    private var currentProjectSelected: CDProject?
     
-    var projectsData: [Project] = [] {
+    var projectsData: [CDProject] = [] {
         didSet {
             updateDataSourceSnapshot()
         }
@@ -61,11 +56,12 @@ class TMProjectsVC: UIViewController {
         view.addSubview(pageIndicator)
         pageIndicator.currentPageIndicatorTintColor = ThemeColors.accentColor
         pageIndicator.pageIndicatorTintColor = UIColor.gray.withAlphaComponent(0.2)
+        pageIndicator.hidesForSinglePage = true
         pageIndicator.isUserInteractionEnabled = false
         pageIndicator.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            pageIndicator.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
+            pageIndicator.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 6 ),
             pageIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             pageIndicator.widthAnchor.constraint(equalToConstant: view.frame.width / 2)
         ])
@@ -89,7 +85,7 @@ class TMProjectsVC: UIViewController {
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: pageIndicator.topAnchor)
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
     
@@ -109,55 +105,55 @@ class TMProjectsVC: UIViewController {
                 }
             }
             
-            var toggleStatusAction: UIAction!
+            let statusActions: [UIAction] = StatusProject.allCases.compactMap({ status in
+                if status == project.statusDescription { return nil }
+                return UIAction(
+                    title: "Pasar a \(status.rawValue)",
+                    image: UIImage(systemName: status.icon)) { (action) in
+                    
+                    project.statusDescription = status
+                    CoreDataManager.shared.update() { [weak self] in
+                        self?.removeInSnapshot(project)
+                        self?.delegate?.projectUpdated()
+                    }
+                }
+            })
             
-            if project.status == StatusProject.inProgress.rawValue {
-                toggleStatusAction = UIAction(title: "Pasar a Completados", image: UIImage(systemName: "tray.and.arrow.down")) { (action) in
-                    CoreDataManager.shared.update(status: .completed, project: project) { [weak self] in
-                        self?.removeInSnapshot(project)
-                        self?.delegate?.projectUpdated()
-                    }
-                }
-            } else if project.status == StatusProject.completed.rawValue{
-                toggleStatusAction = UIAction(title: "Pasar a En Progreso", image: UIImage(systemName: "tray.and.arrow.up")) { (action) in
-                    CoreDataManager.shared.update(status: .inProgress, project: project) { [weak self] in
-                        self?.removeInSnapshot(project)
-                        self?.delegate?.projectUpdated()
-                    }
-                }
-            }
+            var actionsForContextMenu: [UIAction] = []
+            actionsForContextMenu.append(deleteAction)
+            actionsForContextMenu.append(contentsOf: statusActions)
             
             return UIMenu(title: "OPCIONES DEL PROYECTO",
                           image: nil,
                           identifier: nil,
                           options: .displayInline,
-                          children: [deleteAction, toggleStatusAction])
+                          children: actionsForContextMenu)
         }
     }
     
     func animateToStartItem() {
         collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .centeredHorizontally, animated: true)
         pageIndicatorIndex = 0
-        currentProjectSelected = self.projectsData.first
     }
     
-    private func removeInSnapshot(_ project: Project) {
+    private func removeInSnapshot(_ project: CDProject) {
         var currentSnapshot =  dataSource.snapshot()
         currentSnapshot.deleteItems([project])
         dataSource.apply(currentSnapshot, animatingDifferences: false)
     }
     
-    private func updateCurrentProjectSelected() {
-        let centerPoint = self.view.convert(collectionView.center, to: collectionView)
-        guard let indexPathSafe = collectionView.indexPathForItem(at: centerPoint) else { return }
-        guard let item = dataSource.itemIdentifier(for: indexPathSafe) else { return }
-        // como el metodo es ejectado varias veces,
-        // esto verifica si ya tenemos un valor igual no se asigne el mismo valor varias veces
-        if currentProjectSelected != item {
-            currentProjectSelected = item
-            pageIndicatorIndex = indexPathSafe.row
-            impactFeedback.impactOccurred()
-        }
+    private func changeProjectSelected( index: Int) {
+        guard index >= 0 && index < projectsData.count else { return }
+        let indexPath = IndexPath(row: index, section: 0)
+        // como el metodo es ejectado varias veces, se verifica si el item es diff al actual
+        guard let item = dataSource.itemIdentifier(for: indexPath),
+              currentProjectSelected != item else { return }
+        
+        currentProjectSelected = item
+        pageIndicatorIndex = index
+        updatePageIndicatorColor()
+        delegate?.projectDidChange(project: item)
+        impactFeedback.impactOccurred()
     }
     
     private func updatePageIndicatorColor() {
@@ -199,9 +195,10 @@ class TMProjectsVC: UIViewController {
             // 1.0 = 100%
             let itemFractionalWidth: CGFloat = 1.0
             let itemFractionalHeight: CGFloat = 1.0
-            let groupFractionalWidth: CGFloat = 0.6
+            let groupFractionalWidth: CGFloat = 0.75
             let groupFractionalHeight: CGFloat = 1.0
-            let spacingBetweenGroups: CGFloat = 10
+            let spacingBetweenGroups: CGFloat = 0
+            let sectionTopBottomInset: CGFloat = 20
             // calcula el espacio lateral entre el item para centrarlo !!!
             // groupPagingCenter no funciona adecuadamente!!!!
             let actuaLayoutContainerWidth = layoutEnvironment.container.effectiveContentSize.width
@@ -211,23 +208,32 @@ class TMProjectsVC: UIViewController {
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(groupFractionalWidth), heightDimension: .fractionalHeight(groupFractionalHeight))
-            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item , count: 1)
             
             let section = NSCollectionLayoutSection(group: group)
             section.interGroupSpacing = spacingBetweenGroups
             section.orthogonalScrollingBehavior = .groupPaging
-            section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: paddingToCenterItem, bottom: 0, trailing: paddingToCenterItem)
+            section.contentInsets = NSDirectionalEdgeInsets(top: sectionTopBottomInset, leading: paddingToCenterItem, bottom:sectionTopBottomInset, trailing: paddingToCenterItem)
             
-            section.visibleItemsInvalidationHandler = { (items, offset, environment) in
+            section.visibleItemsInvalidationHandler = { [weak self] (items, offset, environment) in
                 items.forEach { item in
+                    // animacion flow de los items al hacer scroll
                     let distanceFromCenter = abs((item.frame.midX - offset.x) - environment.container.contentSize.width / 2.0)
                     let minScale: CGFloat = 0.85
                     let maxScale: CGFloat = 1
                     let scale = max(maxScale - (distanceFromCenter / environment.container.contentSize.width), minScale)
                     item.transform = CGAffineTransform(scaleX: scale, y: scale)
-                    // Obtener el item que se muestra al centro cada vez que las celdas visibles cambien
-                    self.updateCurrentProjectSelected()
                 }
+                // Obtener el item que se muestra al centro cada vez que la celda visible
+                let widthContainer = environment.container.contentSize.width // 375
+                let scrollOffset = offset.x // anchura segun el scroll realizado
+                let withItem = widthContainer * groupFractionalWidth
+                let tolerance: CGFloat = 10.0 // tolerancia
+                // obtiene la posicion proxima del siguiente item 2
+                let indexFloat: CGFloat =  (scrollOffset-tolerance) / withItem
+                // redondeamos para obtener la posicion siguiente ejem: 1.49 = 1 , 1.50 = 2
+                let index = Int(indexFloat.rounded(.toNearestOrEven))
+                self?.changeProjectSelected(index: index)
             }
             return section
         }

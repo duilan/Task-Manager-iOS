@@ -22,7 +22,7 @@ class TaskDetailVC: UIViewController {
     
     private let coredata = CoreDataManager.shared
     
-    private var task: Task!
+    private var task: CDTask!
     
     weak var delegate: TaskDetailProtocol?
     
@@ -37,10 +37,9 @@ class TaskDetailVC: UIViewController {
         setupPrioritiesView()
         setupSaveButton()
         setupCloseButton()
-        
     }
     
-    init(task: Task) {
+    init(task: CDTask) {
         super.init(nibName: nil, bundle: nil)
         self.task = task
         titleTextField.text = task.title
@@ -75,15 +74,20 @@ class TaskDetailVC: UIViewController {
         let notes = notesTextView.text
         let priorityID = prioritiesView.indexOption
         
-        task.title = titleValue
-        task.notes = notes
-        task.priority = Int64(priorityID)
-        
-        coredata.updateTask(with: task ) { [weak self] in
-            guard let self = self else { return }
-            self.dismiss(animated: true, completion: {
-                self.delegate?.taskDidUpdate()
-            })            
+        if (task.title != titleValue || task.notes != notes || task.priority != Int64(priorityID) ) {
+            
+            task.title = titleValue
+            task.notes = notes
+            task.priority = Int64(priorityID)
+            
+            coredata.updateTask(with: task ) { [weak self] in
+                guard let self = self else { return }
+                self.dismiss(animated: true, completion: {
+                    self.delegate?.taskDidUpdate()
+                })
+            }
+        } else {
+            self.dismiss(animated: true)
         }
         
     }
@@ -102,16 +106,18 @@ class TaskDetailVC: UIViewController {
         formStackView.backgroundColor = .white
         formStackView.axis = .vertical
         formStackView.spacing = 4
+        formStackView.isLayoutMarginsRelativeArrangement = true
+        formStackView.layoutMargins = UIEdgeInsets(top: 12, left: 8, bottom: 12, right: 8)
         formStackView.translatesAutoresizingMaskIntoConstraints = false
         
-        formStackView.layer.cornerRadius = 15
+        formStackView.layer.cornerRadius = 20
         formStackView.layer.cornerCurve = .continuous
         formStackView.clipsToBounds = true
         
         NSLayoutConstraint.activate([
             formStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -70),
-            formStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            formStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            formStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
+            formStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
             formStackView.heightAnchor.constraint(greaterThanOrEqualToConstant: 100)
         ])
     }
@@ -121,8 +127,6 @@ class TaskDetailVC: UIViewController {
         titleTextField.title = "Nombre"
         titleTextField.placeholder = "Nombre de la tarea"
         titleTextField.clearButtonMode = .whileEditing
-        titleTextField.layer.cornerCurve = .continuous
-        titleTextField.layer.cornerRadius = 10
         titleTextField.translatesAutoresizingMaskIntoConstraints = false
         titleTextField.heightAnchor.constraint(equalToConstant: 60).isActive = true
     }
@@ -132,6 +136,7 @@ class TaskDetailVC: UIViewController {
         notesTextView.title = "Notas"
         notesTextView.isScrollEnabled = false
         notesTextView.maximumNumberOfLines = 5
+        notesTextView.layer.cornerRadius = 0
         notesTextView.heightAnchor.constraint(greaterThanOrEqualToConstant: 120).isActive = true
     }
     
@@ -139,7 +144,7 @@ class TaskDetailVC: UIViewController {
         view.addSubview(saveButton)
         saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         saveButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        saveButton.topAnchor.constraint(equalTo: formStackView.bottomAnchor, constant: 20).isActive = true
+        saveButton.topAnchor.constraint(equalTo: formStackView.bottomAnchor, constant: 40).isActive = true
         saveButton.widthAnchor.constraint(equalToConstant: 200).isActive = true
         saveButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
@@ -152,7 +157,7 @@ class TaskDetailVC: UIViewController {
         closeButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            closeButton.topAnchor.constraint(equalTo: saveButton.bottomAnchor, constant: 60),
+            closeButton.topAnchor.constraint(equalTo: saveButton.bottomAnchor, constant: 48),
             closeButton.widthAnchor.constraint(equalToConstant: 60),
             closeButton.heightAnchor.constraint(equalToConstant: 60),
             closeButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)

@@ -8,42 +8,33 @@
 import Foundation
 import UIKit
 
-//struct Project: Hashable {
-//    let id = UUID().uuidString.lowercased()
-//    let alias: String
-//    let title: String
-//    let tasks: [Task]
-//    let status: StatusProject
-//    let createAt = Date()
-//}
-//
-//struct Task: Hashable {
-//    let id = UUID().uuidString.lowercased()
-//    let title: String
-//}
+struct Project {
+    let id: UUID
+    let title: String
+    let alias: String
+    let desc: String?
+    let startDate: Date
+    let endDate: Date
+    let color: Int
+    let status: StatusProject
+    let tasks: [Task]
+    let createAt: Date
+}
 
 enum StatusProject: String, CaseIterable {
     case inProgress = "En Progreso"
     case completed = "Completado"
-}
-
-enum Priority: Int, CaseIterable {
-    case normal = 0
-    case moderada = 1
-    case importante = 2
-    
-    var index: Int {
-        return self.rawValue
-    }
     
     var value: String {
+        return rawValue
+    }
+    
+    var icon : String {
         switch self {
-        case .normal:
-            return "Normal"
-        case .moderada:
-            return "Moderada"
-        case .importante:
-            return "Importante"
+        case .inProgress:
+            return "rectangle.stack"
+        case .completed:
+            return "sparkles.rectangle.stack"
         }
     }
 }

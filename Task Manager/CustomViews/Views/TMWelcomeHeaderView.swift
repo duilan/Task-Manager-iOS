@@ -9,8 +9,8 @@ import UIKit
 
 class TMWelcomeHeaderView: UIView {
     
-    private let titleLabel = TMTitleLabel(fontSize: 34)
-    private let subtitleLabel = TMSubtitleLabel(fontSize: 14)
+    private let titleLabel = TMTitleLabel(fontSize: 24)
+    private let subtitleLabel = TMSubtitleLabel(fontSize: 12)
     private let subtitlesData = ["Completemos algunas tareas!","Con diciplina lo lograrás!","Imposible es lo que no intentas!","No te rindas, ¡tú puedes!","¡Aprendamos de los errores!","El camino al éxito es la actitud.","Descansa, pero no te rindas!"]
     
     public var title: String? {
@@ -44,12 +44,12 @@ class TMWelcomeHeaderView: UIView {
             titleLabel.topAnchor.constraint(equalTo: topAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-            titleLabel.heightAnchor.constraint(equalToConstant: 40),
+            titleLabel.heightAnchor.constraint(equalToConstant: 30),
             
             subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
             subtitleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
             subtitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-            subtitleLabel.heightAnchor.constraint(equalToConstant: 20)
+            subtitleLabel.heightAnchor.constraint(equalToConstant: 15)
         ])
     }
     

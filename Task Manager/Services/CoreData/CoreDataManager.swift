@@ -1,0 +1,197 @@
+//
+//  CoreDataManager.swift
+//  Task Manager
+//
+//  Created by Duilan on 27/10/21.
+//
+
+import CoreData
+
+enum StorageType {
+    case persistent, inMemory
+}
+
+final class CoreDataManager {
+    
+    // Singleton
+    static let shared = CoreDataManager(storageType: .persistent)
+    
+    let context: NSManagedObjectContext
+    
+    private init(storageType: StorageType = .persistent) {
+        
+        let databaseName = "TaskManager"
+        let persistentContainer = NSPersistentContainer(name: databaseName)
+        
+        if storageType == .inMemory {
+            let description = NSPersistentStoreDescription()
+            description.url = URL(fileURLWithPath: "/dev/null")
+            persistentContainer.persistentStoreDescriptions = [description]
+        }
+        
+        persistentContainer.loadPersistentStores { (storeDescription, error) in
+            if let error = error as NSError? {
+                fatalError("Unable to load persistent stores: \(error) , \(error.userInfo)")
+            }
+            print("CoreData Name: \(databaseName) Loaded!")
+        }
+        
+        context = persistentContainer.viewContext
+        
+    }
+    
+    func sqliteFilePath() {
+        print("SQLite File Path:  \(NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true).first!)")
+    }
+    
+    func fetch<T: NSManagedObject>(entity: T.Type) throws -> [T]  {
+        let request = entity.fetchRequest() as! NSFetchRequest<T>
+        let result = try context.fetch(request)
+        return result
+    }
+    
+    func fetchById<T: NSManagedObject>(entity: T.Type, id: UUID) throws -> T?  {
+        let request = entity.fetchRequest() as! NSFetchRequest<T>
+        request.fetchLimit = 1
+        request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+        let item = try context.fetch(request).first
+        return item
+    }
+    
+    func delete<T: NSManagedObject>(_ item: T) throws {
+        context.delete(item)
+        try saveContext()
+    }
+    
+    func saveContext() throws {
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                context.rollback()
+                fatalError("Error Coredata: \(error)")
+            }
+        }
+    }
+    
+    func fetchAllProjects( completion: @escaping ([CDProject]) -> Void) {
+        let request : NSFetchRequest<CDProject> = CDProject.fetchRequest()
+        // sort result by createAt date
+        let sort = NSSortDescriptor(keyPath: \CDProject.createAt, ascending: false)
+        request.sortDescriptors = [sort]
+        
+        do {
+            let result = try context.fetch(request)
+            completion(result)
+        } catch {
+            print(error)
+        }
+    }
+    
+    func fetchProject(id: UUID, completion: @escaping(CDProject?)-> Void) {
+        let request: NSFetchRequest<CDProject> = CDProject.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+        
+        do {
+            let project = try context.fetch(request).first
+            completion(project)
+        } catch {
+            print(error)
+        }
+    }
+    
+    func createProject(alias: String, title: String , desc: String? = nil, startDate: Date, endDate: Date, color: Int, completion: @escaping() -> Void ) {
+        
+        let project = CDProject(context: context)
+        // setup project obj
+        project.id = UUID()
+        project.alias = alias
+        project.title = title
+        project.desc = desc
+        project.statusDescription = .inProgress // this will set raw value at status
+        project.createAt = Date()
+        project.startDate = startDate
+        project.endDate = endDate
+        project.color = Int64(color)
+        // save
+        do {
+            try context.save()
+            print("Se creo el proyecto: \(project.title)")
+            completion()
+        } catch {
+            print(error)
+        }
+    }
+    
+    func update( completion: @escaping() -> Void) {
+        do {
+            try context.save()
+            completion()
+        } catch  {
+            print(error)
+        }
+    }
+    
+    func addTask(title: String, notes: String?, priority: Int, to project: CDProject, completion: @escaping() -> Void) {
+        // verificamos que el proyecto exista en el MOC
+        guard let existingProject = context.object(with: project.objectID) as? CDProject else { return }
+        
+        let task = CDTask(context: context)
+        task.id = UUID()
+        task.createAt = Date()
+        task.title = title
+        task.notes = notes
+        task.priority = Int64(priority)
+        task.isDone = false
+        task.project = existingProject // relation to parent
+        // save
+        do {
+            try context.save()
+            completion()
+            print("Se creo tarea \(task.title) en el proyecto \(existingProject.title)")
+        } catch {
+            print(error)
+        }
+    }
+    
+    func fetchTasksOf(_ project: CDProject, completion: @escaping([CDTask]) -> Void) {
+        // verificamos que el proyecto exista en el MOC
+        guard let existingProject = context.object(with: project.objectID) as? CDProject else { return }
+        
+        let request: NSFetchRequest<CDTask> = CDTask.fetchRequest()
+        let predicate  = NSPredicate(format: "project == %@", existingProject)
+        let sort = NSSortDescriptor(keyPath: \CDTask.createAt, ascending: false)
+        
+        request.predicate = predicate
+        request.sortDescriptors = [sort]
+        
+        do {
+            let tasks = try context.fetch(request)
+            completion(tasks)
+        } catch {
+            print(error)
+        }
+    }
+    
+    func updateTask(with task: CDTask, completion: @escaping() -> Void) {
+        do {
+            try context.save()
+            completion()
+            print("Tarea actualizada")
+        } catch {
+            print(error)
+        }
+    }
+    
+    func delete(_ object: NSManagedObject, completion: @escaping() -> Void) {
+        context.delete(object)
+        do {
+            try context.save()
+            completion()
+            print("Se elimino")
+        } catch {
+            print(error)
+        }
+    }
+    
+}

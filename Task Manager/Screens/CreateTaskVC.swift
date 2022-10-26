@@ -19,7 +19,7 @@ class CreateTaskVC: UIViewController {
     private let prioritiesView = TMPriorityOptionsView()
     private let saveButton = TMButton("Guardar")
     
-    private var project: Project!
+    private var project: CDProject!
     private let coredata = CoreDataManager.shared
     
     weak var delegate: CreateTaskProtocol?
@@ -35,7 +35,7 @@ class CreateTaskVC: UIViewController {
         setupSaveButton()
     }
     
-    init(project: Project) {
+    init(project: CDProject) {
         super.init(nibName: nil, bundle: nil)
         self.project = project
         

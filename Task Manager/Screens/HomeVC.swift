@@ -13,12 +13,12 @@ class HomeVC: UIViewController {
     private let welcomeHeader = TMWelcomeHeaderView()
     private let segmentedControl = BetterSegmentedControl()
     private let projectsVC = TMProjectsVC()
-    private var projectsData: [Project] = []
+    private var projectsData: [CDProject] = []
     private let taskVC = TMTasksListVC()
     private var tableHeight: NSLayoutConstraint!
     // 0 : InProgress, 1:Completed
     private var segmentIndex: Int = 0
-    private var currentProject: Project? {
+    private var currentProject: CDProject? {
         didSet {
             taskVC.setProject(currentProject)
         }
@@ -132,11 +132,11 @@ class HomeVC: UIViewController {
     
     private func setupWelcomeHeader() {
         stackContentView.addArrangedSubview(headerContainer)
-        stackContentView.setCustomSpacing(20, after: headerContainer)
+        stackContentView.setCustomSpacing(8, after: headerContainer)
         headerContainer.addSubview(welcomeHeader)
         welcomeHeader.title = "Hola Adrián"
         NSLayoutConstraint.activate([
-            headerContainer.heightAnchor.constraint(equalToConstant: 60),
+            headerContainer.heightAnchor.constraint(equalToConstant: 50),
             welcomeHeader.topAnchor.constraint(equalTo: headerContainer.topAnchor),
             welcomeHeader.leadingAnchor.constraint(equalTo: headerContainer.leadingAnchor, constant: 16),
             welcomeHeader.trailingAnchor.constraint(equalTo: headerContainer.trailingAnchor, constant: -16),
@@ -146,7 +146,6 @@ class HomeVC: UIViewController {
     
     private func setupSegmentedControl() {
         stackContentView.addArrangedSubview(segmentedControlContainer)
-        stackContentView.setCustomSpacing(20, after: segmentedControlContainer)
         segmentedControlContainer.addSubview(segmentedControl)
         segmentedControl.cornerRadius = 22.5
         segmentedControl.backgroundColor = #colorLiteral(red: 0.6156862745, green: 0.6156862745, blue: 0.6156862745, alpha: 0.08)
@@ -178,7 +177,7 @@ class HomeVC: UIViewController {
         
         projectsVCContainer.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            projectsVCContainer.heightAnchor.constraint(equalToConstant: 260)
+            projectsVCContainer.heightAnchor.constraint(equalToConstant: 200)
         ])
     }
     
@@ -214,7 +213,7 @@ class HomeVC: UIViewController {
 }
 
 extension HomeVC: TMProjectsProtocol {
-    func projectDidChange(project: Project?) {
+    func projectDidChange(project: CDProject?) {
         currentProject = project
     }
     
