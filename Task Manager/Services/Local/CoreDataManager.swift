@@ -7,27 +7,71 @@
 
 import CoreData
 
+enum StorageType {
+    case persistent, inMemory
+}
+
 final class CoreDataManager {
     
     // Singleton
-    public static let shared = CoreDataManager()
+    static let shared = CoreDataManager(storageType: .persistent)
     
-    private let persistentContainer: NSPersistentContainer = {
+    let context: NSManagedObjectContext
+    
+    private init(storageType: StorageType = .persistent) {
+        
         let databaseName = "TaskManager"
-        let container = NSPersistentContainer(name: databaseName)
-        container.loadPersistentStores { (storeDescription, error) in
+        let persistentContainer = NSPersistentContainer(name: databaseName)
+        
+        if storageType == .inMemory {
+            let description = NSPersistentStoreDescription()
+            description.url = URL(fileURLWithPath: "/dev/null")
+            persistentContainer.persistentStoreDescriptions = [description]
+        }
+        
+        persistentContainer.loadPersistentStores { (storeDescription, error) in
             if let error = error as NSError? {
                 fatalError("Unable to load persistent stores: \(error) , \(error.userInfo)")
             }
-            print("CoreData: \(databaseName) Loaded!")
+            print("CoreData Name: \(databaseName) Loaded!")
         }
-        return container
-    }()
-    
-    private let context: NSManagedObjectContext
-    
-    private init() {
+        
         context = persistentContainer.viewContext
+        
+    }
+    
+    func sqliteFilePath() {
+        print("SQLite File Path:  \(NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true).first!)")
+    }
+    
+    func fetch<T: NSManagedObject>(entity: T.Type) throws -> [T]  {
+        let request = entity.fetchRequest() as! NSFetchRequest<T>
+        let result = try context.fetch(request)
+        return result
+    }
+    
+    func fetchById<T: NSManagedObject>(entity: T.Type, id: UUID) throws -> T?  {
+        let request = entity.fetchRequest() as! NSFetchRequest<T>
+        request.fetchLimit = 1
+        request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+        let item = try context.fetch(request).first
+        return item
+    }
+    
+    func delete<T: NSManagedObject>(_ item: T) throws {
+        context.delete(item)
+        try saveContext()
+    }
+    
+    func saveContext() throws {
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                context.rollback()
+                fatalError("Error Coredata: \(error)")
+            }
+        }
     }
     
     func fetchAllProjects( completion: @escaping ([Project]) -> Void) {
@@ -148,10 +192,6 @@ final class CoreDataManager {
         } catch {
             print(error)
         }
-    }
-    
-    func sqliteFilePath() {
-        print("SQLite File Path:  \(NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true).first!)")
     }
     
 }
