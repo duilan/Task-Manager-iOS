@@ -29,6 +29,7 @@
 		3A3300B1271E2210001DD4F3 /* TMTasksListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3300B0271E2210001DD4F3 /* TMTasksListVC.swift */; };
 		3A3720F0271643CE00FE1A75 /* ThemeColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3720EF271643CE00FE1A75 /* ThemeColors.swift */; };
 		3A43078D27323843005D98D9 /* TMTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A43078C27323843005D98D9 /* TMTextView.swift */; };
+		3A45B1F3290A1AAC00F635E6 /* ModelConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A45B1F2290A1AAC00F635E6 /* ModelConvertible.swift */; };
 		3A468130272F67C900142B4E /* TMTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A46812F272F67C900142B4E /* TMTextField.swift */; };
 		3A468133272FB78C00142B4E /* TMButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A468132272FB78C00142B4E /* TMButton.swift */; };
 		3A5097E72867E98100AB1B02 /* TMColorPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5097E62867E98100AB1B02 /* TMColorPickerView.swift */; };
@@ -75,6 +76,7 @@
 		3A3300B0271E2210001DD4F3 /* TMTasksListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMTasksListVC.swift; sourceTree = "<group>"; };
 		3A3720EF271643CE00FE1A75 /* ThemeColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColors.swift; sourceTree = "<group>"; };
 		3A43078C27323843005D98D9 /* TMTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMTextView.swift; sourceTree = "<group>"; };
+		3A45B1F2290A1AAC00F635E6 /* ModelConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelConvertible.swift; sourceTree = "<group>"; };
 		3A46812F272F67C900142B4E /* TMTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMTextField.swift; sourceTree = "<group>"; };
 		3A468132272FB78C00142B4E /* TMButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMButton.swift; sourceTree = "<group>"; };
 		3A5097E62867E98100AB1B02 /* TMColorPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMColorPickerView.swift; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 			children = (
 				3A33009E271BCE43001DD4F3 /* DummyData.swift */,
 				3AD6916F272A4AC5000279B2 /* CoreDataManager.swift */,
+				3A45B1F2290A1AAC00F635E6 /* ModelConvertible.swift */,
 				3A1FE60F28BB0C0A00E80722 /* CDProject+CoreDataClass.swift */,
 				3A1FE61028BB0C0A00E80722 /* CDProject+CoreDataProperties.swift */,
 				3A1FE61128BB0C0A00E80722 /* CDTask+CoreDataClass.swift */,
@@ -398,6 +401,7 @@
 				3A33009F271BCE43001DD4F3 /* DummyData.swift in Sources */,
 				3A32C5FD274879B600AE1BA4 /* CreateTaskVC.swift in Sources */,
 				3A6462F92727925800FA7F95 /* TaskTableViewCell.swift in Sources */,
+				3A45B1F3290A1AAC00F635E6 /* ModelConvertible.swift in Sources */,
 				3AEF9E02270E6F860065B184 /* AppDelegate.swift in Sources */,
 				3AEF9E04270E6F860065B184 /* SceneDelegate.swift in Sources */,
 				3A3300B1271E2210001DD4F3 /* TMTasksListVC.swift in Sources */,
