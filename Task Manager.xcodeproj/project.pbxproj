@@ -46,6 +46,7 @@
 		3A8CBFC72762AC7E00E1A43A /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8CBFC62762AC7E00E1A43A /* Date+Ext.swift */; };
 		3AA1930A2730D88300D213CB /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA193092730D88300D213CB /* UIColor+Ext.swift */; };
 		3AA39A962738ABF000711E51 /* ProjectDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA39A952738ABF000711E51 /* ProjectDetailVC.swift */; };
+		3AC0ED682908C8CE00A5AB11 /* TaskRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC0ED672908C8CE00A5AB11 /* TaskRepository.swift */; };
 		3AD69170272A4AC5000279B2 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD6916F272A4AC5000279B2 /* CoreDataManager.swift */; };
 		3ADB3DBA273CC84E00944A08 /* TMProjectHeaderDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ADB3DB9273CC84E00944A08 /* TMProjectHeaderDetailView.swift */; };
 		3AEF9E02270E6F860065B184 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEF9E01270E6F860065B184 /* AppDelegate.swift */; };
@@ -97,6 +98,7 @@
 		3A8CBFC62762AC7E00E1A43A /* Date+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
 		3AA193092730D88300D213CB /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
 		3AA39A952738ABF000711E51 /* ProjectDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetailVC.swift; sourceTree = "<group>"; };
+		3AC0ED672908C8CE00A5AB11 /* TaskRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRepository.swift; sourceTree = "<group>"; };
 		3AD6916F272A4AC5000279B2 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		3ADB3DB9273CC84E00944A08 /* TMProjectHeaderDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMProjectHeaderDetailView.swift; sourceTree = "<group>"; };
 		3AEF9DFE270E6F860065B184 /* Task Manager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Task Manager.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -239,6 +241,7 @@
 			children = (
 				3A638DE129078C0A00FB4C29 /* RepositoryProtocol.swift */,
 				3A638DE629078E1300FB4C29 /* ProjectRepository.swift */,
+				3AC0ED672908C8CE00A5AB11 /* TaskRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -419,6 +422,7 @@
 				3A45B1ED290A1A0D00F635E6 /* CDProject+Additions.swift in Sources */,
 				3A56C64A2769B99A00B91ACF /* TaskDetailVC.swift in Sources */,
 				3A2983D927364D6A006B9448 /* TMDateField.swift in Sources */,
+				3AC0ED682908C8CE00A5AB11 /* TaskRepository.swift in Sources */,
 				3A33009F271BCE43001DD4F3 /* DummyData.swift in Sources */,
 				3A32C5FD274879B600AE1BA4 /* CreateTaskVC.swift in Sources */,
 				3A6462F92727925800FA7F95 /* TaskTableViewCell.swift in Sources */,
