@@ -37,6 +37,7 @@
 		3A5097E72867E98100AB1B02 /* TMColorPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5097E62867E98100AB1B02 /* TMColorPickerView.swift */; };
 		3A56C64A2769B99A00B91ACF /* TaskDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A56C6492769B99A00B91ACF /* TaskDetailVC.swift */; };
 		3A638DE229078C0A00FB4C29 /* RepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A638DE129078C0A00FB4C29 /* RepositoryProtocol.swift */; };
+		3A638DE729078E1300FB4C29 /* ProjectRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A638DE629078E1300FB4C29 /* ProjectRepository.swift */; };
 		3A6462F92727925800FA7F95 /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6462F82727925800FA7F95 /* TaskTableViewCell.swift */; };
 		3A69C77D271892E50078668B /* TMTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A69C77C271892E40078668B /* TMTitleLabel.swift */; };
 		3A69C780271899E10078668B /* TMSubtitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A69C77F271899E10078668B /* TMSubtitleLabel.swift */; };
@@ -87,6 +88,7 @@
 		3A5097E62867E98100AB1B02 /* TMColorPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMColorPickerView.swift; sourceTree = "<group>"; };
 		3A56C6492769B99A00B91ACF /* TaskDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailVC.swift; sourceTree = "<group>"; };
 		3A638DE129078C0A00FB4C29 /* RepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryProtocol.swift; sourceTree = "<group>"; };
+		3A638DE629078E1300FB4C29 /* ProjectRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectRepository.swift; sourceTree = "<group>"; };
 		3A6462F82727925800FA7F95 /* TaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
 		3A69C77C271892E40078668B /* TMTitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMTitleLabel.swift; sourceTree = "<group>"; };
 		3A69C77F271899E10078668B /* TMSubtitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMSubtitleLabel.swift; sourceTree = "<group>"; };
@@ -236,6 +238,7 @@
 			isa = PBXGroup;
 			children = (
 				3A638DE129078C0A00FB4C29 /* RepositoryProtocol.swift */,
+				3A638DE629078E1300FB4C29 /* ProjectRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -426,6 +429,7 @@
 				3A3300B1271E2210001DD4F3 /* TMTasksListVC.swift in Sources */,
 				3A638DE229078C0A00FB4C29 /* RepositoryProtocol.swift in Sources */,
 				3A17BC2A274341F800CE504B /* TMSectionHeaderView.swift in Sources */,
+				3A638DE729078E1300FB4C29 /* ProjectRepository.swift in Sources */,
 				3A1FE61628BB0C0A00E80722 /* CDTask+CoreDataProperties.swift in Sources */,
 				3A33009A271BCBC3001DD4F3 /* Project.swift in Sources */,
 			);
