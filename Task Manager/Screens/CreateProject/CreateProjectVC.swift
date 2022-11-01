@@ -183,7 +183,20 @@ class CreateProjectVC: UIViewController {
 
 extension  CreateProjectVC: CreateProjectVMDelgate {
     func validationError(error: createProjectValidationError) {
-        print("error:",error.rawValue)
+        
+        presentTMAlertVC(title: "", message: error.rawValue, buttonTitle: "Entendido")
+        
+        switch error {
+        case .requiredTitle:
+            titleTextField.becomeFirstResponder()
+        case .requiredSubtitle:
+            aliasTextField.becomeFirstResponder()
+        case .startShouldBeLessThatEndDate:
+            startDateTextField.setDefaultDate(vm.startDate.value)
+            endDateTextField.setDefaultDate(vm.endDate.value)
+        case .saveFail:
+            break
+        }
     }
     
     func saveCompleted() {
