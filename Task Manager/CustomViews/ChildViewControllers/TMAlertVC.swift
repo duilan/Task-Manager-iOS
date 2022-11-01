@@ -104,15 +104,3 @@ class TMAlertVC: UIViewController {
         actionButton.heightAnchor.constraint(equalToConstant: 45).isActive = true
     }
 }
-
-// Extension para que sea accesible desde los VC
-extension UIViewController {
-    func presentTMAlertVC(title: String, message: String, buttonTitle: String) {
-        DispatchQueue.main.async {
-            let alert = TMAlertVC(title: title, message: message, buttonTitle: buttonTitle)
-            alert.modalPresentationStyle = .overFullScreen
-            alert.modalTransitionStyle = .crossDissolve
-            self.present(alert, animated: true)
-        }
-    }
-}
