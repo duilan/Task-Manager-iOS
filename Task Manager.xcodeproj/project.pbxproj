@@ -46,6 +46,7 @@
 		3A8CBFC72762AC7E00E1A43A /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8CBFC62762AC7E00E1A43A /* Date+Ext.swift */; };
 		3AA1930A2730D88300D213CB /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA193092730D88300D213CB /* UIColor+Ext.swift */; };
 		3AA39A962738ABF000711E51 /* ProjectDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA39A952738ABF000711E51 /* ProjectDetailVC.swift */; };
+		3ABE2DA6290B58D500B7D6F6 /* CreateProjectVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ABE2DA5290B58D500B7D6F6 /* CreateProjectVM.swift */; };
 		3AC0ED682908C8CE00A5AB11 /* TaskRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC0ED672908C8CE00A5AB11 /* TaskRepository.swift */; };
 		3AD69170272A4AC5000279B2 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD6916F272A4AC5000279B2 /* CoreDataManager.swift */; };
 		3ADB3DBA273CC84E00944A08 /* TMProjectHeaderDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ADB3DB9273CC84E00944A08 /* TMProjectHeaderDetailView.swift */; };
@@ -98,6 +99,7 @@
 		3A8CBFC62762AC7E00E1A43A /* Date+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
 		3AA193092730D88300D213CB /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
 		3AA39A952738ABF000711E51 /* ProjectDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetailVC.swift; sourceTree = "<group>"; };
+		3ABE2DA5290B58D500B7D6F6 /* CreateProjectVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProjectVM.swift; sourceTree = "<group>"; };
 		3AC0ED672908C8CE00A5AB11 /* TaskRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRepository.swift; sourceTree = "<group>"; };
 		3AD6916F272A4AC5000279B2 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		3ADB3DB9273CC84E00944A08 /* TMProjectHeaderDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMProjectHeaderDetailView.swift; sourceTree = "<group>"; };
@@ -201,9 +203,9 @@
 		3A3F2C73271A90F0008BEEC5 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				3ADF6FA92910EADB003B8050 /* CreateProject */,
 				3A7080562711240E00D2F06E /* HomeVC.swift */,
 				3AA39A952738ABF000711E51 /* ProjectDetailVC.swift */,
-				3A022AE1272CD815009BD2B3 /* CreateProjectVC.swift */,
 				3A32C5FC274879B600AE1BA4 /* CreateTaskVC.swift */,
 				3A56C6492769B99A00B91ACF /* TaskDetailVC.swift */,
 			);
@@ -274,6 +276,15 @@
 				3A6B9FFD27547482004E47BF /* TMCheckBoxButton.swift */,
 			);
 			path = Buttons;
+			sourceTree = "<group>";
+		};
+		3ADF6FA92910EADB003B8050 /* CreateProject */ = {
+			isa = PBXGroup;
+			children = (
+				3A022AE1272CD815009BD2B3 /* CreateProjectVC.swift */,
+				3ABE2DA5290B58D500B7D6F6 /* CreateProjectVM.swift */,
+			);
+			path = CreateProject;
 			sourceTree = "<group>";
 		};
 		3AEF9DF5270E6F860065B184 = {
@@ -419,6 +430,7 @@
 				3A1FE61328BB0C0A00E80722 /* CDProject+CoreDataClass.swift in Sources */,
 				3A022ADF272CBFE7009BD2B3 /* TMEmptyView.swift in Sources */,
 				3A1FE61528BB0C0A00E80722 /* CDTask+CoreDataClass.swift in Sources */,
+				3ABE2DA6290B58D500B7D6F6 /* CreateProjectVM.swift in Sources */,
 				3A45B1ED290A1A0D00F635E6 /* CDProject+Additions.swift in Sources */,
 				3A56C64A2769B99A00B91ACF /* TaskDetailVC.swift in Sources */,
 				3A2983D927364D6A006B9448 /* TMDateField.swift in Sources */,
