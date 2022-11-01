@@ -25,12 +25,14 @@ class CreateProjectVC: UIViewController {
     private let scrollView = UIScrollView()
     private let contentView = UIView()
     
-    private var colorOfProject = 0 // default blue = 0
+    // viewModel
+    private let vm = CreateProjectVM()
     
     weak var delegate: CreateProjectProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        vm.delegate = self
         setup()
         setupNavbarItems()
         setupScrollView()
@@ -44,7 +46,7 @@ class CreateProjectVC: UIViewController {
     }
     
     private func setup() {
-        title = "Nuevo Proyecto"
+        title = vm.screenTitle
         view.backgroundColor = ThemeColors.backgroundPrimary
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode  = .always
@@ -90,14 +92,13 @@ class CreateProjectVC: UIViewController {
             formStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             formStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             formStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            //formStackView.heightAnchor.constraint(greaterThanOrEqualToConstant: 200),
         ])
     }
     
     private func setupTitleTextField() {
         formStackView.addArrangedSubview(titleTextField)
-        titleTextField.title = "Titulo"
-        titleTextField.placeholder = "Titulo del proyecto"
+        titleTextField.title = vm.title.title
+        titleTextField.placeholder = vm.title.placeHolder
         titleTextField.clearButtonMode = .whileEditing
         titleTextField.layer.cornerCurve = .continuous
         titleTextField.layer.cornerRadius = 10
@@ -107,8 +108,8 @@ class CreateProjectVC: UIViewController {
     
     private func setupAliasTextField() {
         formStackView.addArrangedSubview(aliasTextField)
-        aliasTextField.title = "Subtitulo"
-        aliasTextField.placeholder = "Subtitulo o alias"
+        aliasTextField.title = vm.subtitle.title
+        aliasTextField.placeholder = vm.subtitle.placeHolder
         aliasTextField.clearButtonMode = .whileEditing
         aliasTextField.layer.cornerCurve = .continuous
         aliasTextField.layer.cornerRadius = 10
@@ -118,8 +119,8 @@ class CreateProjectVC: UIViewController {
     
     private func setupDescTextView() {
         formStackView.addArrangedSubview(descTextView)        
-        descTextView.title = "Descripción"
-        descTextView.toolbarPlaceholder = "Descripción acerca del proyecto"
+        descTextView.title = vm.desc.title
+        descTextView.toolbarPlaceholder = vm.desc.placeHolder
         descTextView.maximumNumberOfLines = 0
         descTextView.isScrollEnabled = false
         descTextView.layer.cornerCurve = .continuous
@@ -136,15 +137,16 @@ class CreateProjectVC: UIViewController {
         formStackView.addArrangedSubview(hStack)
         
         hStack.addArrangedSubview(startDateTextField)
-        startDateTextField.title = "Fecha Inicio"
-        startDateTextField.setDefaultDate()
+        startDateTextField.title = vm.startDate.title
+        startDateTextField.setDefaultDate(vm.startDate.value)
         startDateTextField.layer.cornerCurve = .continuous
         startDateTextField.layer.cornerRadius = 10
         startDateTextField.translatesAutoresizingMaskIntoConstraints = false
         startDateTextField.heightAnchor.constraint(equalToConstant: 60).isActive = true
         
         hStack.addArrangedSubview(endDateTextField)
-        endDateTextField.title = "Fecha Termino"
+        endDateTextField.title = vm.endDate.title
+        endDateTextField.setDefaultDate(vm.endDate.value)
         endDateTextField.layer.cornerCurve = .continuous
         endDateTextField.layer.cornerRadius = 10
         endDateTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -167,38 +169,38 @@ class CreateProjectVC: UIViewController {
     }
     
     @objc private func saveButtonTapped() {
+        vm.title.value = titleTextField.text ?? ""
+        vm.subtitle.value = aliasTextField.text ?? ""
+        vm.desc.value = descTextView.text ?? ""
+        vm.startDate.value = startDateTextField.date ?? Date()
+        vm.endDate.value = endDateTextField.date ?? Date()
+        vm.color.value = colorPicker.indexColor
+        // create Project
+        vm.createProject()
+    }
+    
+}
+
+extension  CreateProjectVC: CreateProjectVMDelgate {
+    func validationError(error: createProjectValidationError) {
         
-        guard let titleValue = titleTextField.text, !titleValue.isEmpty else {
+        presentTMAlertVC(title: "", message: error.rawValue, buttonTitle: "Entendido")
+        
+        switch error {
+        case .requiredTitle:
             titleTextField.becomeFirstResponder()
-            return
-        }
-        guard let aliasValue = aliasTextField.text, !aliasValue.isEmpty else {
+        case .requiredSubtitle:
             aliasTextField.becomeFirstResponder()
-            return
-        }
-        guard let startDate = startDateTextField.date else {
-            startDateTextField.becomeFirstResponder()
-            return
-        }
-        
-        guard let endDate = endDateTextField.date else {
-            endDateTextField.becomeFirstResponder()
-            return
-        }
-        
-        let descValue = descTextView.text
-        let colorProject = colorPicker.indexColor
-        
-        CoreDataManager.shared.createProject(
-            alias: aliasValue,
-            title: titleValue,
-            desc: descValue,
-            startDate: startDate,
-            endDate: endDate,
-            color: colorProject) { [weak self] in
-            self?.navigationController?.popViewController(animated: true)
-            self?.delegate?.projectAdded()
+        case .startShouldBeLessThatEndDate:
+            startDateTextField.setDefaultDate(vm.startDate.value)
+            endDateTextField.setDefaultDate(vm.endDate.value)
+        case .saveFail:
+            break
         }
     }
     
+    func saveCompleted() {
+        navigationController?.popViewController(animated: true)
+        self.delegate?.projectAdded()
+    }
 }
