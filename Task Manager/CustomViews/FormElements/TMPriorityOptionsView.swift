@@ -17,9 +17,11 @@ class TMPriorityOptionsView: UIView {
     var indexOption: Int = 0 {
         didSet {
             guard let option = Priority(rawValue: indexOption) else { return }
-            setPriority(priority: option)
+            setPriority(option: option)
         }
     }
+    
+    private(set) var currentValue: Priority!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -32,13 +34,18 @@ class TMPriorityOptionsView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setPriority(priority: Priority) {
+    func setPriority(option: Priority) {
         for priorityButton in stackH.arrangedSubviews {
             priorityButton.alpha = 0.3
-            if priorityButton.tag == priority.value {
+            if priorityButton.tag == option.value {
                 priorityButton.alpha = 1
+                currentValue = option
             }
         }
+    }
+    
+    func setTitle(text: String) {
+        titleLabel.text = text.uppercased()
     }
     
     private func setup() {
@@ -50,7 +57,7 @@ class TMPriorityOptionsView: UIView {
     
     private func setupTitle() {
         addSubview(titleLabel)
-        titleLabel.text = "PRIORIDAD"        
+        titleLabel.text = "PRIORIDAD"
         titleLabel.textColor = ThemeColors.text.withAlphaComponent(0.6)
         titleLabel.font = .systemFont(ofSize: 12, weight: .medium)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -77,22 +84,16 @@ class TMPriorityOptionsView: UIView {
             
             switch option {
             case .normal:
-                btn.setTitle("Normal", for: .normal)
                 btn.backgroundColor = .systemTeal
-                btn.alpha = 0.3
-                btn.tag = 0
             case .moderada:
-                btn.setTitle("Moderada", for: .normal)
                 btn.backgroundColor = .systemYellow
-                btn.alpha = 0.3
-                btn.tag = 1
             case .importante:
-                btn.setTitle("Importante", for: .normal)
                 btn.backgroundColor = .systemRed
-                btn.alpha = 0.3
-                btn.tag = 2
             }
             
+            btn.setTitle(option.text, for: .normal)
+            btn.alpha = 0.3
+            btn.tag = option.value
             btn.layer.cornerRadius = 10
             btn.clipsToBounds = true
             btn.addTarget(self, action: #selector(priorityTapped(_:)), for: .touchUpInside)
