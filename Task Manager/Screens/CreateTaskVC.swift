@@ -19,8 +19,7 @@ class CreateTaskVC: UIViewController {
     private let prioritiesView = TMPriorityOptionsView()
     private let saveButton = TMButton("Guardar")
     
-    private var project: CDProject!
-    private let coredata = CoreDataManager.shared
+    private var vm: CreateTaskVM!
     
     weak var delegate: CreateTaskProtocol?
     
@@ -35,12 +34,10 @@ class CreateTaskVC: UIViewController {
         setupSaveButton()
     }
     
-    init(project: CDProject) {
+    init(project: Project) {
         super.init(nibName: nil, bundle: nil)
-        self.project = project
-        
-        guard let color = ProjectColors(rawValue: Int(project.color))?.value else { return }
-        saveButton.backgroundColor = color
+        vm = CreateTaskVM(project: project)
+        vm.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -48,22 +45,10 @@ class CreateTaskVC: UIViewController {
     }
     
     @objc private func saveButtonTapped() {
-        guard let titleValue = titleTextField.text, !titleValue.isEmpty else {
-            titleTextField.becomeFirstResponder()
-            return
-        }
-        
-        let descValue = notesTextView.text
-        let priorityID = prioritiesView.indexOption
-        
-        coredata.addTask(title: titleValue, notes: descValue, priority: priorityID, to: self.project) { [weak self] in
-            guard let self = self else { return }
-            
-            self.dismiss(animated: true) {
-                self.delegate?.taskAdded()
-            }
-        }
-        
+        vm.taskName.value = titleTextField.text ?? ""
+        vm.taskNotes.value = notesTextView.text ?? ""
+        vm.taskPriority.value = prioritiesView.currentValue
+        vm.createTask()
     }
     
     @objc private func dismissThis() {
@@ -71,7 +56,7 @@ class CreateTaskVC: UIViewController {
     }
     
     private func setup() {
-        title = "Nueva Tarea"
+        title = vm.screenTitle
         view.backgroundColor = ThemeColors.backgroundPrimary
         navigationController?.navigationBar.prefersLargeTitles = true
     }
@@ -96,8 +81,8 @@ class CreateTaskVC: UIViewController {
     
     private func setupTitleTextField() {
         formStackView.addArrangedSubview(titleTextField)
-        titleTextField.title = "Nombre"
-        titleTextField.placeholder = "Nombre de la tarea"
+        titleTextField.title = vm.taskName.title
+        titleTextField.placeholder = vm.taskName.placeHolder
         titleTextField.clearButtonMode = .whileEditing
         titleTextField.layer.cornerCurve = .continuous
         titleTextField.layer.cornerRadius = 10
@@ -107,7 +92,7 @@ class CreateTaskVC: UIViewController {
     
     private func setupNotesTextView() {
         formStackView.addArrangedSubview(notesTextView)
-        notesTextView.title = "Notas"
+        notesTextView.title = vm.taskNotes.title
         notesTextView.isScrollEnabled = false
         notesTextView.maximumNumberOfLines = 5
         notesTextView.heightAnchor.constraint(greaterThanOrEqualToConstant: 120).isActive = true
@@ -115,6 +100,7 @@ class CreateTaskVC: UIViewController {
     
     private func setupSaveButton() {
         formStackView.addArrangedSubview(saveButton)
+        saveButton.backgroundColor = vm.colorProject.value
         saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         saveButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
@@ -122,6 +108,28 @@ class CreateTaskVC: UIViewController {
     private func setupPrioritiesView() {
         formStackView.addArrangedSubview(prioritiesView)
         formStackView.setCustomSpacing(24, after: prioritiesView)
+        prioritiesView.setTitle(text: vm.taskPriority.title)
+        prioritiesView.setPriority(option: vm.taskPriority.value)
+    }
+    
+}
+
+extension CreateTaskVC: CreateTaskVMDelegate {
+    func validationError(error: CreateTaskValidationError) {
+        
+        presentTMAlertVC(title: "", message: error.rawValue, buttonTitle: "Entendido")
+        
+        switch error {
+        case .requiredName:
+            titleTextField.becomeFirstResponder()
+        case .saveFail:
+            break
+        }
+    }
+    
+    func saveCompleted() {
+        delegate?.taskAdded()
+        dismissThis()
     }
     
 }

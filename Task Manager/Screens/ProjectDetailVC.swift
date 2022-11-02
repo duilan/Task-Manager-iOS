@@ -76,7 +76,7 @@ class ProjectDetailVC: UIViewController {
     }
     
     @objc func showAddTaskVC() {
-        let taskVC = CreateTaskVC(project: project)
+        let taskVC = CreateTaskVC(project: project.toDomainModel())
         taskVC.delegate = self
         let nav = UINavigationController(rootViewController: taskVC)
         self.present(nav, animated: true, completion: nil)

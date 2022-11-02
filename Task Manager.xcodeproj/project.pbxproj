@@ -43,6 +43,7 @@
 		3A69C780271899E10078668B /* TMSubtitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A69C77F271899E10078668B /* TMSubtitleLabel.swift */; };
 		3A6B9FFE27547482004E47BF /* TMCheckBoxButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6B9FFD27547482004E47BF /* TMCheckBoxButton.swift */; };
 		3A7080572711240E00D2F06E /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7080562711240E00D2F06E /* HomeVC.swift */; };
+		3A8774F12911E00700EC3D1B /* CreateTaskVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8774F02911E00700EC3D1B /* CreateTaskVM.swift */; };
 		3A8CBFC72762AC7E00E1A43A /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8CBFC62762AC7E00E1A43A /* Date+Ext.swift */; };
 		3AA1930A2730D88300D213CB /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA193092730D88300D213CB /* UIColor+Ext.swift */; };
 		3AA39A962738ABF000711E51 /* ProjectDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA39A952738ABF000711E51 /* ProjectDetailVC.swift */; };
@@ -97,6 +98,7 @@
 		3A69C77F271899E10078668B /* TMSubtitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMSubtitleLabel.swift; sourceTree = "<group>"; };
 		3A6B9FFD27547482004E47BF /* TMCheckBoxButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMCheckBoxButton.swift; sourceTree = "<group>"; };
 		3A7080562711240E00D2F06E /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
+		3A8774F02911E00700EC3D1B /* CreateTaskVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTaskVM.swift; sourceTree = "<group>"; };
 		3A8CBFC62762AC7E00E1A43A /* Date+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
 		3AA193092730D88300D213CB /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
 		3AA39A952738ABF000711E51 /* ProjectDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetailVC.swift; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 				3A7080562711240E00D2F06E /* HomeVC.swift */,
 				3AA39A952738ABF000711E51 /* ProjectDetailVC.swift */,
 				3A32C5FC274879B600AE1BA4 /* CreateTaskVC.swift */,
+				3A8774F02911E00700EC3D1B /* CreateTaskVM.swift */,
 				3A56C6492769B99A00B91ACF /* TaskDetailVC.swift */,
 			);
 			path = Screens;
@@ -406,6 +409,7 @@
 				3A022AE2272CD815009BD2B3 /* CreateProjectVC.swift in Sources */,
 				3A07CB36272B798A00E20F3A /* TaskManager.xcdatamodeld in Sources */,
 				3A23CA3227646F060030437E /* TMTagLabel.swift in Sources */,
+				3A8774F12911E00700EC3D1B /* CreateTaskVM.swift in Sources */,
 				3A3720F0271643CE00FE1A75 /* ThemeColors.swift in Sources */,
 				3AFA32F92908EE5D0096CC52 /* Task.swift in Sources */,
 				3A8CBFC72762AC7E00E1A43A /* Date+Ext.swift in Sources */,
