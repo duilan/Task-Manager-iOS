@@ -53,9 +53,9 @@ class CreateProjectVM {
             return false
         }
         
-        let diffBetweenDays = Calendar.current.dateComponents([.day], from: startDate.value, to: endDate.value).day!
+        let hoursDiffBetweenDates = Calendar.current.dateComponents([.hour], from: startDate.value, to: endDate.value).hour!
         
-        if diffBetweenDays < 1 {
+        if hoursDiffBetweenDates < 1 {
             delegate?.validationError(error: .startShouldBeLessThatEndDate)
             return false
         }
