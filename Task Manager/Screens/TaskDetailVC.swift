@@ -20,9 +20,7 @@ class TaskDetailVC: UIViewController {
     private let saveButton = TMButton("Guardar cambios")
     private let closeButton = UIButton(type: .close)
     
-    private let coredata = CoreDataManager.shared
-    
-    private var task: CDTask!
+    private var vm: TaskDetailVM!
     
     weak var delegate: TaskDetailProtocol?
     
@@ -39,12 +37,10 @@ class TaskDetailVC: UIViewController {
         setupCloseButton()
     }
     
-    init(task: CDTask) {
+    init(task: Task) {
         super.init(nibName: nil, bundle: nil)
-        self.task = task
-        titleTextField.text = task.title
-        notesTextView.text = task.notes        
-        prioritiesView.indexOption = Int(task.priority)
+        vm = TaskDetailVM(of: task)
+        vm.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -62,34 +58,11 @@ class TaskDetailVC: UIViewController {
         view.addSubview(blurView)
     }
     
-    @objc private func saveButtonTapped() {
-        
-        guard let task = self.task else { return }
-        
-        guard let titleValue = titleTextField.text, !titleValue.isEmpty else {
-            titleTextField.becomeFirstResponder()
-            return
-        }
-        
-        let notes = notesTextView.text
-        let priorityID = prioritiesView.indexOption
-        
-        if (task.title != titleValue || task.notes != notes || task.priority != Int64(priorityID) ) {
-            
-            task.title = titleValue
-            task.notes = notes
-            task.priority = Int64(priorityID)
-            
-            coredata.updateTask(with: task ) { [weak self] in
-                guard let self = self else { return }
-                self.dismiss(animated: true, completion: {
-                    self.delegate?.taskDidUpdate()
-                })
-            }
-        } else {
-            self.dismiss(animated: true)
-        }
-        
+    @objc private func saveButtonTapped() {      
+        vm.taskName.value = titleTextField.text ?? ""
+        vm.taskNotes.value = notesTextView.text ?? ""
+        vm.taskPriority.value = prioritiesView.currentValue
+        vm.updateDetailTask()
     }
     
     @objc private func dismissThis() {
@@ -124,8 +97,9 @@ class TaskDetailVC: UIViewController {
     
     private func setupTitleTextField() {
         formStackView.addArrangedSubview(titleTextField)
-        titleTextField.title = "Nombre"
-        titleTextField.placeholder = "Nombre de la tarea"
+        titleTextField.title = vm.taskName.title
+        titleTextField.placeholder = vm.taskName.placeHolder
+        titleTextField.text = vm.taskName.value
         titleTextField.clearButtonMode = .whileEditing
         titleTextField.translatesAutoresizingMaskIntoConstraints = false
         titleTextField.heightAnchor.constraint(equalToConstant: 60).isActive = true
@@ -133,11 +107,18 @@ class TaskDetailVC: UIViewController {
     
     private func setupNotesTextView() {
         formStackView.addArrangedSubview(notesTextView)
-        notesTextView.title = "Notas"
+        notesTextView.title = vm.taskNotes.title
+        notesTextView.text = vm.taskNotes.value
         notesTextView.isScrollEnabled = false
         notesTextView.maximumNumberOfLines = 5
         notesTextView.layer.cornerRadius = 0
         notesTextView.heightAnchor.constraint(greaterThanOrEqualToConstant: 120).isActive = true
+    }
+    
+    private func setupPrioritiesView() {
+        formStackView.addArrangedSubview(prioritiesView)
+        formStackView.setCustomSpacing(24, after: prioritiesView)
+        prioritiesView.setPriority(option: vm.taskPriority.value)
     }
     
     private func setupSaveButton() {
@@ -163,10 +144,29 @@ class TaskDetailVC: UIViewController {
             closeButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
+}
+
+extension  TaskDetailVC: TaskDetailDelegate {
     
-    private func setupPrioritiesView() {
-        formStackView.addArrangedSubview(prioritiesView)
-        formStackView.setCustomSpacing(24, after: prioritiesView)
+    func taskDetailUpdated() {
+        dismiss(animated: true) { [weak self] in
+            self?.delegate?.taskDidUpdate()
+        }
     }
     
+    func taskWithOutChanges() {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func validationError(error: DetailTaskValidationError) {
+        
+        presentTMAlertVC(title: "", message: error.rawValue, buttonTitle: "Entendido")
+        
+        switch error {
+        case .requiredName:
+            titleTextField.becomeFirstResponder()
+        case .updateFail:
+            break
+        }
+    }
 }

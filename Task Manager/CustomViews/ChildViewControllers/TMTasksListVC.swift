@@ -162,7 +162,7 @@ extension TMTasksListVC: UITableViewDelegate {
         tableView.cellForRow(at: indexPath)?.isSelected = false
         
         guard let task = dataSource.itemIdentifier(for: indexPath) else { return }
-        let taskDetailVC = TaskDetailVC(task: task)
+        let taskDetailVC = TaskDetailVC(task: task.toDomainModel())
         taskDetailVC.delegate = self
         taskDetailVC.modalPresentationStyle = .overCurrentContext
         taskDetailVC.modalTransitionStyle = .crossDissolve
