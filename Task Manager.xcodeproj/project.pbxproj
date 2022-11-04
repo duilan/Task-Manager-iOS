@@ -151,12 +151,8 @@
 				3A33009E271BCE43001DD4F3 /* DummyData.swift */,
 				3AD6916F272A4AC5000279B2 /* CoreDataManager.swift */,
 				3A45B1F2290A1AAC00F635E6 /* ModelConvertible.swift */,
-				3A1FE60F28BB0C0A00E80722 /* CDProject+CoreDataClass.swift */,
-				3A1FE61028BB0C0A00E80722 /* CDProject+CoreDataProperties.swift */,
-				3A45B1EC290A1A0D00F635E6 /* CDProject+Additions.swift */,
-				3A45B1EF290A1A4E00F635E6 /* CDTask+Additions.swift */,
-				3A1FE61128BB0C0A00E80722 /* CDTask+CoreDataClass.swift */,
-				3A1FE61228BB0C0A00E80722 /* CDTask+CoreDataProperties.swift */,
+				3A4BD3892914E143001DCBA6 /* CDProject */,
+				3A4BD38A2914E150001DCBA6 /* CDTask */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -211,12 +207,10 @@
 			isa = PBXGroup;
 			children = (
 				3ADF6FA92910EADB003B8050 /* CreateProject */,
+				3A4BD3872914E0B8001DCBA6 /* CreateTask */,
+				3A4BD3882914E0CE001DCBA6 /* DetailTask */,
 				3A7080562711240E00D2F06E /* HomeVC.swift */,
 				3AA39A952738ABF000711E51 /* ProjectDetailVC.swift */,
-				3A32C5FC274879B600AE1BA4 /* CreateTaskVC.swift */,
-				3A8774F02911E00700EC3D1B /* CreateTaskVM.swift */,
-				3A56C6492769B99A00B91ACF /* TaskDetailVC.swift */,
-				3AEC4CC8291375BE009A4E9B /* TaskDetailVM.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -245,6 +239,44 @@
 				3A6462F82727925800FA7F95 /* TaskTableViewCell.swift */,
 			);
 			path = ReusableCells;
+			sourceTree = "<group>";
+		};
+		3A4BD3872914E0B8001DCBA6 /* CreateTask */ = {
+			isa = PBXGroup;
+			children = (
+				3A32C5FC274879B600AE1BA4 /* CreateTaskVC.swift */,
+				3A8774F02911E00700EC3D1B /* CreateTaskVM.swift */,
+			);
+			path = CreateTask;
+			sourceTree = "<group>";
+		};
+		3A4BD3882914E0CE001DCBA6 /* DetailTask */ = {
+			isa = PBXGroup;
+			children = (
+				3A56C6492769B99A00B91ACF /* TaskDetailVC.swift */,
+				3AEC4CC8291375BE009A4E9B /* TaskDetailVM.swift */,
+			);
+			path = DetailTask;
+			sourceTree = "<group>";
+		};
+		3A4BD3892914E143001DCBA6 /* CDProject */ = {
+			isa = PBXGroup;
+			children = (
+				3A1FE60F28BB0C0A00E80722 /* CDProject+CoreDataClass.swift */,
+				3A1FE61028BB0C0A00E80722 /* CDProject+CoreDataProperties.swift */,
+				3A45B1EC290A1A0D00F635E6 /* CDProject+Additions.swift */,
+			);
+			path = CDProject;
+			sourceTree = "<group>";
+		};
+		3A4BD38A2914E150001DCBA6 /* CDTask */ = {
+			isa = PBXGroup;
+			children = (
+				3A1FE61128BB0C0A00E80722 /* CDTask+CoreDataClass.swift */,
+				3A1FE61228BB0C0A00E80722 /* CDTask+CoreDataProperties.swift */,
+				3A45B1EF290A1A4E00F635E6 /* CDTask+Additions.swift */,
+			);
+			path = CDTask;
 			sourceTree = "<group>";
 		};
 		3A638DE429078DF100FB4C29 /* Repositories */ = {
