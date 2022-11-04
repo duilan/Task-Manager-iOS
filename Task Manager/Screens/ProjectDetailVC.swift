@@ -51,7 +51,7 @@ class ProjectDetailVC: UIViewController {
     
     private func setupDetailHeaderView() {
         view.addSubview(detailHeaderView)
-        detailHeaderView.configure(with: project)
+        detailHeaderView.configure(with: project.toDomainModel())
         
         detailHeaderView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([

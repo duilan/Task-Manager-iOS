@@ -32,14 +32,14 @@ class TMProjectHeaderDetailView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(with project: CDProject) {
+    func configure(with project: Project) {
         titleLabel.text = project.title
         aliasLabel.text = project.alias
         startDateTextField.setDefaultDate(project.startDate)
         endDateTextField.setDefaultDate(project.endDate)
         descTextView.text = project.desc
         projectColor = ProjectColors(rawValue: Int(project.color))
-        setupGradientWith(color: projectColor)
+        setupGradient()
     }
     
     @objc func showMoreInfo(_ sender: UIButton) {
@@ -59,6 +59,7 @@ class TMProjectHeaderDetailView: UIView {
                 }
             }
         }
+        setupGradient()
     }
     
     private func setup() {
@@ -66,13 +67,12 @@ class TMProjectHeaderDetailView: UIView {
         self.clipsToBounds = true
     }
     
-    private func setupGradientWith(color: ProjectColors?) {
-        guard let color = color else { return }
+    private func setupGradient() {
+        guard let color = projectColor else { return }
         let startEndPointsGradient = (CGPoint(x: 0, y: 0), CGPoint(x: 0, y: 1))
         self.addGradientBackground(colorSet: [color.value.darker(), color.value.lighter()],
                                    startAndEndPoints: startEndPointsGradient)
     }
-    
     
     private func setupContentStack() {
         self.addSubview(contentStackView)
@@ -154,7 +154,7 @@ class TMProjectHeaderDetailView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        setupGradientWith(color: projectColor)
+        setupGradient()
     }
     
 }
