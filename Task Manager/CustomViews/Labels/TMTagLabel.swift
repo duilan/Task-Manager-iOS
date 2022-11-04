@@ -34,7 +34,7 @@ class TMTagLabel: UILabel {
         textAlignment = .center
         numberOfLines = 1
         lineBreakMode = .byTruncatingTail
-        layer.cornerRadius = 6
+        //      layer.cornerRadius = 6
         layer.cornerCurve = .continuous
         clipsToBounds = true
         translatesAutoresizingMaskIntoConstraints = false
@@ -58,5 +58,10 @@ class TMTagLabel: UILabel {
         let ctr = super.textRect(forBounds: tr, limitedToNumberOfLines: 0)
         // that line of code MUST be LAST in this function, NOT first
         return ctr
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layer.cornerRadius = self.frame.height / 2
     }
 }
