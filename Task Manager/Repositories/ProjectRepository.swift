@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ProjectRepository: RepositoryProtocol {
+class ProjectRepository: ProjectRepositoryProtocol {
     
     let store = CoreDataManager.shared
     

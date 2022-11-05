@@ -7,14 +7,15 @@
 
 import Foundation
 
-class TaskRepository: RepositoryProtocol {
+class TaskRepository: TaskRepositoryProtocol {
     
     let store = CoreDataManager.shared
     
-    func getAll() -> Result<[Task], RepositoryError> {
+    func getAllBy(_ projectID: UUID) -> Result<[Task], RepositoryError> {
         do {
-            let tasks = try store.fetch(entity: CDTask.self)
-            return .success(tasks.map({ $0.toDomainModel() }))
+            let project =  try store.fetchById(entity: CDProject.self, id: projectID)
+            let tasks = project?.toDomainModel().tasks ?? []
+            return .success(tasks)
         } catch {
             print(error)
             return .failure(.failError)
