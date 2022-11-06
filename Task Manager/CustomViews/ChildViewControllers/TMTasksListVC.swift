@@ -108,7 +108,7 @@ class TMTasksListVC: UIViewController {
             guard  let cell = tableView.dequeueReusableCell(withIdentifier: TaskTableViewCell.cellID, for: indexPath) as? TaskTableViewCell else {
                 return TaskTableViewCell()
             }
-            cell.configure(with: item)
+            cell.configure(with: item.toDomainModel())
             cell.doneButtonAction = {
                 item.isDone = !item.isDone
                 item.doneAt = Date() // current date
