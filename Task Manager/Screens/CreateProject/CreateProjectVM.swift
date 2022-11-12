@@ -7,15 +7,9 @@
 
 import Foundation
 
-enum createProjectValidationError: String, Error {
-    case requiredTitle = "Agrega un titulo"
-    case requiredSubtitle = "Agrega un subtitulo"
-    case startShouldBeLessThatEndDate = "La fecha de inicio debe ser menor a la de termino"
-    case saveFail = "Ocurrio un error al guardar"
-}
 protocol CreateProjectVMDelgate: AnyObject  {
     func saveCompleted()
-    func validationError(error: createProjectValidationError)
+    func validationError(error: Project.ProjectError)
 }
 
 class CreateProjectVM {
@@ -43,30 +37,9 @@ class CreateProjectVM {
         color = (title: "Color", value: 0)
     }
     
-    func isValidInfo() -> Bool {
-        if title.value.isEmpty {
-            delegate?.validationError(error: .requiredTitle)
-            return false
-        }
-        if subtitle.value.isEmpty {
-            delegate?.validationError(error: .requiredSubtitle)
-            return false
-        }
-        
-        let hoursDiffBetweenDates = Calendar.current.dateComponents([.hour], from: startDate.value, to: endDate.value).hour!
-        
-        if hoursDiffBetweenDates < 1 {
-            delegate?.validationError(error: .startShouldBeLessThatEndDate)
-            return false
-        }
-        
-        return true
-        
-    }
-    
     func createProject() {
-        if isValidInfo() {
-            let newProject = Project(id: UUID(), title: title.value, alias: subtitle.value, desc: desc.value, startDate: startDate.value, endDate: endDate.value, color: color.value, status: .inProgress, tasks: [], createAt: Date())
+        do {
+            let newProject = try Project.create(title: title.value, alias: subtitle.value, desc: desc.value, startDate: startDate.value, endDate: endDate.value, color: color.value)
             
             let result = respository.create(newProject)
             switch result {
@@ -74,8 +47,9 @@ class CreateProjectVM {
                 delegate?.saveCompleted()
             case .failure( let error):
                 print(error)
-                delegate?.validationError(error: .saveFail)
             }
+        } catch {
+            delegate?.validationError(error: error as! Project.ProjectError)
         }
     }
     

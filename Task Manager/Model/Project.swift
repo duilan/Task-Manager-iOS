@@ -19,6 +19,26 @@ struct Project {
     let status: StatusProject
     let tasks: [Task]
     let createAt: Date
+    
+    enum ProjectError: Equatable, Error {
+        case emptyTitleisNotAllowed
+        case emptySubtitleisNotAllowed
+        case startDateShouldBeLessThatEndDate
+    }
+}
+
+extension Project {
+    // MARK: - Create project case 
+    static func create(title: String, alias: String, desc: String, startDate: Date, endDate: Date, color: Int) throws  -> Project {
+        
+        let hoursDiffBetweenDates = Calendar.current.dateComponents([.hour], from: startDate, to: endDate).hour!
+        
+        if title.isEmpty { throw ProjectError.emptyTitleisNotAllowed }
+        if alias.isEmpty { throw ProjectError.emptySubtitleisNotAllowed }
+        if hoursDiffBetweenDates < 0 { throw ProjectError.startDateShouldBeLessThatEndDate }
+        
+        return Project(id: UUID(), title: title, alias: alias, desc: desc, startDate: startDate, endDate: endDate, color: color, status: .inProgress , tasks: [], createAt: Date())
+    }
 }
 
 enum StatusProject: String, CaseIterable {
