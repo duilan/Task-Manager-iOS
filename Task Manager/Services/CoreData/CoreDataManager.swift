@@ -7,12 +7,11 @@
 
 import CoreData
 
-enum StorageType {
-    case persistent, inMemory
-}
-
 final class CoreDataManager {
     
+    enum StorageType {
+        case persistent, inMemory
+    }
     // Singleton
     static let shared = CoreDataManager(storageType: .persistent)
     
@@ -88,68 +87,11 @@ final class CoreDataManager {
         }
     }
     
-    func fetchProject(id: UUID, completion: @escaping(CDProject?)-> Void) {
-        let request: NSFetchRequest<CDProject> = CDProject.fetchRequest()
-        request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
-        
-        do {
-            let project = try context.fetch(request).first
-            completion(project)
-        } catch {
-            print(error)
-        }
-    }
-    
-    func createProject(alias: String, title: String , desc: String? = nil, startDate: Date, endDate: Date, color: Int, completion: @escaping() -> Void ) {
-        
-        let project = CDProject(context: context)
-        // setup project obj
-        project.id = UUID()
-        project.alias = alias
-        project.title = title
-        project.desc = desc
-        project.statusDescription = .inProgress // this will set raw value at status
-        project.createAt = Date()
-        project.startDate = startDate
-        project.endDate = endDate
-        project.color = Int64(color)
-        // save
-        do {
-            try context.save()
-            print("Se creo el proyecto: \(project.title)")
-            completion()
-        } catch {
-            print(error)
-        }
-    }
-    
     func update( completion: @escaping() -> Void) {
         do {
             try context.save()
             completion()
         } catch  {
-            print(error)
-        }
-    }
-    
-    func addTask(title: String, notes: String?, priority: Int, to project: CDProject, completion: @escaping() -> Void) {
-        // verificamos que el proyecto exista en el MOC
-        guard let existingProject = context.object(with: project.objectID) as? CDProject else { return }
-        
-        let task = CDTask(context: context)
-        task.id = UUID()
-        task.createAt = Date()
-        task.title = title
-        task.notes = notes
-        task.priority = Int64(priority)
-        task.isDone = false
-        task.project = existingProject // relation to parent
-        // save
-        do {
-            try context.save()
-            completion()
-            print("Se creo tarea \(task.title) en el proyecto \(existingProject.title)")
-        } catch {
             print(error)
         }
     }
