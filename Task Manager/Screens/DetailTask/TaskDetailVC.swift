@@ -154,19 +154,14 @@ extension  TaskDetailVC: TaskDetailDelegate {
         }
     }
     
-    func taskWithOutChanges() {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    func validationError(error: DetailTaskValidationError) {
-        
-        presentTMAlertVC(title: "", message: error.rawValue, buttonTitle: "Entendido")
-        
+    func validationError(error: Task.TaskError) {
+        var msgError = ""
         switch error {
-        case .requiredName:
+        case .emptyTitleisNotAllowed:
+            msgError = "Agrega nombre a la tarea"
             titleTextField.becomeFirstResponder()
-        case .updateFail:
-            break
         }
+        
+        presentTMAlertVC(title: "", message: msgError, buttonTitle: "Entendido")
     }
 }

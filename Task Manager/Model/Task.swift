@@ -30,6 +30,14 @@ extension Task {
         
         return Task(id: UUID(), title: title, notes: notes, priority: priority, isDone: false, doneAt: nil, createAt: Date(), projectID: projectID)
     }
+    
+    func edit(title: String, notes: String, priority: Priority) throws -> Task {
+        
+        if title.isEmpty { throw TaskError.emptyTitleisNotAllowed }
+        
+        return Task(id: self.id, title: title, notes: notes, priority: priority, isDone: self.isDone, doneAt: self.doneAt, createAt: self.createAt, projectID: self.projectID)
+    }
+    
 }
 
 enum Priority: Int, CaseIterable {
