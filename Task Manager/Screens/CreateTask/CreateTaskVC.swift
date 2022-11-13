@@ -115,16 +115,16 @@ class CreateTaskVC: UIViewController {
 }
 
 extension CreateTaskVC: CreateTaskVMDelegate {
-    func validationError(error: CreateTaskValidationError) {
+    func validationError(error: Task.TaskError) {
         
-        presentTMAlertVC(title: "", message: error.rawValue, buttonTitle: "Entendido")
-        
+        var msgError = ""
         switch error {
-        case .requiredName:
+        case .emptyTitleisNotAllowed:
+            msgError = "Agrega nombre a la tarea"
             titleTextField.becomeFirstResponder()
-        case .saveFail:
-            break
         }
+        
+        presentTMAlertVC(title: "", message: msgError, buttonTitle: "Entendido")
     }
     
     func saveCompleted() {

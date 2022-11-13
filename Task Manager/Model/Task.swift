@@ -16,6 +16,20 @@ struct Task {
     let doneAt: Date?
     let createAt: Date
     let projectID: UUID
+    
+    enum TaskError: Equatable ,Error {
+        case emptyTitleisNotAllowed
+    }
+}
+
+extension Task {
+    
+    static func create(title: String, notes: String, priority: Priority, projectID: UUID) throws -> Task {
+        
+        if title.isEmpty { throw TaskError.emptyTitleisNotAllowed }
+        
+        return Task(id: UUID(), title: title, notes: notes, priority: priority, isDone: false, doneAt: nil, createAt: Date(), projectID: projectID)
+    }
 }
 
 enum Priority: Int, CaseIterable {
