@@ -31,6 +31,11 @@ class TMProjectsVC: UIViewController {
     }
     
     private var currentProjectSelected: CDProject?
+    {
+        didSet {
+            delegate?.projectDidChange(project: currentProjectSelected)
+        }
+    }
     
     var projectsData: [CDProject] = [] {
         didSet {
@@ -152,7 +157,6 @@ class TMProjectsVC: UIViewController {
         currentProjectSelected = item
         pageIndicatorIndex = index
         updatePageIndicatorColor()
-        delegate?.projectDidChange(project: item)
         impactFeedback.impactOccurred()
     }
     
