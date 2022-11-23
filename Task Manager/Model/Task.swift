@@ -22,6 +22,12 @@ struct Task {
     }
 }
 
+extension Task: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+}
+
 extension Task {
     
     static func create(title: String, notes: String, priority: Priority, projectID: UUID) throws -> Task {
