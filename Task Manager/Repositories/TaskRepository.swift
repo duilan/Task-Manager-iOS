@@ -13,9 +13,12 @@ class TaskRepository: TaskRepositoryProtocol {
     
     func getAllBy(_ projectID: UUID) -> Result<[Task], RepositoryError> {
         do {
+            // se podria mejorar pasando un predicate y un sort al fetch generico
+            // Ej. let tasks = try store.fetch(entity: CDTask, predicate, sortedBy)
             let project =  try store.fetchById(entity: CDProject.self, id: projectID)
             let tasks = project?.toDomainModel().tasks ?? []
-            return .success(tasks)
+            let tasksSorted = tasks.sorted { $0.createAt > $1.createAt }
+            return .success(tasksSorted)
         } catch {
             print(error)
             return .failure(.failError)
