@@ -38,6 +38,10 @@ extension Task {
         return Task(id: self.id, title: title, notes: notes, priority: priority, isDone: self.isDone, doneAt: self.doneAt, createAt: self.createAt, projectID: self.projectID)
     }
     
+    func editDoneState(to value: Bool) -> Task {
+        return Task(id: self.id, title: title, notes: notes, priority: priority, isDone: value, doneAt: Date(), createAt: self.createAt, projectID: self.projectID)
+    }
+    
 }
 
 enum Priority: Int, CaseIterable {
