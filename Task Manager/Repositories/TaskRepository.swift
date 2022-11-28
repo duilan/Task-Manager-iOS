@@ -21,7 +21,7 @@ class TaskRepository: TaskRepositoryProtocol {
             return .success(tasksSorted)
         } catch {
             print(error)
-            return .failure(.failError)
+            return .failure(.fetchError)
         }
     }
     
@@ -31,12 +31,12 @@ class TaskRepository: TaskRepositoryProtocol {
             return .success(task?.toDomainModel())
         } catch {
             print(error)
-            return .failure(.failError)
+            return .failure(.fetchError)
         }
     }
     
     func create(_ item: Task) -> Result<Void, RepositoryError> {
-        guard let projectRelationship = try? store.fetchById(entity: CDProject.self, id: item.projectID) else { return .failure(.failError) }
+        guard let projectRelationship = try? store.fetchById(entity: CDProject.self, id: item.projectID) else { return .failure(.createError) }
         
         let newTask = CDTask(context: store.context)
         newTask.id = item.id
@@ -52,13 +52,13 @@ class TaskRepository: TaskRepositoryProtocol {
             return .success(())
         } catch  {
             print(error)
-            return .failure(.failError)
+            return .failure(.createError)
         }
     }
     
     func update(_ item: Task) -> Result<Void, RepositoryError> {
         guard let task = try? store.fetchById(entity: CDTask.self, id: item.id) else {
-            return .failure(.failError) }
+            return .failure(.updateError) }
         
         task.title = item.title
         task.notes = item.notes
@@ -71,13 +71,13 @@ class TaskRepository: TaskRepositoryProtocol {
             return .success(())
         } catch {
             print(error)
-            return .failure(.failError)
+            return .failure(.updateError)
         }
     }
     
     func delete(_ item: Task) -> Result<Void, RepositoryError> {
         guard let task = try? store.fetchById(entity: CDTask.self, id: item.id) else {
-            return .failure(.failError)
+            return .failure(.deleteError)
         }
         
         do {
@@ -85,7 +85,7 @@ class TaskRepository: TaskRepositoryProtocol {
             return .success(())
         } catch {
             print(error)
-            return .failure(.failError)
+            return .failure(.deleteError)
         }
     }
     

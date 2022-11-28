@@ -17,7 +17,7 @@ class ProjectRepository: ProjectRepositoryProtocol {
             return .success(projects.map({ $0.toDomainModel() }))
         } catch {
             print(error)
-            return .failure(.failError)
+            return .failure(.fetchError)
         }
     }
     
@@ -26,7 +26,7 @@ class ProjectRepository: ProjectRepositoryProtocol {
             let project =  try store.fetchById(entity: CDProject.self, id: id)
             return .success(project?.toDomainModel())
         } catch {
-            return .failure(.failError)
+            return .failure(.fetchError)
         }
     }
     
@@ -49,13 +49,13 @@ class ProjectRepository: ProjectRepositoryProtocol {
             return .success(())
         } catch  {
             print(error)
-            return .failure(.failError)
+            return .failure(.createError)
         }
     }
     
     func update(_ item: Project) -> Result<Void, RepositoryError> {
         guard let project = try? store.fetchById(entity: CDProject.self, id: item.id) else {
-            return .failure(.failError)
+            return .failure(.updateError)
         }
         project.status = item.status.value
         do {
@@ -63,13 +63,13 @@ class ProjectRepository: ProjectRepositoryProtocol {
             return .success(())
         } catch {
             print(error)
-            return .failure(.failError)
+            return .failure(.updateError)
         }
     }
     
     func delete(_ item: Project) -> Result<Void, RepositoryError> {
         guard let project = try? store.fetchById(entity: CDProject.self, id: item.id) else {
-            return .failure(.failError)
+            return .failure(.deleteError)
         }
         
         do {
@@ -77,7 +77,7 @@ class ProjectRepository: ProjectRepositoryProtocol {
             return .success(())
         } catch {
             print(error)
-            return .failure(.failError)
+            return .failure(.deleteError)
         }
     }
     

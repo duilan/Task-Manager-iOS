@@ -12,7 +12,10 @@ import Foundation
 // en este caso lo pondre todo aqui
 
 enum RepositoryError: Error {
-    case failError
+    case fetchError
+    case createError
+    case updateError
+    case deleteError
 }
 
 protocol ProjectRepositoryProtocol {
