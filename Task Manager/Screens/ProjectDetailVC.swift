@@ -40,7 +40,7 @@ class ProjectDetailVC: UIViewController {
     }
     
     private func updateTasksListProject() {
-        self.taskListVC.setProject(project)
+        self.taskListVC.setProject(project.toDomainModel())
     }
     
     private func setup() {

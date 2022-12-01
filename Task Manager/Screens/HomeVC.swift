@@ -20,7 +20,7 @@ class HomeVC: UIViewController {
     private var segmentIndex: Int = 0
     private var currentProject: CDProject? {
         didSet {
-            taskVC.setProject(currentProject)
+            taskVC.setProject(currentProject?.toDomainModel())
         }
     }
     
@@ -65,7 +65,7 @@ class HomeVC: UIViewController {
             self.filterProjectData()
         }
         
-        taskVC.updateData(animatingDifferences: false)
+        taskVC.refreshList()
     }
     
     private func filterProjectData() {

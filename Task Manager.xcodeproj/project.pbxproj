@@ -49,6 +49,7 @@
 		3AA39A962738ABF000711E51 /* ProjectDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA39A952738ABF000711E51 /* ProjectDetailVC.swift */; };
 		3ABE2DA6290B58D500B7D6F6 /* CreateProjectVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ABE2DA5290B58D500B7D6F6 /* CreateProjectVM.swift */; };
 		3AC0ED682908C8CE00A5AB11 /* TaskRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC0ED672908C8CE00A5AB11 /* TaskRepository.swift */; };
+		3AD25DF329162B9900CA3AE8 /* TaskListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD25DF229162B9900CA3AE8 /* TaskListViewModel.swift */; };
 		3AD69170272A4AC5000279B2 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD6916F272A4AC5000279B2 /* CoreDataManager.swift */; };
 		3ADB3DBA273CC84E00944A08 /* TMProjectHeaderDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ADB3DB9273CC84E00944A08 /* TMProjectHeaderDetailView.swift */; };
 		3ADF6FAE2910EC76003B8050 /* TMAlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ADF6FAD2910EC76003B8050 /* TMAlertVC.swift */; };
@@ -105,6 +106,7 @@
 		3AA39A952738ABF000711E51 /* ProjectDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetailVC.swift; sourceTree = "<group>"; };
 		3ABE2DA5290B58D500B7D6F6 /* CreateProjectVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProjectVM.swift; sourceTree = "<group>"; };
 		3AC0ED672908C8CE00A5AB11 /* TaskRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRepository.swift; sourceTree = "<group>"; };
+		3AD25DF229162B9900CA3AE8 /* TaskListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListViewModel.swift; sourceTree = "<group>"; };
 		3AD6916F272A4AC5000279B2 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		3ADB3DB9273CC84E00944A08 /* TMProjectHeaderDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMProjectHeaderDetailView.swift; sourceTree = "<group>"; };
 		3ADF6FAD2910EC76003B8050 /* TMAlertVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMAlertVC.swift; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 			children = (
 				3A330094271B72FB001DD4F3 /* TMProjectsVC.swift */,
 				3A3300B0271E2210001DD4F3 /* TMTasksListVC.swift */,
+				3AD25DF229162B9900CA3AE8 /* TaskListViewModel.swift */,
 				3ADF6FAD2910EC76003B8050 /* TMAlertVC.swift */,
 			);
 			path = ChildViewControllers;
@@ -486,6 +489,7 @@
 				3AEF9E02270E6F860065B184 /* AppDelegate.swift in Sources */,
 				3AEF9E04270E6F860065B184 /* SceneDelegate.swift in Sources */,
 				3A45B1F0290A1A4E00F635E6 /* CDTask+Additions.swift in Sources */,
+				3AD25DF329162B9900CA3AE8 /* TaskListViewModel.swift in Sources */,
 				3A3300B1271E2210001DD4F3 /* TMTasksListVC.swift in Sources */,
 				3A638DE229078C0A00FB4C29 /* RepositoryProtocols.swift in Sources */,
 				3A17BC2A274341F800CE504B /* TMSectionHeaderView.swift in Sources */,
