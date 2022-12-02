@@ -34,7 +34,7 @@ class ProjectViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(with project: CDProject) {
+    func configure(with project: Project) {
         setupBackgroundGradient(numberColor: Int(project.color))
         iconView.systemNameIcon = "wrench.and.screwdriver"
         aliasLabel.text = project.alias
@@ -42,7 +42,7 @@ class ProjectViewCell: UICollectionViewCell {
         dateFormatterGet.dateFormat = "d MMM yyyy"
         startDateLabel.text = "Del \(dateFormatterGet.string(from: project.startDate))"
         endDateLabel.text = "Hasta \(dateFormatterGet.string(from: project.endDate))"
-        statusLabel.text = project.status
+        statusLabel.text = project.status.value
     }
     
     private func setup() {

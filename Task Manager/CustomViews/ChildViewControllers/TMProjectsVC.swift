@@ -171,7 +171,7 @@ class TMProjectsVC: UIViewController {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProjectViewCell.cellID, for: indexPath) as? ProjectViewCell else {
                 return UICollectionViewCell()
             }
-            cell.configure(with: project)
+            cell.configure(with: project.toDomainModel())
             return cell
         }
     }
