@@ -39,6 +39,10 @@ extension Project {
         
         return Project(id: UUID(), title: title, alias: alias, desc: desc, startDate: startDate, endDate: endDate, color: color, status: .inProgress , tasks: [], createAt: Date())
     }
+    
+    func editStatus(to value: StatusProject) -> Project {
+        return Project(id: id, title: title, alias: alias, desc: desc, startDate: startDate, endDate: endDate, color: color, status: value, tasks: tasks, createAt: createAt)
+    }
 }
 
 enum StatusProject: String, CaseIterable {
