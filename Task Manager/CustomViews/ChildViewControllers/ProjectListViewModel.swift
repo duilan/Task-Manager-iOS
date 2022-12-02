@@ -7,6 +7,7 @@
 
 protocol ProjectListDelegate: AnyObject {
     func didDeletedProject(_ project: Project)
+    func didUpdatedProjectStatus(_ project: Project)
 }
 
 class ProjectListViewModel {
@@ -19,6 +20,17 @@ class ProjectListViewModel {
         switch result {
         case .success():
             delegate?.didDeletedProject(project)
+        case .failure(let error):
+            print(error)
+        }
+    }
+    
+    func changeStatus(of project: Project, to status: StatusProject) {
+        let projectEdited = project.editStatus(to: status)
+        let result = repository.update(projectEdited)
+        switch result {
+        case .success():
+            delegate?.didUpdatedProjectStatus(projectEdited)
         case .failure(let error):
             print(error)
         }
