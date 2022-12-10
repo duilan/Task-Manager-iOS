@@ -9,7 +9,7 @@ import UIKit
 
 class ProjectDetailVC: UIViewController {
     
-    private var project: CDProject!
+    private var project: Project!
     private let detailHeaderView = TMProjectHeaderDetailView()
     private let addFloatButton = TMCircleButton()
     
@@ -29,7 +29,7 @@ class ProjectDetailVC: UIViewController {
     
     init(project: CDProject) {
         super.init(nibName: nil, bundle: nil)
-        self.project = project
+        self.project = project.toDomainModel()
         
         guard let color = ProjectColors(rawValue: Int(project.color))?.value else { return }
         addFloatButton.backgroundColor = color
@@ -40,7 +40,7 @@ class ProjectDetailVC: UIViewController {
     }
     
     private func updateTasksListProject() {
-        self.taskListVC.setProject(project.toDomainModel())
+        self.taskListVC.setProject(project)
     }
     
     private func setup() {
@@ -51,7 +51,7 @@ class ProjectDetailVC: UIViewController {
     
     private func setupDetailHeaderView() {
         view.addSubview(detailHeaderView)
-        detailHeaderView.configure(with: project.toDomainModel())
+        detailHeaderView.configure(with: project)
         
         detailHeaderView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -76,7 +76,7 @@ class ProjectDetailVC: UIViewController {
     }
     
     @objc func showAddTaskVC() {
-        let taskVC = CreateTaskVC(project: project.toDomainModel())
+        let taskVC = CreateTaskVC(project: project)
         taskVC.delegate = self
         let nav = UINavigationController(rootViewController: taskVC)
         self.present(nav, animated: true, completion: nil)
