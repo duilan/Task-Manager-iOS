@@ -27,6 +27,12 @@ struct Project {
     }
 }
 
+extension Project: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+}
+
 extension Project {
     // MARK: - Create project case 
     static func create(title: String, alias: String, desc: String, startDate: Date, endDate: Date, color: Int) throws  -> Project {
