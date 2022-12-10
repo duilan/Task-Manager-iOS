@@ -8,15 +8,15 @@
 import UIKit
 
 protocol TMProjectsProtocol: AnyObject {
-    func projectDidChange(project: CDProject?)
+    func projectDidChange(project: Project?)
     func projectDeleted()
     func projectUpdated()
 }
 
 class TMProjectsVC: UIViewController {
     
-    private typealias ProjectDataSource = UICollectionViewDiffableDataSource<Section,CDProject>
-    private typealias ProjectSnapshot = NSDiffableDataSourceSnapshot<Section,CDProject>
+    private typealias ProjectDataSource = UICollectionViewDiffableDataSource<Section,Project>
+    private typealias ProjectSnapshot = NSDiffableDataSourceSnapshot<Section,Project>
     
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: generateLayout())
     private var dataSource: ProjectDataSource!
@@ -30,14 +30,13 @@ class TMProjectsVC: UIViewController {
         case projects = "Proyectos"
     }
     
-    private var currentProjectSelected: CDProject?
-    {
+    private var currentProjectSelected: Project? {
         didSet {
             delegate?.projectDidChange(project: currentProjectSelected)
         }
     }
     
-    var projectsData: [CDProject] = [] {
+    var projectsData: [Project] = [] {
         didSet {
             updateDataSourceSnapshot()
         }
@@ -48,6 +47,8 @@ class TMProjectsVC: UIViewController {
             pageIndicator.currentPage = pageIndicatorIndex
         }
     }
+    
+    private let vm = ProjectListViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,6 +75,7 @@ class TMProjectsVC: UIViewController {
     
     private func setup() {
         view.backgroundColor = ThemeColors.backgroundPrimary
+        vm.delegate = self
     }
     
     private func setupCollectionView() {
@@ -100,28 +102,22 @@ class TMProjectsVC: UIViewController {
         
         return UIContextMenuConfiguration(identifier: NSIndexPath(item: indexPath.item, section: indexPath.section), previewProvider: nil) { (menuElement) -> UIMenu? in
             
-            let deleteAction = UIAction(title: "Eliminar",
-                                        image: UIImage(systemName: "trash"),
-                                        attributes: .destructive) { (action) in
-                
-                CoreDataManager.shared.delete(project) { [weak self] in
-                    self?.removeInSnapshot(project)
-                    self?.delegate?.projectDeleted()
-                }
-            }
+            let deleteAction = UIAction(
+                title: "Eliminar",
+                image: UIImage(systemName: "trash"),
+                attributes: .destructive,
+                handler: { [weak self] (action) in
+                    self?.vm.delete(project: project)
+                })
             
             let statusActions: [UIAction] = StatusProject.allCases.compactMap({ status in
-                if status == project.statusDescription { return nil }
+                if status == project.status { return nil }
                 return UIAction(
                     title: "Pasar a \(status.rawValue)",
-                    image: UIImage(systemName: status.icon)) { (action) in
-                    
-                    project.statusDescription = status
-                    CoreDataManager.shared.update() { [weak self] in
-                        self?.removeInSnapshot(project)
-                        self?.delegate?.projectUpdated()
-                    }
-                }
+                    image: UIImage(systemName: status.icon),
+                    handler: { [weak self] (action) in
+                        self?.vm.changeStatus(of: project, to: status)
+                    })
             })
             
             var actionsForContextMenu: [UIAction] = []
@@ -141,7 +137,7 @@ class TMProjectsVC: UIViewController {
         pageIndicatorIndex = 0
     }
     
-    private func removeInSnapshot(_ project: CDProject) {
+    private func removeInSnapshot(_ project: Project) {
         var currentSnapshot =  dataSource.snapshot()
         currentSnapshot.deleteItems([project])
         dataSource.apply(currentSnapshot, animatingDifferences: false)
@@ -171,7 +167,7 @@ class TMProjectsVC: UIViewController {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProjectViewCell.cellID, for: indexPath) as? ProjectViewCell else {
                 return UICollectionViewCell()
             }
-            cell.configure(with: project.toDomainModel())
+            cell.configure(with: project)
             return cell
         }
     }
@@ -272,4 +268,14 @@ extension TMProjectsVC: UICollectionViewDelegate {
         return targetedPreview
     }
     
+}
+
+extension TMProjectsVC: ProjectListDelegate {
+    func didUpdatedProjectStatus(_ project: Project) {
+        delegate?.projectUpdated()
+    }
+    
+    func didDeletedProject(_ project: Project) {
+        delegate?.projectDeleted()
+    }
 }

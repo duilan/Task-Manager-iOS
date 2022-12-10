@@ -27,9 +27,9 @@ class ProjectDetailVC: UIViewController {
         updateTasksListProject()
     }
     
-    init(project: CDProject) {
+    init(project: Project) {
         super.init(nibName: nil, bundle: nil)
-        self.project = project.toDomainModel()
+        self.project = project
         
         guard let color = ProjectColors(rawValue: Int(project.color))?.value else { return }
         addFloatButton.backgroundColor = color

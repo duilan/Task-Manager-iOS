@@ -13,14 +13,14 @@ class HomeVC: UIViewController {
     private let welcomeHeader = TMWelcomeHeaderView()
     private let segmentedControl = BetterSegmentedControl()
     private let projectsVC = TMProjectsVC()
-    private var projectsData: [CDProject] = []
+    private var projectsData: [Project] = []
     private let taskVC = TMTasksListVC()
     private var tableHeight: NSLayoutConstraint!
     // 0 : InProgress, 1:Completed
     private var segmentIndex: Int = 0
-    private var currentProject: CDProject? {
+    private var currentProject: Project? {
         didSet {
-            taskVC.setProject(currentProject?.toDomainModel())
+            taskVC.setProject(currentProject)
         }
     }
     
@@ -61,7 +61,7 @@ class HomeVC: UIViewController {
     private func updateProjects() {
         coredata.fetchAllProjects { [weak self] (projects) in
             guard let self = self else { return }
-            self.projectsData = projects
+            self.projectsData = projects.map({ $0.toDomainModel() })
             self.filterProjectData()
         }
         
@@ -73,12 +73,12 @@ class HomeVC: UIViewController {
         case 0 :
             // show just in progress projects
             self.projectsVC.projectsData = projectsData.filter({ (project)  in
-                return project.status == StatusProject.inProgress.rawValue
+                return project.status == .inProgress
             })
         case 1 :
             // show just complete projects
             projectsVC.projectsData = projectsData.filter({ (project)  in
-                return project.status == StatusProject.completed.rawValue
+                return project.status == .completed
             })
         default:
             //no filter data
@@ -213,7 +213,7 @@ class HomeVC: UIViewController {
 }
 
 extension HomeVC: TMProjectsProtocol {
-    func projectDidChange(project: CDProject?) {
+    func projectDidChange(project: Project?) {
         currentProject = project
     }
     
